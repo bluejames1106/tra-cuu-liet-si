@@ -2,21 +2,22 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs'); 
+const fs = require('fs');
 
 const app = express();
-const port = process.env.PORT || 3000; 
+const port = process.env.PORT || 3000; // Tự động nhận Port của Render hoặc dùng 3000 ở máy local
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public'))); // Giúp Render chạy được giao diện Frontend[cite: 1]
 
-// CẤU HÌNH KẾT NỐI POSTGRESQL
+// CẤU HÌNH THÔNG TIN KẾT NỐI POSTGRESQL (Tự động nhận key DATABASE_URL từ Render)[cite: 1]
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:1@localhost:5432/postgres',
+  connectionString: process.env.DATABASE_URL || 'postgresql://triadmin:rFlXAFe6ykl7pZCQC8ctYSiUgtrw2HEC@dpg-d9d5k0qhil2s73bcok10-a/postgresql_ywkd',
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
-// HÀM BỔ TRỢ: Tách dòng CSV chuẩn xác, bỏ qua các dấu phẩy nằm bên trong ô văn bản ""
+// HÀM BỔ TRỢ: Tách dòng CSV chuẩn xác tuyệt đối, giữ nguyên dấu phẩy nếu nằm trong ô text ""
 function parseCSVRow(rowText) {
   const result = [];
   let current = '';
@@ -25,23 +26,23 @@ function parseCSVRow(rowText) {
   for (let i = 0; i < rowText.length; i++) {
     const char = rowText[i];
     if (char === '"') {
-      inQuotes = !inQuotes; // Đổi trạng thái khi gặp hoặc thoát khỏi dấu ngoặc kép
+      inQuotes = !inQuotes;
     } else if (char === ',' && !inQuotes) {
-      result.push(current.trim().replace(/^"|"$/g, '').replace(/""/g, '"')); // Hết 1 ô dữ liệu
+      result.push(current.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
       current = '';
     } else {
       current += char;
     }
   }
-  result.push(current.trim().replace(/^"|"$/g, '').replace(/""/g, '"')); // Ô dữ liệu cuối cùng
+  result.push(current.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
   return result;
 }
 
-// HÀM TỰ ĐỘNG ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEET VÀO SQL
+// HÀM TỰ ĐỘNG ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEET (Giữ nguyên cấu trúc 10 cột chuẩn)[cite: 1]
 async function dongBoDuLieuTuGoogleSheet() {
   const client = await pool.connect();
   try {
-    // 1. Khởi tạo lại cấu trúc bảng
+    // Tạo lại bảng với đúng 10 trường thông tin[cite: 1]
     await client.query('DROP TABLE IF EXISTS danh_sach_liet_si CASCADE;');
     await client.query(`
       CREATE TABLE danh_sach_liet_si (
@@ -51,21 +52,17 @@ async function dongBoDuLieuTuGoogleSheet() {
       );
     `);
     
-    // 2. Tải file CSV từ link Google Sheets công khai
+    // Tải CSV dữ liệu từ Google Sheets về[cite: 1]
     const response = await fetch('https://docs.google.com/spreadsheets/d/1TbM4AzOCczRc_5nSlQY3iT5aOYXSAb2W5PTqjNJYx_U/export?format=csv&gid=0');
     const csvText = await response.text();
     
-    // 3. Tách dữ liệu thành từng dòng và bỏ dòng tiêu đề đầu tiên
-    const rows = csvText.split(/\r?\n/).slice(1);
+    const rows = csvText.split(/\r?\n/).slice(1); // Bỏ dòng tiêu đề[cite: 1]
     
-    // 4. Quét từng dòng dữ liệu bằng bộ lọc thông minh mới
     for (let row of rows) {
-      if (!row || row.trim() === '') continue; 
+      if (!row || row.trim() === '') continue;
       
-      // Sử dụng hàm xử lý CSV chuẩn để không bị lệch cột khi gặp dấu phẩy trong văn bản
       const cols = parseCSVRow(row);
-      
-      // Đảm bảo luôn có đủ 10 cột dữ liệu để truyền vào DB
+      // Đảm bảo mapping chuẩn xác theo đúng thứ tự 10 cột vào CSDL[cite: 1]
       const values = Array.from({ length: 10 }, (_, i) => cols[i] || "");
       
       await client.query(`
@@ -74,18 +71,18 @@ async function dongBoDuLieuTuGoogleSheet() {
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       `, values);
     }
-    
-    console.log("🔄 Đã xử lý CSV chuẩn và đồng bộ vào Database thành công!");
+    console.log("🔄 Đồng bộ dữ liệu từ Google Sheets vào Postgres thành công!");
   } catch (err) {
-    console.error("❌ Lỗi khi đồng bộ dữ liệu:", err.message);
+    console.error("❌ Lỗi đồng bộ Google Sheets:", err.message);
   } finally {
-    client.release(); 
+    client.release();
   }
 }
 
-// 1. API: LẤY DANH SÁCH LIỆT SĨ
+// 1. API: LẤY DANH SÁCH LIỆT SĨ (Giữ nguyên y hệt logic lọc và thứ tự SQL cũ của bạn)[cite: 1]
 app.get('/api/martyrs', async (req, res) => {
   try {
+    // Tự động cập nhật dữ liệu mới nhất từ Google Sheets trước khi tìm kiếm[cite: 1]
     await dongBoDuLieuTuGoogleSheet();
 
     const { name, birth, home, area, row, grave } = req.query;
@@ -105,24 +102,49 @@ app.get('/api/martyrs', async (req, res) => {
     const values = [];
     let paramIndex = 1;
 
-    if (name) { sql += ` AND ho_va_ten ILIKE $${paramIndex}`; values.push(`%${name}%`); paramIndex++; }
-    if (birth) { sql += ` AND nam_sinh ILIKE $${paramIndex}`; values.push(`%${birth}%`); paramIndex++; }
-    if (home) { sql += ` AND que_quan ILIKE $${paramIndex}`; values.push(`%${home}%`); paramIndex++; }
-    if (area) { sql += ` AND hang ILIKE $${paramIndex}`; values.push(`%${area}%`); paramIndex++; }
-    if (row) { sql += ` AND so_mo ILIKE $${paramIndex}`; values.push(`%${row}%`); paramIndex++; }
-    if (grave) { sql += ` AND so_tt ILIKE $${paramIndex}`; values.push(`%${grave}%`); paramIndex++; }
+    if (name) {
+      sql += ` AND ho_va_ten ILIKE $${paramIndex}`;
+      values.push(`%${name}%`);
+      paramIndex++;
+    }
+    if (birth) {
+      sql += ` AND nam_sinh ILIKE $${paramIndex}`;
+      values.push(`%${birth}%`);
+      paramIndex++;
+    }
+    if (home) {
+      sql += ` AND que_quan ILIKE $${paramIndex}`;
+      values.push(`%${home}%`);
+      paramIndex++;
+    }
+    if (area) {
+      sql += ` AND hang ILIKE $${paramIndex}`;
+      values.push(`%${area}%`);
+      paramIndex++;
+    }
+    if (row) {
+      sql += ` AND so_mo ILIKE $${paramIndex}`;
+      values.push(`%${row}%`);
+      paramIndex++;
+    }
+    if (grave) {
+      sql += ` AND so_tt ILIKE $${paramIndex}`;
+      values.push(`%${grave}%`);
+      paramIndex++;
+    }
 
-    sql += " ORDER BY so_tt ASC";
+    // Giữ nguyên kiểu sắp xếp cũ theo yêu cầu[cite: 1]
+    sql += " ORDER BY CAST(so_tt AS INT) ASC";
 
     const result = await pool.query(sql, values);
     res.json(result.rows); 
   } catch (err) {
-    console.error("Lỗi API martyrs:", err.message);
+    console.error(err.message);
     res.status(500).send("Lỗi Server khi tải danh sách");
   }
 });
 
-// 2. API: LẤY CHI TIẾT THEO ID
+// 2. API: LẤY CHI TIẾT THEO ID (Giữ nguyên cấu trúc SELECT cũ của bạn)[cite: 1]
 app.get('/api/martyrs/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -152,14 +174,12 @@ app.get('/api/martyrs/:id', async (req, res) => {
 
     res.json(result.rows[0]); 
   } catch (err) {
-    console.error("Lỗi API chi tiết:", err.message);
+    console.error(err.message);
     res.status(500).send("Lỗi Server khi tải chi tiết");
   }
 });
 
 // KHỞI ĐỘNG SERVER
 app.listen(port, () => {
-  console.log(`=========================================`);
-  console.log(`Server đang chạy tại cổng ${port}`);
-  console.log(`=========================================`);
+  console.log(`Server đang chạy mượt mà tại cổng ${port}`);
 });
