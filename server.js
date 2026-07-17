@@ -5,23 +5,43 @@ const path = require('path');
 const fs = require('fs'); 
 
 const app = express();
-const port = process.env.PORT || 3000; // Render sẽ tự động gán Port, nếu chạy ở máy tính thì dùng 3000
+const port = process.env.PORT || 3000; 
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public'))); 
 
-// CẤU HÌNH KẾT NỐI POSTGRESQL (Tự động nhận cấu hình từ Render qua biến DATABASE_URL)
+// CẤU HÌNH KẾT NỐI POSTGRESQL
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgresql://postgres:1@localhost:5432/postgres',
-  // Khi chạy trên Render thường cần bật SSL cho kết nối database
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
-// HÀM ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEET VÀO SQL BẰNG NODE.JS
+// HÀM BỔ TRỢ: Tách dòng CSV chuẩn xác, bỏ qua các dấu phẩy nằm bên trong ô văn bản ""
+function parseCSVRow(rowText) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  
+  for (let i = 0; i < rowText.length; i++) {
+    const char = rowText[i];
+    if (char === '"') {
+      inQuotes = !inQuotes; // Đổi trạng thái khi gặp hoặc thoát khỏi dấu ngoặc kép
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim().replace(/^"|"$/g, '').replace(/""/g, '"')); // Hết 1 ô dữ liệu
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim().replace(/^"|"$/g, '').replace(/""/g, '"')); // Ô dữ liệu cuối cùng
+  return result;
+}
+
+// HÀM TỰ ĐỘNG ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEET VÀO SQL
 async function dongBoDuLieuTuGoogleSheet() {
   const client = await pool.connect();
   try {
-    // 1. Xóa và tạo lại bảng
+    // 1. Khởi tạo lại cấu trúc bảng
     await client.query('DROP TABLE IF EXISTS danh_sach_liet_si CASCADE;');
     await client.query(`
       CREATE TABLE danh_sach_liet_si (
@@ -31,19 +51,21 @@ async function dongBoDuLieuTuGoogleSheet() {
       );
     `);
     
-    // 2. Dùng Fetch của Node.js để tải file CSV từ Google Sheets (Thay thế lệnh curl bị cấm)
+    // 2. Tải file CSV từ link Google Sheets công khai
     const response = await fetch('https://docs.google.com/spreadsheets/d/1TbM4AzOCczRc_5nSlQY3iT5aOYXSAb2W5PTqjNJYx_U/export?format=csv&gid=0');
     const csvText = await response.text();
     
-    // 3. Tách dữ liệu thành từng dòng (bỏ qua dòng tiêu đề đầu tiên)
-    const rows = csvText.split('\n').slice(1);
+    // 3. Tách dữ liệu thành từng dòng và bỏ dòng tiêu đề đầu tiên
+    const rows = csvText.split(/\r?\n/).slice(1);
     
-    // 4. Lặp từng dòng và lưu vào CSDL
+    // 4. Quét từng dòng dữ liệu bằng bộ lọc thông minh mới
     for (let row of rows) {
-      if (!row || row.trim() === '') continue; // Bỏ qua dòng trống
+      if (!row || row.trim() === '') continue; 
       
-      // Xử lý tách cột (Giả sử các cột phân tách bằng dấu phẩy)
-      const cols = row.split(',').map(col => col.trim().replace(/^"|"$/g, ''));
+      // Sử dụng hàm xử lý CSV chuẩn để không bị lệch cột khi gặp dấu phẩy trong văn bản
+      const cols = parseCSVRow(row);
+      
+      // Đảm bảo luôn có đủ 10 cột dữ liệu để truyền vào DB
       const values = Array.from({ length: 10 }, (_, i) => cols[i] || "");
       
       await client.query(`
@@ -53,18 +75,17 @@ async function dongBoDuLieuTuGoogleSheet() {
       `, values);
     }
     
-    console.log("🔄 Đã tải dữ liệu từ Google Sheets qua Node.js và cập nhật DB thành công!");
+    console.log("🔄 Đã xử lý CSV chuẩn và đồng bộ vào Database thành công!");
   } catch (err) {
-    console.error("❌ Lỗi khi Node.js đồng bộ dữ liệu:", err.message);
+    console.error("❌ Lỗi khi đồng bộ dữ liệu:", err.message);
   } finally {
-    client.release(); // Giải phóng kết nối
+    client.release(); 
   }
 }
 
 // 1. API: LẤY DANH SÁCH LIỆT SĨ
 app.get('/api/martyrs', async (req, res) => {
   try {
-    // Tự động đồng bộ dữ liệu trước khi quét
     await dongBoDuLieuTuGoogleSheet();
 
     const { name, birth, home, area, row, grave } = req.query;
@@ -91,7 +112,6 @@ app.get('/api/martyrs', async (req, res) => {
     if (row) { sql += ` AND so_mo ILIKE $${paramIndex}`; values.push(`%${row}%`); paramIndex++; }
     if (grave) { sql += ` AND so_tt ILIKE $${paramIndex}`; values.push(`%${grave}%`); paramIndex++; }
 
-    // Sửa lại đoạn order by một chút để tránh lỗi với các giá trị không phải số (nếu có)
     sql += " ORDER BY so_tt ASC";
 
     const result = await pool.query(sql, values);
@@ -141,12 +161,5 @@ app.get('/api/martyrs/:id', async (req, res) => {
 app.listen(port, () => {
   console.log(`=========================================`);
   console.log(`Server đang chạy tại cổng ${port}`);
-  
-  const publicPath = path.join(__dirname, 'public');
-  if (fs.existsSync(publicPath)) {
-    console.log(`✅ Thư mục 'public' TỒN TẠI!`);
-  } else {
-    console.log(`❌ LỖI: Không tìm thấy thư mục 'public'!`);
-  }
   console.log(`=========================================`);
 });
