@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng tra cứu thông tin Liệt sĩ - Xã Phước An</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header class="top-header" id="banner-header">
+        <div class="header-container">
+            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="title-banner">
+            Cổng tra cứu thông tin các anh hùng liệt sĩ địa bàn xã Phước An
+        </div>
+        
+        <!-- Khu vực tìm kiếm -->
+        <div class="search-section">
+            <div class="search-grid">
+                <!-- Hàng 1 -->
+                <div class="input-group">
+                    <label>Họ và tên Liệt sĩ</label>
+                    <input type="text" id="s_name">
+                </div>
+                <div class="input-group">
+                    <label>Năm sinh</label>
+                    <input type="text" id="s_birthDate">
+                </div>
+                <div class="input-group">
+                    <label>Nguyên quán</label>
+                    <input type="text" id="s_home">
+                </div>
+                
+                <!-- Hàng 2 -->
+                <div class="input-group">
+                    <label>Khu/Lô</label>
+                    <input type="text" id="s_area">
+                </div>
+                <div class="input-group">
+                    <label>Hàng</label>
+                    <input type="text" id="s_row">
+                </div>
+                <div class="input-group">
+                    <label>Mộ</label>
+                    <input type="text" id="s_grave">
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn-search" onclick="searchData()">Tìm kiếm</button>
+                <button class="btn-clear" onclick="clearSearch()">Xóa hết</button>
+            </div>
+        </div>
+
+        <!-- Bảng dữ liệu -->
+        <div class="table-container">
+            <table id="martyrTable">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ và tên</th>
+                        <th>Năm sinh</th>
+                        <th>Nguyên quán</th>
+                        <th>Khu/Lô</th>
+                        <th>Hàng</th>
+                        <th>Mộ</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Dữ liệu sẽ được chèn vào đây qua JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+<!-- Phần Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
+            <p>Chịu trách nhiệm nội dung: Ông Đặng Quốc Vũ - Phó Chủ tịch UBND xã Phước An</p>
+            <p>Địa chỉ: Ấp Bà Trường, xã Phước An, Thành phố Đồng Nai</p>
+            <p>Cơ quan thường trực Website: Phòng Văn hóa - Xã hội xã Phước An</p>
+            <p><em>(Mọi hình thức trích dẫn thông tin từ website này để đăng tải yêu cầu ghi rõ nguồn: https://phuocan.dongnai.gov.vn)</em></p>
+            <p>Website: https://phuocan.dongnai.gov.vn &nbsp;&nbsp;|&nbsp;&nbsp; Email: ubnd-pha@dongnai.gov.vn</p>
+        </div>
+    </footer>
+</html>

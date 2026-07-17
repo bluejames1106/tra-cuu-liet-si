@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiểu sử Liệt sĩ</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Header đồng bộ với trang chủ -->
+    <header class="top-header" id="banner-header">
+        <div class="header-container">
+            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Băng rôn tiêu đề -->
+        <div class="title-banner">
+            Cổng tra cứu thông tin các anh hùng liệt sĩ địa bàn xã Phước An
+        </div>
+        
+        <!-- Nút quay lại -->
+        <div class="btn-back-container">
+            <button class="btn-back" onclick="window.location.href='index.html'">← Quay lại trang tra cứu</button>
+        </div>
+
+        <!-- Khung hiển thị chi tiết tiểu sử -->
+        <div class="profile-box">
+            <div class="profile-top">
+                <div class="profile-image">
+                    <span id="no_image_text" class="no-image-text">Anh</span>
+                    <img id="p_image" src="hoasen.jpg" alt="Ảnh Liệt sĩ" style="display: none;">
+                </div>
+                
+                <div class="profile-info">
+                    <h2 id="p_name">Họ và tên</h2>
+                    <p><strong>Năm sinh:</strong> <span id="p_birth"></span></p>
+                    <p><strong>Nguyên quán:</strong> <span id="p_home"></span></p>
+                    <p><strong>Năm hy sinh:</strong> <span id="p_death"></span></p>
+                    <p><strong>Nơi hy sinh:</strong> <span id="p_deathPlace"></span></p>
+                    <p><strong>Đơn vị:</strong> <span id="p_unit"></span></p>
+                    <p><strong>Vị trí mộ:</strong> Khu/Lô <span id="p_area" class="highlight"></span>, Hàng <span id="p_row" class="highlight"></span>, Số mộ <span id="p_grave" class="highlight"></span></p>
+                </div>
+            </div>
+            
+            <div class="profile-bottom">
+                <p><strong>Tiểu sử:</strong> <span id="p_bio"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer đồng bộ với trang chủ -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
+            <p>Chịu trách nhiệm nội dung: Ông Đặng Quốc Vũ - Phó Chủ tịch UBND xã Phước An</p>
+            <p>Địa chỉ: Ấp Bà Trường, xã Phước An, Thành phố Đồng Nai</p>
+            <p>Cơ quan thường trực Website: Phòng Văn hóa - Xã hội xã Phước An</p>
+            <p><em>(Mọi hình thức trích dẫn thông tin từ website này để đăng tải yêu cầu ghi rõ nguồn: https://phuocan.dongnai.gov.vn)</em></p>
+            <p>Website: https://phuocan.dongnai.gov.vn &nbsp;&nbsp;|&nbsp;&nbsp; Email: ubnd-pha@dongnai.gov.vn</p>
+        </div>
+    </footer>
+
+    <script src="detail.js"></script>
+</body>
+</html>

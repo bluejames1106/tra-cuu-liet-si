@@ -1,0 +1,282 @@
+/* Cài đặt chung */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header xanh nhạt */
+.top-header {
+    background-color: #0072c6; /* Màu xanh nền dự phòng */
+    background-image: url('untitled-1.jpg'); /* Gọi file hình nền xanh */
+    background-size: cover; /* Phóng to ảnh nền cho lấp đầy khung */
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 140px; /* Chiều cao header (bạn có thể tăng/giảm nếu muốn) */
+    display: flex;
+    align-items: center; /* Căn giữa ảnh chữ theo chiều dọc */
+    border-bottom: 5px solid #00a8e8; /* Đường viền xanh sáng ở mép dưới giống trang gốc */
+}
+
+.header-container {
+    max-width: 1300px; /* Trùng với kích thước container của bảng dữ liệu */
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header-slogan {
+    max-height: 100px; /* Giới hạn chiều cao để ảnh không bị tràn */
+    width: auto;
+    margin-left: 50px; /* Đẩy chữ dịch sang phải một chút cho giống tỷ lệ ảnh gốc */
+    filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.5)); /* Thêm chút viền bóng trắng sáng mờ để chữ tách bạch khỏi nền xanh */
+}
+
+.top-header h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Container chính */
+.container {
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Băng rôn đỏ nhạt */
+.title-banner {
+    background-color: #5bb4ff; /* Nền màu xanh nhạt */
+    color: #ffffff; /* Chữ màu trắng */
+    text-align: center;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid #3399ff; /* Viền xanh đậm hơn một chút để tạo viền sắc nét */
+    margin-bottom: 20px;
+}
+
+/* Khu vực tìm kiếm (Sử dụng Grid Layout) */
+.search-section {
+    display: flex;
+    gap: 20px;
+    background: white;
+    padding: 25px;
+    border: 1px solid #ddd;
+    margin-bottom: 25px;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px 25px;
+    flex: 1; /* Chiếm phần lớn không gian */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #333;
+}
+
+.input-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+.input-group input:focus {
+    border-color: #3498db;
+}
+
+/* Cột nút bấm */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    width: 150px;
+}
+
+.btn-search, .btn-clear {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-search {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+.btn-search:hover { background-color: #f1b0b7; }
+
+.btn-clear {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+.btn-clear:hover { background-color: #c3e6cb; }
+
+/* Bảng dữ liệu */
+.table-container {
+    background: white;
+    border: 1px solid #ddd;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+}
+
+th {
+    background-color: #fcfcfc;
+    font-weight: bold;
+    color: #333;
+}
+
+tr:nth-child(even) { background-color: #f9f9f9; }
+tr:hover { background-color: #f1f1f1; }
+
+/* Phân trang */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start;
+}
+.pagination button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    color: #3498db;
+}
+.pagination button:hover { background: #eee; }
+.pagination button.active {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* --- CSS BỔ SUNG CHO TRANG TIỂU SỬ --- */
+
+/* Nút quay lại */
+.btn-back-container { margin-bottom: 15px; }
+.btn-back { padding: 8px 15px; background: #fff; border: 1px solid #ccc; cursor: pointer; color: #333; }
+.btn-back:hover { background: #e9ecef; }
+
+/* Khung tiểu sử tổng thể */
+.profile-box {
+    background: white;
+    border: 1px solid #333;
+    padding: 30px;
+}
+
+/* Phần trên: Ảnh và Thông tin */
+.profile-top {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+/* Ô chứa ảnh */
+.profile-image {
+    width: 160px;
+    height: 220px;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+}
+.no-image-text { color: #888; font-size: 14px; }
+
+/* Các dòng text thông tin */
+.profile-info h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #d32f2f; /* Nhấn mạnh tên bằng màu đỏ nhạt/đậm */
+}
+.profile-info p {
+    margin: 8px 0;
+    font-size: 16px;
+    color: #333;
+}
+.highlight {
+    font-weight: bold;
+    margin: 0 5px;
+    border-bottom: 1px dotted #333; /* Tạo đường chân chim cho vị trí mộ */
+}
+
+/* Phần dưới: Tiểu sử */
+.profile-bottom p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Định dạng link ở cột Họ tên trang chủ */
+.martyr-link {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: bold;
+}
+.martyr-link:hover {
+    text-decoration: underline;
+    color: #d32f2f;
+}
+
+/* Tùy chỉnh cho thẻ img bên trong khung ảnh */
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cắt cúp tỉ lệ ảnh tự động cho vừa khung */
+    object-position: center;
+}
+
+/* --- Phần Footer --- */
+.site-footer {
+    background-color: #21a5e3; /* Màu xanh nước biển chuẩn với giao diện xã */
+    color: #ffffff;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px; /* Tạo khoảng cách với phần nội dung bên trên */
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.site-footer h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.site-footer p {
+    margin: 5px 0;
+}
+
+.site-footer em {
+    font-style: italic;
+    opacity: 0.9;
+}
