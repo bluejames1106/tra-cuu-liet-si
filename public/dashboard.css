@@ -239,7 +239,6 @@ tr:hover { background-color: #f1f1f1; }
     width: 150px;
     height: 200px; 
     border: none !important; /* Xóa bỏ đường viền mờ cũ gây lộ vùng trắng */
-    border-radius: 8px; /* Bo tròn các góc */
     overflow: hidden; /* Lệnh cực kỳ quan trọng: Giấu đi mọi phần ảnh tràn ra ngoài khung */
     box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Phủ bóng đổ cho toàn bộ khung */
     flex-shrink: 0; /* Đảm bảo khung không bị bóp méo khi nằm ngang với chữ trên màn hình máy tính */
