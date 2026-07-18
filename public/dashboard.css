@@ -285,9 +285,11 @@ tr:hover { background-color: #f1f1f1; }
 /* Tùy chỉnh cho thẻ img bên trong khung ảnh */
 .profile-image img {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Cắt cúp tỉ lệ ảnh tự động cho vừa khung */
-    object-position: center;
+    height: auto; /* Tự động tính toán chiều cao theo tỷ lệ gốc của ảnh */
+    max-height: 280px;
+    object-fit: cover; /* Cắt cúp gọn gàng nếu ảnh sai tỷ lệ */
+    border-radius: 8px; /* Bo tròn nhẹ các góc cho đẹp */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Thêm bóng đổ nhẹ giúp ảnh nổi bật */
 }
 
 /* --- Phần Footer --- */
@@ -338,8 +340,14 @@ tr:hover { background-color: #f1f1f1; }
     }
     
     .search-grid {
-        grid-template-columns: 1fr; /* Thay vì 3 cột, ép về 1 cột dọc duy nhất để ô nhập rộng rãi */
+        grid-template-columns: 1fr !important; /* Lệnh !important giúp ưu tiên ép về 1 cột dọc trên điện thoại */
         gap: 12px;
+    }
+
+    /* 2. Cân chỉnh lại 2 nút Tab để không bị chật */
+    .tab-btn {
+        padding: 10px 5px;
+        font-size: 13px; /* Giảm cỡ chữ tab một chút cho gọn */
     }
     
     .action-buttons {
@@ -366,5 +374,36 @@ tr:hover { background-color: #f1f1f1; }
     th, td {
         padding: 8px 4px; /* Thu gọn khoảng cách đệm trong ô */
         font-size: 13px; /* Giảm nhẹ 1 cỡ chữ để hiển thị được nhiều từ hơn */
+    }
+
+    /* 3. Tối ưu trang Tiểu sử (Đẩy ảnh lên trên, trải dài chữ xuống dưới) */
+    .profile-top {
+        flex-direction: column; /* Chuyển từ xếp ngang sang xếp dọc */
+        align-items: center; /* Căn ảnh ra giữa màn hình */
+        gap: 10px; /* Khoảng cách giữa ảnh và chữ */
+    }
+
+    .profile-image {
+        width: 180px; /* Khống chế kích thước ảnh nhỏ lại trên mobile */
+        margin-bottom: 15px;
+    }
+
+    .profile-info {
+        width: 100%; /* Trả lại 100% chiều ngang cho chữ chạy thoải mái */
+        padding-left: 0;
+    }
+
+    .profile-info h2 {
+        text-align: center; /* Căn giữa tên Liệt sĩ */
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .profile-info p {
+        font-size: 15px; /* Giữ chữ đủ to để dễ đọc */
+        line-height: 1.6;
+        word-break: break-word; 
+        border-bottom: 1px dashed #ddd; /* Thêm đường kẻ gạch ngang mờ giữa các hàng cho dễ nhìn */
+        padding-bottom: 8px;
     }
 }
