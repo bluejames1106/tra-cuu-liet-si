@@ -46,19 +46,19 @@ window.onload = async function() {
         }
 
         // Xử lý hiển thị Ảnh[cite: 8]
-        const imgElement = document.getElementById("p_image");
-        const noImgText = document.getElementById("no_image_text");
+//        const imgElement = document.getElementById("p_image");
+//        const noImgText = document.getElementById("no_image_text");
 
-        if (data.anh_url && data.anh_url.trim() !== "") {
-            // Nếu database có link ảnh -> Gắn đường dẫn vào src, hiện ảnh, ẩn chữ[cite: 8]
-            imgElement.src = data.anh_url;
-            imgElement.style.display = "block";
-            noImgText.style.display = "none";
-        } else {
-            // Nếu không có ảnh hoặc trống -> Ẩn ảnh, hiện chữ "Ảnh" dự phòng[cite: 8]
-            imgElement.style.display = "none";
-            noImgText.style.display = "block";
-        }
+//        if (data.anh_url && data.anh_url.trim() !== "") {
+//            // Nếu database có link ảnh -> Gắn đường dẫn vào src, hiện ảnh, ẩn chữ[cite: 8]
+//            imgElement.src = data.anh_url;
+//            imgElement.style.display = "block";
+//            noImgText.style.display = "none";
+//        } else {
+//            // Nếu không có ảnh hoặc trống -> Ẩn ảnh, hiện chữ "Ảnh" dự phòng[cite: 8]
+//            imgElement.style.display = "none";
+//           noImgText.style.display = "block";
+//        }
 
     } catch (error) {
         console.error("Lỗi tải chi tiết:", error);
