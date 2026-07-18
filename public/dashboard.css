@@ -236,13 +236,13 @@ tr:hover { background-color: #f1f1f1; }
 
 /* Ô chứa ảnh */
 .profile-image {
-    width: 160px;
-    height: 220px;
-    border: 1px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f9f9f9;
+    width: 150px;
+    height: 200px; 
+    border: none !important; /* Xóa bỏ đường viền mờ cũ gây lộ vùng trắng */
+    border-radius: 8px; /* Bo tròn các góc */
+    overflow: hidden; /* Lệnh cực kỳ quan trọng: Giấu đi mọi phần ảnh tràn ra ngoài khung */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Phủ bóng đổ cho toàn bộ khung */
+    flex-shrink: 0; /* Đảm bảo khung không bị bóp méo khi nằm ngang với chữ trên màn hình máy tính */
 }
 .no-image-text { color: #888; font-size: 14px; }
 
@@ -287,9 +287,8 @@ tr:hover { background-color: #f1f1f1; }
     width: 100%;
     height: 100%; /* Tự động tính toán chiều cao theo tỷ lệ gốc của ảnh */
     max-height: 280px;
-    object-fit: cover; /* Cắt cúp gọn gàng nếu ảnh sai tỷ lệ */
-    border-radius: 8px; /* Bo tròn nhẹ các góc cho đẹp */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Thêm bóng đổ nhẹ giúp ảnh nổi bật */
+    object-fit: cover; /* Thuật toán ma thuật: Tự động zoom lên và cắt (crop) 2 bên rìa phần thừa của ảnh vuông để vừa khít khung chữ nhật mà KHÔNG làm méo chi tiết ảnh */
+    display: block;
 }
 
 /* --- Phần Footer --- */
@@ -385,6 +384,7 @@ tr:hover { background-color: #f1f1f1; }
 
     .profile-image {
         width: 180px; /* Khống chế kích thước ảnh nhỏ lại trên mobile */
+        height: 240px; /* Tăng chiều cao tương ứng với chiều rộng để giữ nguyên tỷ lệ 3:4 */
         margin-bottom: 15px;
     }
 
