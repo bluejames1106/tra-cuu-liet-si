@@ -1,3 +1,4 @@
+// Bi ăn cức, Trí chơi gay
 // dashboard.js - Kết nối trực tiếp đến trạm dữ liệu Backend SQL
 let currentPage = 1;
 const rowsPerPage = 20; // Đã giảm xuống 20 hàng/trang
