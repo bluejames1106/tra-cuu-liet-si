@@ -285,7 +285,7 @@ tr:hover { background-color: #f1f1f1; }
 /* Tùy chỉnh cho thẻ img bên trong khung ảnh */
 .profile-image img {
     width: 100%;
-    height: auto; /* Tự động tính toán chiều cao theo tỷ lệ gốc của ảnh */
+    height: 100%; /* Tự động tính toán chiều cao theo tỷ lệ gốc của ảnh */
     max-height: 280px;
     object-fit: cover; /* Cắt cúp gọn gàng nếu ảnh sai tỷ lệ */
     border-radius: 8px; /* Bo tròn nhẹ các góc cho đẹp */
