@@ -117,8 +117,8 @@ app.get('/api/martyrs', async (req, res) => {
         if (birth) { sql += ` AND nam_sinh ILIKE $${paramIndex}`; values.push(`%${birth}%`); paramIndex++; }
         if (home) { sql += ` AND que_quan ILIKE $${paramIndex}`; values.push(`%${home}%`); paramIndex++; }
         if (area) { sql += ` AND hang ILIKE $${paramIndex}`; values.push(`%${area}%`); paramIndex++; }
-        if (row) { sql += ` AND so_mo ILIKE $${paramIndex}`; values.push(`%${row}%`); paramIndex++; }
-        if (grave) { sql += ` AND so_tt ILIKE $${paramIndex}`; values.push(`%${grave}%`); paramIndex++; }
+        if (row) { sql += ` AND hang ILIKE $${paramIndex}`; values.push(`%${row}%`); paramIndex++; }
+        if (grave) { sql += ` AND so_mo ILIKE $${paramIndex}`; values.push(`%${grave}%`); paramIndex++; }
         
         sql += " ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST";
         
