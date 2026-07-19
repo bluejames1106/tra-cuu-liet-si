@@ -92,7 +92,7 @@ async function dongBoToanBoDuLieu() {
                         cols[4] || "", // $5: nam_hy_sinh (Lấy cột HY SINH)
                         cols[5] || "", // $6: don_vi (Lấy cột ĐƠN VỊ)
                         "",            // $7: noi_hy_sinh (Sheet không có, bắt buộc để chuỗi rỗng)
-                        boardIndex.toString(), // $8: board (Tự động điền số Bảng dựa theo vòng lặp Sheet)
+                        cols[10] || "",// $8: board 
                         cols[6] || "", // $9: "row" (Lấy cột HÀNG - cột số 7 trên Sheets)
                         cols[7] || "", // $10: col (Lấy cột CỘT - cột số 8 trên Sheets)
                         cols[8] || ""  // $11: tieu_su (Lấy cột TIỂU SỬ - cột số 9 trên Sheets)
