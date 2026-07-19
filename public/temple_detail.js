@@ -33,9 +33,71 @@ window.onload = async function() {
         document.getElementById("p_row").innerText = data.row || "Trống";
         document.getElementById("p_col").innerText = data.col || "Trống";
         document.getElementById("p_bio").innerText = data.bio || "Đang cập nhật thông tin tiểu sử...";
+// --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT TỰ ĐỘNG ---
+        const targetRow = parseInt(data.row);
+        const targetCol = parseInt(data.col);
+        const gridElement = document.getElementById("shrine_grid");
+        const statusElement = document.getElementById("map_status");
 
+        // Kiểm tra xem dữ liệu hàng và cột có hợp lệ không
+        if (isNaN(targetRow) || isNaN(targetCol) || targetRow <= 0 || targetCol <= 0) {
+            statusElement.innerText = "⚠️ Chưa cập nhật thông tin Hàng/Cột cụ thể trong cơ sở dữ liệu để vẽ sơ đồ.";
+            gridElement.style.display = "none";
+        } else {
+            statusElement.innerHTML = `Vị trí hiển thị: <strong>Bảng ${data.board || 1} — Hàng ${targetRow}, Cột ${targetCol}</strong> (Ô màu hồng nổi bật).`;
+            
+            // Xác định kích thước bảng mô phỏng (Tự động mở rộng kích thước nếu hàng/cột lớn hơn 10)
+            const maxRows = Math.max(8, targetRow + 2); 
+            const maxCols = Math.max(12, targetCol + 2);
+
+            let tableHTML = "";
+
+            // 1. Tạo hàng tiêu đề trên cùng để đánh số Cột (Cột 1, Cột 2...)
+            tableHTML += "<tr><td class='shrine-header-cell'>H\\C</td>";
+            for (let c = 1; c <= maxCols; c++) {
+                tableHTML += `<td class='shrine-header-cell'>${c}</td>`;
+            }
+            tableHTML += "</tr>";
+
+            // 2. Vòng lặp dựng các hàng và ô lưới
+            for (let r = 1; r <= maxRows; r++) {
+                tableHTML += "<tr>";
+                // Ô đầu tiên của mỗi hàng dùng để ghi số Hàng (Hàng 1, Hàng 2...)
+                tableHTML += `<td class='shrine-header-cell'>${r}</td>`;
+                
+                for (let c = 1; c <= maxCols; c++) {
+                    let cellClass = "shrine-cell";
+                    let cellContent = ""; // Mặc định để trống không ghi tên theo yêu cầu của bạn
+
+                    // Nếu nằm trên cùng hàng hoặc cùng cột mục tiêu -> Thêm class highlight đường dẫn
+                    if (r === targetRow || c === targetCol) {
+                        cellClass += " shrine-highlight-line";
+                    }
+
+                    // Nếu là ô giao điểm chính xác của Hàng và Cột
+                    if (r === targetRow && c === targetCol) {
+                        cellClass += " shrine-cell-active";
+                        cellContent = "ĐÂY"; // Ghi ký hiệu hoặc để trống tùy bạn, ở đây ghi chữ ngắn để dễ nhìn
+                    }
+
+                    tableHTML += `<td class="${cellClass}">${cellContent}</td>`;
+                }
+                tableHTML += "</tr>";
+            }
+
+            // Xuất HTML ra màn hình giao diện
+            gridElement.innerHTML = tableHTML;
+            gridElement.style.display = "table";
+        }
+
+
+        
     } catch (error) {
         console.error("Lỗi tải trang chi tiết đền thờ:", error);
         alert("Đã xảy ra lỗi khi tải dữ liệu chi tiết từ cơ sở dữ liệu đám mây!");
     }
 };
+
+
+
+
