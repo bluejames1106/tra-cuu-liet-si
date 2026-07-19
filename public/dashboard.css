@@ -13,24 +13,23 @@ body {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    height: 110px; /* Ép mỏng chiều cao khung ảnh nền */
     display: flex;
-    flex-direction: column; /* Xếp dọc ảnh chữ và title */
-    justify-content: center;
-    border-bottom: none; /* Bỏ viền cũ */
+    align-items: center; /* Căn giữa slogan theo chiều dọc */
+    border-bottom: none;
 }
 
 .header-container {
     max-width: 1300px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 20px 10px 20px;
+    padding: 0 20px;
 }
 
 .header-slogan {
-    max-height: 100px; /* Giới hạn chiều cao để ảnh không bị tràn */
-    width: auto;
-    margin-left: 50px; /* Đẩy chữ dịch sang phải một chút cho giống tỷ lệ ảnh gốc */
-    filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.5)); /* Thêm chút viền bóng trắng sáng mờ để chữ tách bạch khỏi nền xanh */
+    max-height: 75px; /* Thu nhỏ ảnh chữ Slogan cho cân đối với khung 110px */
+    margin-left: 50px;
+    filter: drop-shadow(2px 2px 4px rgba(255, 255, 255, 0.5));
 }
 
 .top-header h1 {
@@ -48,21 +47,20 @@ body {
 }
 
 .title-banner {
-    background-color: rgba(0, 114, 198, 0.75); /* Đổ một lớp nền xanh hơi trong suốt để chữ nổi bật trên hình */
+    background-color: #0069b4; /* Xanh đậm hơn thanh menu một chút theo hình mẫu */
     color: #ffffff;
     text-align: center;
-    padding: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    padding: 10px; /* Giảm độ dày của dải tiêu đề */
+    font-size: 18px;
+    font-weight: normal; /* Bỏ in đậm để trông nhẹ nhàng hơn */
     margin-bottom: 0;
-    border-top: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Đường phân cách mờ với thanh menu */
 }
 
 /* --- GIAO DIỆN THANH CHỌN MỤC (TABS) --- */
 /* --- THANH MENU ĐIỀU HƯỚNG MỚI --- */
 .main-nav {
-    background-color: #0090d2; /* Xanh da trời chuẩn theo web xã */
+    background-color: #0090d2;
     width: 100%;
     border-bottom: 3px solid #007bb5;
     margin-bottom: 20px;
@@ -94,12 +92,12 @@ body {
 }
 
 .tab-btn {
-    padding: 15px 30px;
+    padding: 10px 20px; /* Giảm padding trên/dưới để thu hẹp chiều cao thanh chọn mục */
     color: white;
     text-decoration: none;
     font-weight: bold;
-    font-size: 15px;
-    border-right: 1px solid rgba(255, 255, 255, 0.2); /* Vạch kẻ ngăn cách */
+    font-size: 14px; /* Giảm nhẹ cỡ chữ */
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
     transition: background 0.3s;
 }
 
@@ -109,7 +107,7 @@ body {
 
 /* Menu đang được chọn (Màu xanh thẫm hơn) */
 .tab-btn.active {
-    background-color: #4582b5; 
+    background-color: #5b87b9; /* Màu nền xám xanh trầm cho mục đang chọn */
     color: white;
 }
 
@@ -340,18 +338,19 @@ tr:hover { background-color: #f1f1f1; }
     
     /* 1. Thu nhỏ Header & Ảnh Slogan để không bị tràn màn hình */
     .top-header {
-        height: 110px; /* Giảm chiều cao header */
+        height: 85px; 
     }
+    
     .header-slogan {
+        max-height: 50px;
         margin: 0 auto;
         display: block;
-        max-height: 55px;
     }
 
     /* Thu nhỏ title */
     .title-banner {
-        font-size: 15px;
-        padding: 10px;
+        font-size: 14px;
+        padding: 8px 10px;
     }
 
     /* 2. Sắp xếp lại khu vực Tìm kiếm */
@@ -368,26 +367,26 @@ tr:hover { background-color: #f1f1f1; }
 
     /* --- HIỂN THỊ NÚT 3 GẠCH TRÊN MOBILE --- */
     .menu-toggle {
-        display: block; 
+        display: block;
+        padding: 4px 15px; /* Thu gọn nút bấm */
     }
 
     /* Đóng/Mở Menu */
     .nav-links {
-        display: none; /* Mặc định giấu menu đi */
-        flex-direction: column; /* Xếp các nút thành hàng dọc */
+        display: none;
+        flex-direction: column;
         width: 100%;
         background-color: #007bb5;
     }
 
-    /* Class show này sẽ được JS gọi ra khi bấm nút */
     .nav-links.show {
         display: flex;
     }
 
     .tab-btn {
+        padding: 12px 20px; /* Trên điện thoại cần để nút đủ to để ngón tay dễ chạm */
         border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.1); /* Vạch kẻ ngang */
-        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
         text-align: left;
     }
     
