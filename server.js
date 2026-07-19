@@ -10,10 +10,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 1. CẤU HÌNH KẾT NỐI POSTGRESQL (Tự động nhận biến DATABASE_URL từ Render)
+// 1. CẤU HÌNH KẾT NỐI POSTGRESQL
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false } // Cần thiết cho các kết nối cloud database
+    ssl: { rejectUnauthorized: false }
 });
 
 // Hàm hỗ trợ đọc file CSV từ Google Sheets
@@ -33,11 +33,11 @@ function parseCSVRow(rowText) {
     return result;
 }
 
-// 2. HÀM TỰ ĐỘNG ĐỒNG BỘ DỮ LIỆU TỪ 2 LINK GOOGLE SHEETS
+// 2. HÀM TỰ ĐỘNG ĐỒNG BỘ DỮ LIỆU TỪ NHIỀU LINK GOOGLE SHEETS
 async function dongBoToanBoDuLieu() {
     const client = await pool.connect();
     try {
-        // --- ĐỒNG BỘ DANH SÁCH MỘ PHẦN ---
+        // --- ĐỒNG BỘ DANH SÁCH MỘ PHẦN (1 Link) ---
         await client.query('DROP TABLE IF EXISTS danh_sach_liet_si CASCADE;');
         await client.query(`
             CREATE TABLE danh_sach_liet_si (
@@ -57,7 +57,7 @@ async function dongBoToanBoDuLieu() {
             }
         }
 
-        // --- ĐỒNG BỘ DANH SÁCH ĐỀN THỜ ---
+        // --- ĐỒNG BỘ DANH SÁCH ĐỀN THỜ (Gom 8 Links) ---
         await client.query('DROP TABLE IF EXISTS danh_sach_trong_den CASCADE;');
         await client.query(`
             CREATE TABLE danh_sach_trong_den (
@@ -66,18 +66,38 @@ async function dongBoToanBoDuLieu() {
                 board TEXT, row TEXT, col TEXT, tieu_su TEXT
             );
         `);
-        const resTrong = await fetch('https://docs.google.com/spreadsheets/d/18KqyTFMNp_1hm4hQObfc7b8HtmsLLD6jkievCvYkF4U/export?format=csv&gid=164496961');
-        if (resTrong.ok) {
-            const csvTrong = await resTrong.text();
-            const rowsTrong = csvTrong.split(/\r?\n/).slice(1);
-            for (let row of rowsTrong) {
-                if (!row || row.trim() === '') continue;
-                const cols = parseCSVRow(row);
-                const values = Array.from({ length: 11 }, (_, i) => cols[i] || "");
-                await client.query(`INSERT INTO danh_sach_trong_den VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, values);
+        
+        // Danh sách các GID của các bảng trong đền (Bao gồm bảng cũ và 7 bảng mới)
+        const shrineGids = [
+            '164496961',  // Bảng cũ ban đầu
+            '2030583334', // Bảng mới 1
+            '520701169',  // Bảng mới 2
+            '1389251803', // Bảng mới 3
+            '2097412071', // Bảng mới 4
+            '256922227',  // Bảng mới 5
+            '1621758412', // Bảng mới 6
+            '1896480892'  // Bảng mới 7
+        ];
+
+        // Vòng lặp tải toàn bộ các bảng và gộp chung vào 1 database
+        for (const gid of shrineGids) {
+            const url = `https://docs.google.com/spreadsheets/d/18KqyTFMNp_1hm4hQObfc7b8HtmsLLD6jkievCvYkF4U/export?format=csv&gid=${gid}`;
+            const resTrong = await fetch(url);
+            
+            if (resTrong.ok) {
+                const csvTrong = await resTrong.text();
+                // Bỏ qua dòng tiêu đề đầu tiên của mỗi bảng (slice(1))
+                const rowsTrong = csvTrong.split(/\r?\n/).slice(1); 
+                for (let row of rowsTrong) {
+                    if (!row || row.trim() === '') continue;
+                    const cols = parseCSVRow(row);
+                    const values = Array.from({ length: 11 }, (_, i) => cols[i] || "");
+                    await client.query(`INSERT INTO danh_sach_trong_den VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, values);
+                }
             }
         }
-        console.log("🔄 Đã đồng bộ thành công cả 2 danh sách từ Google Sheets vào SQL!");
+        
+        console.log("🔄 Đã đồng bộ thành công tất cả các danh sách từ Google Sheets vào SQL!");
     } catch (err) {
         console.error("❌ Lỗi đồng bộ:", err.message);
     } finally {
@@ -100,7 +120,6 @@ app.get('/api/martyrs', async (req, res) => {
         if (row) { sql += ` AND so_mo ILIKE $${paramIndex}`; values.push(`%${row}%`); paramIndex++; }
         if (grave) { sql += ` AND so_tt ILIKE $${paramIndex}`; values.push(`%${grave}%`); paramIndex++; }
         
-        // Đã áp dụng câu lệnh chống sập hệ thống khi ô Số Thứ Tự bị trống
         sql += " ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST";
         
         const result = await pool.query(sql, values);
@@ -128,7 +147,6 @@ app.get('/api/shrine-martyrs', async (req, res) => {
         if (home) { sql += ` AND que_quan ILIKE $${paramIndex}`; values.push(`%${home}%`); paramIndex++; }
         if (deathYear) { sql += ` AND nam_hy_sinh ILIKE $${paramIndex}`; values.push(`%${deathYear}%`); paramIndex++; }
         
-        // Đã áp dụng câu lệnh chống sập hệ thống khi ô Số Thứ Tự bị trống
         sql += " ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST";
         
         const result = await pool.query(sql, values);
