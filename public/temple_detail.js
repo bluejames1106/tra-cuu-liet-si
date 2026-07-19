@@ -27,13 +27,17 @@ window.onload = async function() {
         document.getElementById("p_birth").innerText = data.birth || "";
         document.getElementById("p_home").innerText = data.home || "";
         document.getElementById("p_death").innerText = data.deathYear || "";
-        document.getElementById("p_deathPlace").innerText = data.deathPlace || "";
+        
+        // --- ĐÃ SỬA: Thay thế Nơi hy sinh thành Danh hiệu ---
+        document.getElementById("p_title").innerText = data.danh_hieu || data.title || ""; 
+        
         document.getElementById("p_unit").innerText = data.unit || "";
         document.getElementById("p_board").innerText = data.board || "";
         document.getElementById("p_row").innerText = data.row || "";
         document.getElementById("p_col").innerText = data.col || "";
         document.getElementById("p_bio").innerText = data.bio || "Tiểu sử trích ngang";
-// --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT TỰ ĐỘNG ---
+
+        // --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT TỰ ĐỘNG ---
         const targetRow = parseInt(data.row);
         const targetCol = parseInt(data.col);
         const gridElement = document.getElementById("shrine_grid");
@@ -90,14 +94,8 @@ window.onload = async function() {
             gridElement.style.display = "table";
         }
 
-
-        
     } catch (error) {
         console.error("Lỗi tải trang chi tiết đền thờ:", error);
         alert("Đã xảy ra lỗi khi tải dữ liệu chi tiết từ cơ sở dữ liệu đám mây!");
     }
 };
-
-
-
-
