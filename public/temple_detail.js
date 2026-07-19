@@ -24,15 +24,15 @@ window.onload = async function() {
 
         // Đổ toàn bộ dữ liệu trả về vào các thẻ ID HTML tương ứng trên trang chi tiết
         document.getElementById("p_name").innerText = data.name || "Liệt sĩ";
-        document.getElementById("p_birth").innerText = data.birth || "Trống";
-        document.getElementById("p_home").innerText = data.home || "Trống";
-        document.getElementById("p_death").innerText = data.deathYear || "Trống";
-        document.getElementById("p_deathPlace").innerText = data.deathPlace || "Trống";
-        document.getElementById("p_unit").innerText = data.unit || "Trống";
-        document.getElementById("p_board").innerText = data.board || "Trống";
-        document.getElementById("p_row").innerText = data.row || "Trống";
-        document.getElementById("p_col").innerText = data.col || "Trống";
-        document.getElementById("p_bio").innerText = data.bio || "Đang cập nhật thông tin tiểu sử...";
+        document.getElementById("p_birth").innerText = data.birth || "";
+        document.getElementById("p_home").innerText = data.home || "";
+        document.getElementById("p_death").innerText = data.deathYear || "";
+        document.getElementById("p_deathPlace").innerText = data.deathPlace || "";
+        document.getElementById("p_unit").innerText = data.unit || "";
+        document.getElementById("p_board").innerText = data.board || "";
+        document.getElementById("p_row").innerText = data.row || "";
+        document.getElementById("p_col").innerText = data.col || "";
+        document.getElementById("p_bio").innerText = data.bio || "Tiểu sử trích ngang";
 // --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT TỰ ĐỘNG ---
         const targetRow = parseInt(data.row);
         const targetCol = parseInt(data.col);
