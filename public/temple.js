@@ -60,12 +60,12 @@ async function renderTable() {
             let row = `<tr>
                 <td>${stt}</td>
                 <td><a href="temple_detail.html?id=${item.id}" class="martyr-link">${item.name}</a></td>
-                <td>${item.birth || "Trống"}</td>
-                <td>${item.home || "Trống"}</td>
-                <td>${item.deathYear || "Trống"}</td>
-                <td>${item.board || "Trống"}</td>
-                <td>${item.row || "Trống"}</td>
-                <td>${item.col || "Trống"}</td>
+                <td>${item.birth || ""}</td>
+                <td>${item.home || ""}</td>
+                <td>${item.deathYear || ""}</td>
+                <td>${item.board || ""}</td>
+                <td>${item.row || ""}</td>
+                <td>${item.col || ""}</td>
             </tr>`;
             tableBody.innerHTML += row;
         });
