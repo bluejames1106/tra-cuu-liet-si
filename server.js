@@ -72,6 +72,8 @@ async function dongBoToanBoDuLieu() {
         
         const shrineGids = ['164496961', '2030583334', '520701169', '1389251803', '2097412071', '256922227', '1621758412', '1896480892'];
 
+        let boardIndex = 1; // Biến tự động đếm số thứ tự Bảng (Bảng 1, Bảng 2...)
+
         for (const gid of shrineGids) {
             const resTrong = await fetch(`https://docs.google.com/spreadsheets/d/18KqyTFMNp_1hm4hQObfc7b8HtmsLLD6jkievCvYkF4U/export?format=csv&gid=${gid}`);
             if (resTrong.ok) {
@@ -80,10 +82,30 @@ async function dongBoToanBoDuLieu() {
                 for (let row of rowsTrong) {
                     if (!row || row.trim() === '') continue;
                     const cols = parseCSVRow(row);
-                    const values = Array.from({ length: 11 }, (_, i) => cols[i] || "");
-                    await client.query(`INSERT INTO danh_sach_trong_den (so_tt, ho_va_ten, nam_sinh, que_quan, nam_hy_sinh, don_vi, noi_hy_sinh, board, "row", col, tieu_su) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, values);
+                    
+                    // BẢNG ÁNH XẠ CHÍNH XÁC CỘT SHEETS -> SQL
+                    const values = [
+                        cols[0] || "", // $1: so_tt (Lấy cột STT)
+                        cols[1] || "", // $2: ho_va_ten (Lấy cột HỌ VÀ TÊN)
+                        cols[2] || "", // $3: nam_sinh (Lấy cột NĂM SINH)
+                        cols[3] || "", // $4: que_quan (Lấy cột QUÊ QUÁN)
+                        cols[4] || "", // $5: nam_hy_sinh (Lấy cột HY SINH)
+                        cols[5] || "", // $6: don_vi (Lấy cột ĐƠN VỊ)
+                        "",            // $7: noi_hy_sinh (Sheet không có, bắt buộc để chuỗi rỗng)
+                        boardIndex.toString(), // $8: board (Tự động điền số Bảng dựa theo vòng lặp Sheet)
+                        cols[6] || "", // $9: "row" (Lấy cột HÀNG - cột số 7 trên Sheets)
+                        cols[7] || "", // $10: col (Lấy cột CỘT - cột số 8 trên Sheets)
+                        cols[8] || ""  // $11: tieu_su (Lấy cột TIỂU SỬ - cột số 9 trên Sheets)
+                    ];
+
+                    await client.query(`
+                        INSERT INTO danh_sach_trong_den 
+                        (so_tt, ho_va_ten, nam_sinh, que_quan, nam_hy_sinh, don_vi, noi_hy_sinh, board, "row", col, tieu_su) 
+                        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                    `, values);
                 }
             }
+            boardIndex++; // Chuyển sang GID tiếp theo thì tự động tăng lên Bảng 2, Bảng 3...
         }
         console.log("✅ Đã hoàn tất đồng bộ toàn bộ dữ liệu vào cơ sở dữ liệu!");
     } catch (err) {
