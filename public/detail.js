@@ -53,3 +53,8 @@ window.onload = async function() {
         alert("Lỗi khi tải chi tiết dữ liệu từ cơ sở dữ liệu SQL!");
     }
 };
+// Hàm Đóng/Mở Menu trên điện thoại
+function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    nav.classList.toggle("show");
+}
