@@ -99,3 +99,9 @@ window.onload = async function() {
         alert("Đã xảy ra lỗi khi tải dữ liệu chi tiết từ cơ sở dữ liệu đám mây!");
     }
 };
+
+// Hàm Đóng/Mở Menu trên điện thoại
+function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    nav.classList.toggle("show");
+}
