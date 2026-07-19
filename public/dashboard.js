@@ -114,3 +114,9 @@ function clearSearch() {
     currentPage = 1;
     searchData();
 }
+
+// Hàm Đóng/Mở Menu trên điện thoại
+function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    nav.classList.toggle("show");
+}
