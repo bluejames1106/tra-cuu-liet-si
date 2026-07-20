@@ -36,7 +36,7 @@ function parseCSVRow(rowText) {
 async function dongBoToanBoDuLieu() {
     const client = await pool.connect();
     try {
-        console.log("⏳ Đang bắt đầu tải dữ liệu từ 9 bảng Google Sheets...");
+        console.log("⏳ Đang bắt đầu tải dữ liệu từ Google Sheets...");
         
         // --- ĐỒNG BỘ MỘ PHẦN ---
         await client.query('DROP TABLE IF EXISTS danh_sach_liet_si CASCADE;');
@@ -65,14 +65,14 @@ async function dongBoToanBoDuLieu() {
             CREATE TABLE danh_sach_trong_den (
                 id_db SERIAL PRIMARY KEY,
                 so_tt TEXT, ho_va_ten TEXT, nam_sinh TEXT, que_quan TEXT, 
-                nam_hy_sinh TEXT, don_vi TEXT, noi_hy_sinh TEXT, 
+                nam_hy_sinh TEXT, don_vi TEXT, danh_hieu TEXT, 
                 board TEXT, "row" TEXT, col TEXT, tieu_su TEXT
             );
         `);
         
         const shrineGids = ['164496961', '2030583334', '520701169', '1389251803', '2097412071', '256922227', '1621758412', '1896480892'];
 
-        let boardIndex = 1; // Biến tự động đếm số thứ tự Bảng (Bảng 1, Bảng 2...)
+        let boardIndex = 1; 
 
         for (const gid of shrineGids) {
             const resTrong = await fetch(`https://docs.google.com/spreadsheets/d/18KqyTFMNp_1hm4hQObfc7b8HtmsLLD6jkievCvYkF4U/export?format=csv&gid=${gid}`);
@@ -83,29 +83,29 @@ async function dongBoToanBoDuLieu() {
                     if (!row || row.trim() === '') continue;
                     const cols = parseCSVRow(row);
                     
-                    // BẢNG ÁNH XẠ CHÍNH XÁC CỘT SHEETS -> SQL
+                    // BẢNG ÁNH XẠ CHÍNH XÁC CỘT SHEETS -> SQL (Cập nhật theo ảnh thực tế)
                     const values = [
-                        cols[0] || "", // $1: so_tt (Lấy cột STT)
-                        cols[1] || "", // $2: ho_va_ten (Lấy cột HỌ VÀ TÊN)
-                        cols[2] || "", // $3: nam_sinh (Lấy cột NĂM SINH)
-                        cols[3] || "", // $4: que_quan (Lấy cột QUÊ QUÁN)
-                        cols[4] || "", // $5: nam_hy_sinh (Lấy cột HY SINH)
-                        cols[5] || "", // $6: don_vi (Lấy cột ĐƠN VỊ)
-                        "",            // $7: noi_hy_sinh (Sheet không có, bắt buộc để chuỗi rỗng)
-                        cols[10] || "",// $8: board 
-                        cols[6] || "", // $9: "row" (Lấy cột HÀNG - cột số 7 trên Sheets)
-                        cols[7] || "", // $10: col (Lấy cột CỘT - cột số 8 trên Sheets)
-                        cols[8] || ""  // $11: tieu_su (Lấy cột TIỂU SỬ - cột số 9 trên Sheets)
+                        cols[0] || "",  // $1: so_tt
+                        cols[1] || "",  // $2: ho_va_ten
+                        cols[2] || "",  // $3: nam_sinh
+                        cols[3] || "",  // $4: que_quan
+                        cols[4] || "",  // $5: nam_hy_sinh
+                        cols[5] || "",  // $6: don_vi
+                        cols[9] || "",  // $7: danh_hieu (Lấy cột số 10 trên Sheets - index 9)
+                        cols[10] || "", // $8: board (Lấy cột số 11 trên Sheets - index 10)
+                        cols[6] || "",  // $9: "row" (Lấy cột HÀNG - index 6)
+                        cols[7] || "",  // $10: col (Lấy cột CỘT - index 7)
+                        cols[8] || ""   // $11: tieu_su (Lấy cột TIỂU SỬ - index 8)
                     ];
 
                     await client.query(`
                         INSERT INTO danh_sach_trong_den 
-                        (so_tt, ho_va_ten, nam_sinh, que_quan, nam_hy_sinh, don_vi, noi_hy_sinh, board, "row", col, tieu_su) 
+                        (so_tt, ho_va_ten, nam_sinh, que_quan, nam_hy_sinh, don_vi, danh_hieu, board, "row", col, tieu_su) 
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
                     `, values);
                 }
             }
-            boardIndex++; // Chuyển sang GID tiếp theo thì tự động tăng lên Bảng 2, Bảng 3...
+            boardIndex++; 
         }
         console.log("✅ Đã hoàn tất đồng bộ toàn bộ dữ liệu vào cơ sở dữ liệu!");
     } catch (err) {
@@ -115,7 +115,7 @@ async function dongBoToanBoDuLieu() {
     }
 }
 
-// 3. API TRA CỨU: MỘ PHẦN (Đã bỏ hàm đồng bộ liên tục)
+// 3. API TRA CỨU: MỘ PHẦN
 app.get('/api/martyrs', async (req, res) => {
     try {
         const { name, birth, home, area, row, grave } = req.query;
@@ -135,7 +135,7 @@ app.get('/api/martyrs', async (req, res) => {
     } catch (err) { res.status(500).json({ error: "Lỗi Server API Mộ phần" }); }
 });
 
-// 4. API TRA CỨU: TRONG ĐỀN THỜ (Đã bỏ hàm đồng bộ liên tục)
+// 4. API TRA CỨU: TRONG ĐỀN THỜ
 app.get('/api/shrine-martyrs', async (req, res) => {
     try {
         const { name, birth, home, deathYear } = req.query;
@@ -166,13 +166,12 @@ app.get('/api/martyrs/:id', async (req, res) => {
     } catch (err) { res.status(500).json({ error: "Lỗi chi tiết mộ phần" }); }
 });
 
-// 6. API CHI TIẾT: ĐỀN THỜ (Đã sửa đổi ánh xạ cột chính xác)
-// 6. API CHI TIẾT: ĐỀN THỜ
+// 6. API CHI TIẾT: ĐỀN THỜ (Đã cập nhật để xuất "danh_hieu" thay vì "noi_hy_sinh")
 app.get('/api/shrine-martyrs/:id', async (req, res) => {
     try {
         const result = await pool.query(`
             SELECT id_db AS id, ho_va_ten AS name, nam_sinh AS birth, que_quan AS home, 
-                   nam_hy_sinh AS "deathYear", don_vi AS unit, noi_hy_sinh AS "deathPlace", 
+                   nam_hy_sinh AS "deathYear", don_vi AS unit, danh_hieu AS "title", 
                    board, "row", col, tieu_su AS bio 
             FROM danh_sach_trong_den WHERE id_db = $1
         `, [req.params.id]);
@@ -181,23 +180,19 @@ app.get('/api/shrine-martyrs/:id', async (req, res) => {
     } catch (err) { res.status(500).json({ error: "Lỗi chi tiết đền thờ" }); }
 });
 
-// API LÀM MỚI DỮ LIỆU THỦ CÔNG (Gọi API này khi bạn cập nhật Google Sheets)
+// API LÀM MỚI DỮ LIỆU THỦ CÔNG
 app.get('/api/sync-data', async (req, res) => {
     await dongBoToanBoDuLieu();
     res.json({ message: "Đã cập nhật dữ liệu mới nhất từ Google Sheets!" });
 });
-
 
 // =======================================================================
 // API WEBHOOK: TỰ ĐỘNG NHẬN TÍN HIỆU ĐỒNG BỘ TỪ GOOGLE SHEETS
 // =======================================================================
 app.post('/api/sync-webhook', async (req, res) => {
     try {
-        console.log("🔄 Bắt đầu nhận tín hiệu đồng bộ từ Google Sheets qua Webhook...");
-
-        // Gọi ngay hàm đồng bộ xịn sò có sẵn của bạn!
+        console.log("🔄 Bắt đầu nhận tín hiệu đồng bộ qua Webhook...");
         await dongBoToanBoDuLieu();
-
         console.log("✅ Webhook đã chạy xong lệnh đồng bộ!");
         res.status(200).json({ message: "Đồng bộ thành công!" });
     } catch (err) {
@@ -206,9 +201,8 @@ app.post('/api/sync-webhook', async (req, res) => {
     }
 });
 
-
-// 7. KHỞI ĐỘNG SERVER VÀ CHỈ ĐỒNG BỘ 1 LẦN DUY NHẤT LÚC NÀY
+// 7. KHỞI ĐỘNG SERVER
 app.listen(port, async () => { 
     console.log(`🚀 Server đang chạy mượt mà tại cổng ${port}`); 
-    await dongBoToanBoDuLieu(); // Chỉ chạy đúng 1 lần khi server mới khởi động
+    await dongBoToanBoDuLieu(); 
 });
