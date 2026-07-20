@@ -408,12 +408,26 @@ tr:hover { background-color: #f1f1f1; }
     }
     
     table {
-        min-width: 700px; /* Ép bảng luôn giữ độ rộng tối thiểu 700px để chữ không bị bóp nghẹt */
+        min-width: 500px; /* Giảm mạnh độ rộng tối thiểu xuống để hạn chế tối đa việc phải vuốt ngang */
     }
     
     th, td {
-        padding: 8px 4px; /* Thu gọn khoảng cách đệm trong ô */
-        font-size: 13px; /* Giảm nhẹ 1 cỡ chữ để hiển thị được nhiều từ hơn */
+        padding: 6px 3px; /* Vắt kiệt khoảng trắng thừa xung quanh chữ */
+        font-size: 12px; /* Hạ cỡ chữ xuống để hiển thị được nhiều nội dung hơn trên 1 dòng */
+        line-height: 1.3;
+        word-wrap: break-word; /* Cho phép chữ tự động rớt xuống dòng nếu quá dài */
+    }
+
+    /* Ép nhỏ riêng cột STT (Cột số 1) để tiết kiệm triệt để không gian ngang */
+    th:first-child, td:first-child {
+        width: 30px;
+        min-width: 30px;
+        padding: 4px 1px;
+    }
+    
+    /* (Tùy chọn) Ép nhỏ các cột Năm sinh / Năm hy sinh nếu cần */
+    th:nth-child(3), td:nth-child(3) {
+        width: 60px;
     }
 
     /* 3. Tối ưu trang Tiểu sử (Đẩy ảnh lên trên, trải dài chữ xuống dưới) */
