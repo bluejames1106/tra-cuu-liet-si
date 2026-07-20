@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Cổng tra cứu thông tin Liệt sĩ Xã Phước An</title>
+    <!-- Nhúng CSS tổng của hệ thống (Header, Footer, Menu) -->
+    <link rel="stylesheet" href="dashboard.css">
+    <!-- Nhúng CSS riêng của Trang chủ -->
+    <link rel="stylesheet" href="trangchu.css">
+</head>
+<body>
+    <!-- 1. Phần Header -->
+    <header class="top-header" id="banner-header">
+        <div class="header-container">
+            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+        </div>
+    </header>
+
+    <!-- 2. Phần Tiêu đề -->
+    <div class="title-banner">
+        Cổng tra cứu thông tin các Anh hùng Liệt sĩ địa bàn xã Phước An
+    </div>
+
+    <!-- 3. Thanh Chọn Mục Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+            <div class="nav-links" id="navLinks">
+                <a href="trangchu.html" class="tab-btn active">TRANG CHỦ</a>
+                <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
+                <a href="temple.html" class="tab-btn">TRA CỨU TÊN TRONG ĐỀN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 4. Khu vực nội dung trung tâm -->
+    <div class="container">   
+        
+        <!-- Lời ngỏ tri ân -->
+        <div class="home-intro">
+            <h2>Đời Đời Nhớ Ơn Các Anh Hùng Liệt Sĩ</h2>
+            <p>Nhằm phát huy đạo lý "Uống nước nhớ nguồn" và ứng dụng công nghệ vào công tác Đền ơn đáp nghĩa, Cổng thông tin được xây dựng để giúp các cơ quan, thân nhân, đồng đội và nhân dân dễ dàng tra cứu, tìm kiếm vị trí phần mộ tại Nghĩa trang Liệt sĩ cũng như thông tin tâm linh được khắc trên Bảng vàng tại Đền thờ Liệt sĩ xã Phước An.</p>
+        </div>
+
+        <!-- Các khối chức năng điều hướng nhanh -->
+        <div class="home-cards">
+            <a href="index.html" class="action-card">
+                <span class="action-icon">🪦</span>
+                <h3>Tra Cứu Mộ Phần</h3>
+                <p>Hỗ trợ tìm kiếm thông tin chi tiết và vị trí thực tế (Khu/Lô, Hàng, Số mộ) của các Anh hùng Liệt sĩ đang an nghỉ tại Nghĩa trang.</p>
+            </a>
+
+            <a href="temple.html" class="action-card">
+                <span class="action-icon">🏛️</span>
+                <h3>Tra Cứu Trong Đền</h3>
+                <p>Hỗ trợ tìm kiếm vị trí trang trọng của tên các Anh hùng Liệt sĩ được khắc trên hệ thống Bia và Bảng vàng vinh danh bên trong Đền thờ.</p>
+            </a>
+        </div>
+
+        <!-- Khung Thông báo & Kênh Hỗ trợ -->
+        <div class="home-notice">
+            <h4>📌 Thông báo & Hỗ trợ thông tin</h4>
+            <p>• <strong>Đóng góp và đính chính dữ liệu:</strong> Trong quá trình tra cứu, nếu quý thân nhân phát hiện thông tin chưa chính xác hoặc còn thiếu sót, xin vui lòng liên hệ với Cán bộ phụ trách Thương binh - Xã hội địa phương để phối hợp cập nhật kịp thời vào hệ thống cốt lõi.</p>
+            <p>• <strong>Địa điểm tiếp nhận:</strong> Bộ phận Tiếp nhận và Trả kết quả - UBND Xã Phước An (Ấp Bà Trường, xã Phước An, Thành phố Đồng Nai).</p>
+        </div>
+
+    </div>
+
+    <!-- 5. Phần Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
+            <p>Chịu trách nhiệm nội dung: Ông Đặng Quốc Vũ - Phó Chủ tịch UBND xã Phước An</p>
+            <p>Địa chỉ: Ấp Bà Trường, xã Phước An, Thành phố Đồng Nai</p>
+            <p>Cơ quan thường trực Website: Phòng Văn hóa - Xã hội xã Phước An</p>
+            <p><em>(Mọi hình thức trích dẫn thông tin từ website này để đăng tải yêu cầu ghi rõ nguồn: https://phuocan.dongnai.gov.vn)</em></p>
+            <p>Website: https://phuocan.dongnai.gov.vn &nbsp;&nbsp;|&nbsp;&nbsp; Email: ubnd-pha@dongnai.gov.vn</p>
+        </div>
+    </footer>
+
+    <!-- Nhúng file xử lý logic Javascript riêng của Trang chủ -->
+    <script src="trangchu.js"></script>
+</body>
+</html>
