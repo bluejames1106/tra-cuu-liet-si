@@ -52,7 +52,7 @@ body {
     text-align: center;
     padding: 10px; /* Giảm độ dày của dải tiêu đề */
     font-size: 18px;
-    font-weight: normal; /* Bỏ in đậm để trông nhẹ nhàng hơn */
+    font-weight: bold;
     margin-bottom: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Đường phân cách mờ với thanh menu */
 }
