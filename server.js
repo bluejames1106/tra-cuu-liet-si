@@ -2,7 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const path = require('path');
-
+//tri oc chó
 const app = express();
 const port = process.env.PORT || 3000;
 
