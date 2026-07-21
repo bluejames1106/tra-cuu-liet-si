@@ -74,6 +74,8 @@ async function dongBoToanBoDuLieu() {
                 for (let row of rowsTrong) {
                     if (!row || row.trim() === '') continue;
                     const cols = parseCSVRow(row);
+                    // 🛑 THÊM ĐOẠN NÀY ĐỂ LỌC BỎ DÒNG TRỐNG (Cột 1 là Họ và tên)
+                    if (!cols[1] || cols[1].trim() === '') continue;
                     const values = [
                         cols[0] || "", cols[1] || "", cols[2] || "", cols[3] || "",  
                         cols[4] || "", cols[5] || "", cols[9] || "", cols[10] || "", 
