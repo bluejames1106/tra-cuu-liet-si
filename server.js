@@ -2,7 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const path = require('path');
-//tri oc chó
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -15,6 +15,18 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
+
+// HÀM CHUYỂN ĐỔI CHUỖI TIẾNG VIỆT SANG KHÔNG DẤU VÀ VIẾT THƯỜNG TRONG SQL
+const unaccentSQL = (column) => `translate(LOWER(${column}), 'áàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyyd')`;
+
+// HÀM XỬ LÝ TỪ KHÓA TÌM KIẾM LINH HOẠT (HỖ TRỢ TÌM THIẾU CHỮ / TỪ LÓT)
+function formatSearchPattern(text) {
+    if (!text || !text.trim()) return '';
+    // Tách các từ theo khoảng trắng và nối lại bằng dấu %
+    // Ví dụ: "Nguyễn An" -> "%nguyen%an%"
+    const words = text.trim().split(/\s+/);
+    return `%${words.join('%')}%`;
+}
 
 function parseCSVRow(rowText) {
     const result = [];
@@ -54,6 +66,7 @@ async function dongBoToanBoDuLieu() {
             for (let row of rowsNgoai) {
                 if (!row || row.trim() === '') continue;
                 const cols = parseCSVRow(row);
+                if (!cols[1] || cols[1].trim() === '') continue; // Bỏ qua dòng trống tên
                 const values = Array.from({ length: 10 }, (_, i) => cols[i] || "");
                 await client.query(`INSERT INTO danh_sach_liet_si (so_tt, ho_va_ten, nam_sinh, que_quan, hang, so_mo, don_vi, ngay_hy_sinh, noi_hy_sinh, tieu_su) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, values);
             }
@@ -82,8 +95,8 @@ async function dongBoToanBoDuLieu() {
                 for (let row of rowsTrong) {
                     if (!row || row.trim() === '') continue;
                     const cols = parseCSVRow(row);
+                    if (!cols[1] || cols[1].trim() === '') continue; // Bỏ qua dòng trống tên
                     
-                    // BẢNG ÁNH XẠ CHÍNH XÁC CỘT SHEETS -> SQL (Cập nhật theo ảnh thực tế)
                     const values = [
                         cols[0] || "",  // $1: so_tt
                         cols[1] || "",  // $2: ho_va_ten
@@ -91,11 +104,11 @@ async function dongBoToanBoDuLieu() {
                         cols[3] || "",  // $4: que_quan
                         cols[4] || "",  // $5: nam_hy_sinh
                         cols[5] || "",  // $6: don_vi
-                        cols[9] || "",  // $7: danh_hieu (Lấy cột số 10 trên Sheets - index 9)
-                        cols[10] || "", // $8: board (Lấy cột số 11 trên Sheets - index 10)
-                        cols[6] || "",  // $9: "row" (Lấy cột HÀNG - index 6)
-                        cols[7] || "",  // $10: col (Lấy cột CỘT - index 7)
-                        cols[8] || ""   // $11: tieu_su (Lấy cột TIỂU SỬ - index 8)
+                        cols[9] || "",  // $7: danh_hieu
+                        cols[10] || "", // $8: board
+                        cols[6] || "",  // $9: "row"
+                        cols[7] || "",  // $10: col
+                        cols[8] || ""   // $11: tieu_su
                     ];
 
                     await client.query(`
@@ -115,27 +128,55 @@ async function dongBoToanBoDuLieu() {
     }
 }
 
-// 3. API TRA CỨU: MỘ PHẦN
+// 3. API TRA CỨU: MỘ PHẦN (ĐÃ NÂNG CẤP LỌC KHÔNG DẤU & TÌM THIẾU CHỮ)
 app.get('/api/martyrs', async (req, res) => {
     try {
         const { name, birth, home, area, row, grave } = req.query;
         let sql = `SELECT id_db AS id, so_tt, ho_va_ten, nam_sinh, que_quan, hang, so_mo FROM danh_sach_liet_si WHERE 1=1`;
-        const values = []; let paramIndex = 1;
+        const values = []; 
+        let paramIndex = 1;
         
-        if (name) { sql += ` AND ho_va_ten ILIKE $${paramIndex}`; values.push(`%${name}%`); paramIndex++; }
-        if (birth) { sql += ` AND nam_sinh ILIKE $${paramIndex}`; values.push(`%${birth}%`); paramIndex++; }
-        if (home) { sql += ` AND que_quan ILIKE $${paramIndex}`; values.push(`%${home}%`); paramIndex++; }
-        if (area) { sql += ` AND hang ILIKE $${paramIndex}`; values.push(`%${area}%`); paramIndex++; }
-        if (row) { sql += ` AND hang ILIKE $${paramIndex}`; values.push(`%${row}%`); paramIndex++; }
-        if (grave) { sql += ` AND so_mo ILIKE $${paramIndex}`; values.push(`%${grave}%`); paramIndex++; }
+        if (name && name.trim()) { 
+            sql += ` AND ${unaccentSQL('ho_va_ten')} LIKE ${unaccentSQL(`$${paramIndex}`)}`; 
+            values.push(formatSearchPattern(name)); 
+            paramIndex++; 
+        }
+        if (birth && birth.trim()) { 
+            sql += ` AND nam_sinh ILIKE $${paramIndex}`; 
+            values.push(`%${birth.trim()}%`); 
+            paramIndex++; 
+        }
+        if (home && home.trim()) { 
+            sql += ` AND ${unaccentSQL('que_quan')} LIKE ${unaccentSQL(`$${paramIndex}`)}`; 
+            values.push(formatSearchPattern(home)); 
+            paramIndex++; 
+        }
+        if (area && area.trim()) { 
+            sql += ` AND ${unaccentSQL('hang')} LIKE ${unaccentSQL(`$${paramIndex}`)}`; 
+            values.push(formatSearchPattern(area)); 
+            paramIndex++; 
+        }
+        if (row && row.trim()) { 
+            sql += ` AND ${unaccentSQL('hang')} LIKE ${unaccentSQL(`$${paramIndex}`)}`; 
+            values.push(formatSearchPattern(row)); 
+            paramIndex++; 
+        }
+        if (grave && grave.trim()) { 
+            sql += ` AND so_mo ILIKE $${paramIndex}`; 
+            values.push(`%${grave.trim()}%`); 
+            paramIndex++; 
+        }
         
         sql += " ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST";
         const result = await pool.query(sql, values);
         res.json(result.rows);
-    } catch (err) { res.status(500).json({ error: "Lỗi Server API Mộ phần" }); }
+    } catch (err) { 
+        console.error(err);
+        res.status(500).json({ error: "Lỗi Server API Mộ phần" }); 
+    }
 });
 
-// 4. API TRA CỨU: TRONG ĐỀN THỜ
+// 4. API TRA CỨU: TRONG ĐỀN THỜ (ĐÃ NÂNG CẤP LỌC KHÔNG DẤU & TÌM THIẾU CHỮ)
 app.get('/api/shrine-martyrs', async (req, res) => {
     try {
         const { name, birth, home, deathYear } = req.query;
@@ -144,20 +185,40 @@ app.get('/api/shrine-martyrs', async (req, res) => {
                    nam_hy_sinh AS "deathYear", board, "row", col 
             FROM danh_sach_trong_den WHERE 1=1
         `;
-        const values = []; let paramIndex = 1;
+        const values = []; 
+        let paramIndex = 1;
         
-        if (name) { sql += ` AND ho_va_ten ILIKE $${paramIndex}`; values.push(`%${name}%`); paramIndex++; }
-        if (birth) { sql += ` AND nam_sinh ILIKE $${paramIndex}`; values.push(`%${birth}%`); paramIndex++; }
-        if (home) { sql += ` AND que_quan ILIKE $${paramIndex}`; values.push(`%${home}%`); paramIndex++; }
-        if (deathYear) { sql += ` AND nam_hy_sinh ILIKE $${paramIndex}`; values.push(`%${deathYear}%`); paramIndex++; }
+        if (name && name.trim()) { 
+            sql += ` AND ${unaccentSQL('ho_va_ten')} LIKE ${unaccentSQL(`$${paramIndex}`)}`; 
+            values.push(formatSearchPattern(name)); 
+            paramIndex++; 
+        }
+        if (birth && birth.trim()) { 
+            sql += ` AND nam_sinh ILIKE $${paramIndex}`; 
+            values.push(`%${birth.trim()}%`); 
+            paramIndex++; 
+        }
+        if (home && home.trim()) { 
+            sql += ` AND ${unaccentSQL('que_quan')} LIKE ${unaccentSQL(`$${paramIndex}`)}`; 
+            values.push(formatSearchPattern(home)); 
+            paramIndex++; 
+        }
+        if (deathYear && deathYear.trim()) { 
+            sql += ` AND nam_hy_sinh ILIKE $${paramIndex}`; 
+            values.push(`%${deathYear.trim()}%`); 
+            paramIndex++; 
+        }
         
         sql += " ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST";
         const result = await pool.query(sql, values);
         res.json(result.rows);
-    } catch (err) { res.status(500).json({ error: "Lỗi Server API Đền Thờ" }); }
+    } catch (err) { 
+        console.error(err);
+        res.status(500).json({ error: "Lỗi Server API Đền Thờ" }); 
+    }
 });
 
-// 5. API CHI TIẾT: MỘ PHẦN
+// 5. API CHI TIẾT: MỘ PHẦN (GIỮ NGUYÊN HOẠT ĐỘNG TỐT)
 app.get('/api/martyrs/:id', async (req, res) => {
     try {
         const result = await pool.query(`SELECT * FROM danh_sach_liet_si WHERE id_db = $1`, [req.params.id]);
@@ -166,7 +227,7 @@ app.get('/api/martyrs/:id', async (req, res) => {
     } catch (err) { res.status(500).json({ error: "Lỗi chi tiết mộ phần" }); }
 });
 
-// 6. API CHI TIẾT: ĐỀN THỜ (Đã cập nhật để xuất "danh_hieu" thay vì "noi_hy_sinh")
+// 6. API CHI TIẾT: ĐỀN THỜ (GIỮ NGUYÊN HOẠT ĐỘNG TỐT)
 app.get('/api/shrine-martyrs/:id', async (req, res) => {
     try {
         const result = await pool.query(`
@@ -186,9 +247,7 @@ app.get('/api/sync-data', async (req, res) => {
     res.json({ message: "Đã cập nhật dữ liệu mới nhất từ Google Sheets!" });
 });
 
-// =======================================================================
-// API WEBHOOK: TỰ ĐỘNG NHẬN TÍN HIỆU ĐỒNG BỘ TỪ GOOGLE SHEETS
-// =======================================================================
+// WEBHOOK TỰ ĐỘNG NHẬN TÍN HIỆU ĐỒNG BỘ
 app.post('/api/sync-webhook', async (req, res) => {
     try {
         console.log("🔄 Bắt đầu nhận tín hiệu đồng bộ qua Webhook...");
