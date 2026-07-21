@@ -119,7 +119,7 @@
 
     </div>
 
-    <!-- 5. Phần Footer -->
+   <!-- 5. Phần Footer -->
     <footer class="site-footer">
         <div class="footer-content">
             <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
@@ -136,18 +136,16 @@
         🟢 Online: <span id="online-count" style="font-weight: bold; color: #d9534f; background: #fdf2f2; padding: 2px 6px; border-radius: 10px; border: 1px solid #f5c6cb;">...</span>
     </div>
 
+    <!-- Nhúng thư viện Socket.io phía Client -->
+    <script src="/socket.io/socket.io.js"></script>
     <script>
-    async function laySoNguoiOnline() {
-        try {
-            const response = await fetch('/api/online-count');
-            const data = await response.json();
-            document.getElementById('online-count').innerText = data.online;
-        } catch (error) {
-            console.error("Lỗi lấy số người online:", error);
-        }
-    }
-    laySoNguoiOnline();
-    setInterval(laySoNguoiOnline, 5000);
+        // Kết nối tới server qua Socket.io
+        const socket = io();
+        
+        // Lắng nghe sự kiện cập nhật số người online từ server gửi xuống để thay đổi giao diện theo thời gian thực
+        socket.on('update-online-count', function(count) {
+            document.getElementById('online-count').innerText = count;
+        });
     </script>
 
     <!-- Nhúng file xử lý logic Javascript riêng của Trang chủ -->
