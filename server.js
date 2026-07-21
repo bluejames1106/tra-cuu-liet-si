@@ -1,20 +1,71 @@
-const express = require('express');
-const { Pool } = require('pg');
-const cors = require('cors');
-const path = require('path');
+// Khai báo các thư viện cần thiết cho ứng dụng
+const express = require('express'); // Framework tạo server web
+const { Pool } = require('pg');   // Thư viện kết nối cơ sở dữ liệu PostgreSQL
+const cors = require('cors');     // Thư viện cho phép gọi API từ các tên miền khác nhau
+const path = require('path');     // Thư viện xử lý đường dẫn thư mục
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; // Lấy cổng chạy từ hệ thống hoặc mặc định là 3000
 
+// Cấu hình middleware cơ bản cho Express
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // Cho phép chạy file HTML tĩnh trong thư mục public
 
+// Khởi tạo kết nối đến cơ sở dữ liệu PostgreSQL trên Render thông qua biến môi trường
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
 
+// ==========================================
+// 1. QUẢN LÝ SỐ NGƯỜI ĐANG ONLINE (REAL-TIME)
+// ==========================================
+let activeUsers = new Set(); // Dùng Set để lưu danh sách IP không bị trùng lặp
+
+// API trả về số lượng người đang online hiện tại cho giao diện web
+app.get('/api/online-count', (req, res) => {
+    res.json({ online: activeUsers.size });
+});
+
+// Middleware tự động ghi nhận lượt truy cập của người dùng
+app.use((req, res, next) => {
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    activeUsers.add(ip);
+    
+    // Tự động xóa IP khỏi danh sách online sau 5 phút không tương tác
+    setTimeout(() => {
+        activeUsers.delete(ip);
+    }, 5 * 60 * 1000);
+    
+    next();
+});
+
+// ==========================================
+// 2. HỆ THỐNG CACHE BỘ NHỚ (GIẢM TẢI CHO DATABASE)
+// ==========================================
+const cacheMemory = new Map(); // Lưu trữ kết quả truy vấn tạm thời trong RAM của server
+const CACHE_TTL = 60 * 1000;   // Thời gian tồn tại của cache là 1 phút
+
+// Hàm lấy dữ liệu từ cache nếu có sẵn
+function getCache(key) {
+    const item = cacheMemory.get(key);
+    if (!item) return null;
+    if (Date.now() > item.expiry) { // Nếu hết hạn thì xóa cache cũ
+        cacheMemory.delete(key);
+        return null;
+    }
+    return item.data;
+}
+
+// Hàm lưu kết quả mới vào cache
+function setCache(key, data) {
+    cacheMemory.set(key, { data, expiry: Date.now() + CACHE_TTL });
+}
+
+// ==========================================
+// 3. HÀM XỬ LÝ DỮ LIỆU CSV (Đọc dòng dữ liệu thô từ Google Sheets)
+// ==========================================
 function parseCSVRow(rowText) {
     const result = [];
     let current = '';
@@ -31,9 +82,13 @@ function parseCSVRow(rowText) {
     return result;
 }
 
+// ==========================================
+// 4. HÀM ĐỒNG BỘ TOÀN BỘ DỮ LIỆU TỪ GOOGLE SHEETS VÀO POSTGRESQL
+// ==========================================
 async function dongBoToanBoDuLieu() {
     const client = await pool.connect();
     try {
+        // Đồng bộ danh sách liệt sĩ ngoài nghĩa trang
         await client.query('DROP TABLE IF EXISTS danh_sach_liet_si CASCADE;');
         await client.query(`
             CREATE TABLE danh_sach_liet_si (
@@ -49,11 +104,14 @@ async function dongBoToanBoDuLieu() {
             for (let row of rowsNgoai) {
                 if (!row || row.trim() === '') continue;
                 const cols = parseCSVRow(row);
+                // Bỏ qua dòng nếu cột Họ và tên bị trống
+                if (!cols[1] || cols[1].trim() === '') continue; 
                 const values = Array.from({ length: 10 }, (_, i) => cols[i] || "");
                 await client.query(`INSERT INTO danh_sach_liet_si (so_tt, ho_va_ten, nam_sinh, que_quan, hang, so_mo, don_vi, ngay_hy_sinh, noi_hy_sinh, tieu_su) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, values);
             }
         }
 
+        // Đồng bộ danh sách liệt sĩ trong đền từ các GID khác nhau
         await client.query('DROP TABLE IF EXISTS danh_sach_trong_den CASCADE;');
         await client.query(`
             CREATE TABLE danh_sach_trong_den (
@@ -74,8 +132,10 @@ async function dongBoToanBoDuLieu() {
                 for (let row of rowsTrong) {
                     if (!row || row.trim() === '') continue;
                     const cols = parseCSVRow(row);
-                    // 🛑 THÊM ĐOẠN NÀY ĐỂ LỌC BỎ DÒNG TRỐNG (Cột 1 là Họ và tên)
-                    if (!cols[1] || cols[1].trim() === '') continue;
+                    
+                    // 🛑 BỎ QUA CÁC DÒNG TRỐNG TÊN TRÊN GOOGLE SHEETS
+                    if (!cols[1] || cols[1].trim() === '') continue; 
+
                     const values = [
                         cols[0] || "", cols[1] || "", cols[2] || "", cols[3] || "",  
                         cols[4] || "", cols[5] || "", cols[9] || "", cols[10] || "", 
@@ -93,11 +153,15 @@ async function dongBoToanBoDuLieu() {
     } catch (err) {
         console.error("❌ Lỗi đồng bộ:", err.message);
     } finally {
-        client.release();
+        client.release(); // Giải phóng kết nối client sau khi xong
     }
 }
 
-// API DANH SÁCH NGOÀI NGHĨA TRANG (HỖ TRỢ TÌM KIẾM KHÔNG DẤU)
+// ==========================================
+// 5. CÁC API TRUY VẤN VÀ TÌM KIẾM DỮ LIỆU
+// ==========================================
+
+// API danh sách ngoài nghĩa trang (Hỗ trợ tìm kiếm không dấu + lọc bỏ dòng trống)
 app.get('/api/martyrs', async (req, res) => {
     try {
         let { name, home } = req.query;
@@ -108,6 +172,7 @@ app.get('/api/martyrs', async (req, res) => {
         let baseQuery = `
             SELECT id_db AS id, so_tt, ho_va_ten, nam_sinh, que_quan, hang, so_mo 
             FROM danh_sach_liet_si
+            WHERE ho_va_ten IS NOT NULL AND TRIM(ho_va_ten) != ''
         `;
 
         if (name && name.trim() !== '') {
@@ -122,7 +187,7 @@ app.get('/api/martyrs', async (req, res) => {
         }
 
         if (conditions.length > 0) {
-            baseQuery += ` WHERE ` + conditions.join(' AND ');
+            baseQuery += ` AND ` + conditions.join(' AND ');
         }
 
         baseQuery += ` ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST`;
@@ -135,18 +200,27 @@ app.get('/api/martyrs', async (req, res) => {
     }
 });
 
-// API DANH SÁCH TRONG ĐỀN (HỖ TRỢ TÌM KIẾM KHÔNG DẤU)
+// API danh sách trong đền (Hỗ trợ Cache RAM, tìm kiếm không dấu, lọc bỏ dòng trống)
 app.get('/api/shrine-martyrs', async (req, res) => {
     try {
+        // Kiểm tra xem query này đã được lưu trong bộ nhớ đệm (Cache) chưa
+        const cacheKey = JSON.stringify(req.query);
+        const cachedData = getCache(cacheKey);
+        if (cachedData) {
+            return res.json(cachedData); // Trả về ngay lập tức từ RAM, không cần hỏi Database
+        }
+
         let { name, birth, home, deathYear } = req.query;
         let conditions = [];
         let values = [];
         let paramIndex = 1;
 
+        // Câu lệnh SQL gốc kết hợp lọc bỏ ngay lập tức các dòng tên bị trống
         let baseQuery = `
             SELECT id_db AS id, ho_va_ten AS name, nam_sinh AS birth, que_quan AS home, 
                    nam_hy_sinh AS "deathYear", board, "row", col 
             FROM danh_sach_trong_den
+            WHERE ho_va_ten IS NOT NULL AND TRIM(ho_va_ten) != ''
         `;
 
         if (name && name.trim() !== '') {
@@ -171,12 +245,16 @@ app.get('/api/shrine-martyrs', async (req, res) => {
         }
 
         if (conditions.length > 0) {
-            baseQuery += ` WHERE ` + conditions.join(' AND ');
+            baseQuery += ` AND ` + conditions.join(' AND ');
         }
 
         baseQuery += ` ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST`;
 
         const result = await pool.query(baseQuery, values);
+        
+        // Lưu kết quả tìm kiếm vào Cache RAM để phục vụ các request trùng lặp tiếp theo
+        setCache(cacheKey, result.rows);
+        
         res.json(result.rows);
     } catch (err) { 
         console.error(err);
@@ -184,6 +262,7 @@ app.get('/api/shrine-martyrs', async (req, res) => {
     }
 });
 
+// API lấy chi tiết thông tin một liệt sĩ theo ID trong đền
 app.get('/api/shrine-martyrs/:id', async (req, res) => {
     try {
         const result = await pool.query(`
@@ -197,6 +276,7 @@ app.get('/api/shrine-martyrs/:id', async (req, res) => {
     } catch (err) { res.status(500).json({ error: "Lỗi chi tiết" }); }
 });
 
+// API đồng bộ dữ liệu thủ công qua Webhook hoặc đường dẫn web
 app.post('/api/sync-webhook', async (req, res) => {
     await dongBoToanBoDuLieu();
     res.json({ message: "Đồng bộ thành công!" });
@@ -207,7 +287,7 @@ app.get('/api/sync-data', async (req, res) => {
     res.json({ message: "Đã cập nhật dữ liệu!" });
 });
 
+// Khởi động server lắng nghe tại cổng đã định nghĩa
 app.listen(port, async () => { 
     console.log(`Server đang chạy tại cổng ${port}`); 
-    await dongBoToanBoDuLieu(); 
 });
