@@ -131,6 +131,25 @@
         </div>
     </footer>
 
+    <!-- KHUNG NHỎ HIỂN THỊ SỐ NGƯỜI ONLINE GÓC PHẢI DƯỚI CÙNG -->
+    <div style="position: fixed; bottom: 15px; right: 15px; background: rgba(255, 255, 255, 0.95); border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); font-size: 13px; color: #334155; z-index: 9999; display: flex; align-items: center; gap: 6px; font-family: Arial, sans-serif;">
+        🟢 Online: <span id="online-count" style="font-weight: bold; color: #d9534f; background: #fdf2f2; padding: 2px 6px; border-radius: 10px; border: 1px solid #f5c6cb;">...</span>
+    </div>
+
+    <script>
+    async function laySoNguoiOnline() {
+        try {
+            const response = await fetch('/api/online-count');
+            const data = await response.json();
+            document.getElementById('online-count').innerText = data.online;
+        } catch (error) {
+            console.error("Lỗi lấy số người online:", error);
+        }
+    }
+    laySoNguoiOnline();
+    setInterval(laySoNguoiOnline, 5000);
+    </script>
+
     <!-- Nhúng file xử lý logic Javascript riêng của Trang chủ -->
     <script src="trangchu.js"></script>
 </body>
