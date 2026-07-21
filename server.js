@@ -275,7 +275,34 @@ app.get('/api/shrine-martyrs/:id', async (req, res) => {
         res.json(result.rows[0]);
     } catch (err) { res.status(500).json({ error: "Lỗi chi tiết" }); }
 });
+// API LẤY CHI TIẾT 1 LIỆT SĨ NGOÀI NGHĨA TRANG (TRA CỨU MỘ PHẦN)
+app.get('/api/martyrs/:id', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT id_db AS id, 
+                   so_tt, 
+                   ho_va_ten, 
+                   nam_sinh, 
+                   que_quan, 
+                   hang, 
+                   so_mo, 
+                   don_vi, 
+                   ngay_hy_sinh, 
+                   noi_hy_sinh, 
+                   tieu_su 
+            FROM danh_sach_liet_si 
+            WHERE id_db = $1
+        `, [req.params.id]);
 
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "Không tìm thấy thông tin liệt sĩ" });
+        }
+        res.json(result.rows[0]);
+    } catch (err) { 
+        console.error("Lỗi lấy chi tiết mộ phần:", err);
+        res.status(500).json({ error: "Lỗi chi tiết server" }); 
+    }
+});
 // API đồng bộ dữ liệu thủ công qua Webhook hoặc đường dẫn web
 app.post('/api/sync-webhook', async (req, res) => {
     await dongBoToanBoDuLieu();
