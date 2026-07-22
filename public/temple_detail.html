@@ -7,30 +7,30 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <!-- 1. Phần Header (Chỉ còn chứa ảnh nền và chữ Slogan) -->
+    <!-- 1. Phần Header -->
     <header class="top-header" id="banner-header">
         <div class="header-container">
             <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
         </div>
     </header>
 
-    <!-- 2. Phần Tiêu đề (Nằm độc lập ở giữa) -->
+    <!-- 2. Phần Tiêu đề -->
     <div class="title-banner">
         CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
     </div>
 
-    <!-- 3. Thanh Chọn Mục (Nằm sát dưới tiêu đề) -->
+    <!-- 3. Thanh Chọn Mục -->
     <nav class="main-nav">
         <div class="nav-container">
             <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
             <div class="nav-links" id="navLinks">
-                <!-- Nhớ đổi class active cho đúng trang nhé -->
                 <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
                 <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
                 <a href="temple.html" class="tab-btn active">TRA CỨU TRONG ĐỀN</a>
             </div>
         </div>
     </nav>
+
     <div class="container">      
         <!-- Nút quay lại -->
         <div class="btn-back-container">
@@ -59,61 +59,180 @@
                 <p><strong>Tiểu sử:</strong> <span id="p_bio"></span></p>
             </div>
         </div>
+
+        <!-- KHU VỰC HIỂN THỊ SƠ ĐỒ VỊ TRÍ NÂNG CẤP -->
+        <div class="shrine-map-container">
+            <div class="shrine-map-header">
+                <h4>📌 SƠ ĐỒ VỊ TRÍ TÊN TRONG ĐỀN THỜ</h4>
+                <p id="map_status" class="map-status-text">Đang xác định vị trí trên sơ đồ...</p>
+            </div>
+
+            <!-- BẢNG CHÚ THÍCH (LEGEND) -->
+            <div class="shrine-legend">
+                <div class="legend-item">
+                    <span class="legend-box box-active">★</span>
+                    <span>Vị trí tên Liệt sĩ</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box box-line"></span>
+                    <span>Đường gióng Hàng/Cột</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-box box-normal"></span>
+                    <span>Vị trí khác</span>
+                </div>
+            </div>
+            
+            <!-- Bảng lưới ma trận -->
+            <div class="table-scroll-wrapper">
+                <table id="shrine_grid"></table>
+            </div>
+        </div>
     </div>
 
-<!-- Thêm bảng trực quan --!>
-    <!-- Khu vực hiển thị Sơ đồ Vị trí trực quan -->
-<div class="shrine-map-container" style="margin-top: 25px; padding: 20px; border: 1px dashed #ccc; background: #fdfdfd; border-radius: 6px;">
-    <h4 style="margin-top: 0; color: #b30000; border-bottom: 2px solid #b30000; padding-bottom: 5px;">
-        📌 SƠ ĐỒ VỊ TRÍ TÊN TRONG ĐỀN
-    </h4>
-    <p id="map_status" style="font-style: italic; color: #666;"></p>
-    
-    <!-- Bảng lưới ma trận sẽ được tự động sinh ở đây -->
-    <div style="overflow-x: auto; margin-top: 15px;">
-        <table id="shrine_grid" style="border-collapse: collapse; margin: 0 auto; display: none;"></table>
-    </div>
-</div>
+    <!-- CSS BẢNG VỊ TRÍ ĐƯỢC THIẾT KẾ LẠI -->
+    <style>
+        .shrine-map-container {
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid #e3e8ee;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
 
-<!-- CSS bổ sung để làm đẹp các ô lưới -->
-<style>
-    .shrine-cell {
-        width: 40px;
-        height: 35px;
-        border: 1px solid #d1d1d1;
-        text-align: center;
-        font-size: 11px;
-        color: #999;
-        background-color: #ffffff;
-    }
-    /* Tô màu xám nhạt cho toàn bộ hàng và cột được chọn để định vị đường đi */
-    .shrine-highlight-line {
-        background-color: #f2f2f2;
-        color: #666;
-    }
-    /* Ô giao nhau - Vị trí chính xác của liệt sĩ: Tô màu nổi bật và in đậm */
-    .shrine-cell-active {
-        background-color: #ffcccc !important;
-        border: 2px solid #cc0000 !important;
-        color: #cc0000 !important;
-        font-weight: bold;
-        box-shadow: 0 0 5px rgba(204, 0, 0, 0.4);
-    }
-    /* Dòng tiêu đề chỉ mục hàng/cột */
-    .shrine-header-cell {
-        background-color: #e6e6e6;
-        color: #333;
-        font-weight: bold;
-        width: 40px;
-        height: 30px;
-        border: 1px solid #b8b8b8;
-        text-align: center;
-    }
-</style>
+        .shrine-map-header h4 {
+            margin: 0 0 6px 0;
+            color: #b30000;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid #b30000;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
 
+        .map-status-text {
+            margin: 6px 0 12px 0;
+            font-size: 13.5px;
+            color: #4a5568;
+        }
 
-    
-    <!-- Footer đồng bộ với trang chủ -->
+        /* KHU VỰC CHÚ THÍCH */
+        .shrine-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 18px;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid #edf2f7;
+            font-size: 13px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #4a5568;
+        }
+
+        .legend-box {
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .box-active {
+            background: linear-gradient(135deg, #e63946, #b7094c);
+            color: #ffffff;
+            border-color: #990000;
+            font-weight: bold;
+        }
+
+        .box-line {
+            background-color: #fff5f5;
+            border-color: #fca5a5;
+        }
+
+        .box-normal {
+            background-color: #ffffff;
+        }
+
+        .table-scroll-wrapper {
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        /* BẢNG LƯỚI MA TRẬN */
+        #shrine_grid {
+            border-collapse: separate;
+            border-spacing: 4px; /* Tạo khoảng cách hiện đại giữa các ô */
+            margin: 0 auto;
+            display: none;
+        }
+
+        /* Tiêu đề Hàng / Cột */
+        .shrine-header-cell {
+            background-color: #7a0000;
+            color: #ffffff;
+            font-weight: 600;
+            width: 38px;
+            height: 32px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* Ô lưới bình thường */
+        .shrine-cell {
+            width: 38px;
+            height: 34px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 11px;
+            color: #cbd5e1;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        /* Đường gióng Hàng/Cột */
+        .shrine-highlight-line {
+            background-color: #fff1f2;
+            border-color: #fecdd3;
+            color: #9f1239;
+        }
+
+        /* Ô VỊ TRÍ CHÍNH XÁC (CÓ NỔI BẬT NHẤP NHÁY) */
+        .shrine-cell-active {
+            background: linear-gradient(135deg, #e63946, #b7094c) !important;
+            border: 1px solid #990000 !important;
+            color: #ffffff !important;
+            font-size: 15px;
+            border-radius: 5px;
+            animation: pulse-red 1.8s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(230, 57, 70, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
+            }
+        }
+    </style>
+
+    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-content">
             <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
