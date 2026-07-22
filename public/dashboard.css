@@ -924,3 +924,36 @@ tr:hover { background-color: #f1f1f1; }
         margin-top: 8px;
     }
 }
+/* =========================================================
+   FIX LỖI CĂN LỀ TRÁI LOGO UBND KHI THU NHỎ MÀN HÌNH (MOBILE)
+   ========================================================= */
+
+/* 1. Ép logo luôn căn lề trái ở mọi kích thước màn hình */
+.header-slogan {
+    align-self: flex-start !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    display: block !important;
+}
+
+/* 2. Ghi đè CSS mobile (không cho phép tự động căn giữa) */
+@media (max-width: 768px) {
+    .top-header .header-container {
+        align-items: flex-start !important; /* Giữ các phần tử con ưu tiên sát lề trái */
+    }
+
+    .header-slogan {
+        align-self: flex-start !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        max-width: 190px !important; /* Thu nhỏ logo nhẹ để đẹp mắt trên điện thoại */
+    }
+
+    /* Giữ riêng Khung chữ vàng CỔNG TRA CỨU luôn nằm chính giữa */
+    .header-title-box {
+        align-self: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 92% !important;
+    }
+}
