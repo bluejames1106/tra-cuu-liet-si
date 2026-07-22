@@ -979,3 +979,28 @@ tr:hover { background-color: #f1f1f1; }
         margin-bottom: 10px !important;  /* Tách biệt rõ ràng với ô chữ vàng bên dưới */
     }
 }
+/* =========================================================
+   ÉP KHUNG HEADER TỰ ĐỘNG GIÃN RỘNG (GHI ĐÈ MỌI CODE CŨ)
+   ========================================================= */
+
+.top-header {
+    height: auto !important;       /* Phá bỏ chiều cao cố định cũ */
+    min-height: 140px !important;  /* Chiều cao tối thiểu */
+}
+
+.top-header .header-container {
+    height: auto !important;
+    padding-top: 15px !important;    /* Đẩy logo xuống một chút */
+    padding-bottom: 25px !important; /* Kéo khung giãn dài xuống dưới */
+}
+
+/* Xử lý riêng cho màn hình điện thoại */
+@media (max-width: 768px) {
+    .top-header {
+        min-height: 120px !important;
+    }
+    .top-header .header-container {
+        padding-top: 12px !important; 
+        padding-bottom: 20px !important; 
+    }
+}
