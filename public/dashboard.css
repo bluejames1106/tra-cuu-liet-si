@@ -723,3 +723,33 @@ tr:hover { background-color: #f1f1f1; }
     display: inline-block;
     margin-left: 4px;
 }
+/* Thẻ nhãn tên bảng tra cứu trên mobile & desktop */
+.search-badge {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Kiểu 1: Màu đỏ đô viền vàng trang trọng (Cho Đền thờ) */
+.badge-red {
+    background: linear-gradient(135deg, #b30000, #800000);
+    color: #ffffff;
+    border-left: 5px solid #ffcc00;
+}
+
+/* Kiểu 2: Màu xanh dương chìm nổi bật (Cho Mộ phần) */
+.badge-blue {
+    background: linear-gradient(135deg, #004085, #002752);
+    color: #ffffff;
+    border-left: 5px solid #66b0ff;
+}
