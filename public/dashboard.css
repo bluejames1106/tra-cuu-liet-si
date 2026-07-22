@@ -456,41 +456,49 @@ tr:hover { background-color: #f1f1f1; }
     color: #333;
     font-size: 15px;
 }
-/* Tiêu đề lồng trong Header */
-.header-title-inside {
-    color: #ffeb3b;
-    font-size: 16px;
+/* --- 1. KHUNG TIÊU ĐỀ TRÊN BANNER (Màu vàng kim nổi bật) --- */
+.header-title-box {
+    color: #FFEB3B; /* Vàng sáng sang trọng */
+    font-size: 14.5px;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    margin: 8px 0 0 0;
-    padding: 0 10px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    margin-top: 8px;
+    padding: 6px 18px;
+    background: rgba(0, 25, 65, 0.75); /* Nền xanh sẫm mờ giúp làm nổi bật chữ */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 235, 59, 0.5); /* Viền vàng mảnh */
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px #000000;
+    display: inline-block;
 }
-/* Thanh chứa thời gian */
-/* Thanh xám nền tràn màn hình */
+
+/* --- 2. SỬA LỖI THANH THỜI GIAN (Gọn gàng 1 dòng duy nhất) --- */
 .datetime-bar {
-    background-color: #eeeeee;
+    background-color: #f0f0f0;
     border-bottom: 1px solid #e0e0e0;
-    padding: 8px 0;
-    font-size: 14px;
-    color: #222222;
+    padding: 7px 0;
+    font-size: 13.5px;
+    color: #333333;
     font-family: Arial, sans-serif;
 }
 
-/* Định vị chữ căn lề trái chuẩn theo khung container */
-.datetime-bar .container {
-    text-align: left;
-    font-weight: 500;
-}
-
-/* Khung căn lề chuẩn theo độ rộng của trang */
-.datetime-container {
-    max-width: 1200px; /* Điều chỉnh kích thước bằng với chiều rộng trang của bạn */
+/* Dùng datetime-inner thay vì container để không bị dính khung trắng */
+.datetime-inner {
+    max-width: 1200px; /* Căn thẳng hàng với lề khung dưới */
     margin: 0 auto;
     padding: 0 15px;
     text-align: left;
     font-weight: 500;
+}
+
+/* Tự động điều chỉnh kích thước trên điện thoại */
+@media (max-width: 768px) {
+    .header-title-box {
+        font-size: 11.5px;
+        padding: 5px 10px;
+        margin-top: 5px;
+    }
 }
 /* --- 9. CẤU HÌNH RESPONSIVE CHO ĐIỆN THOẠI (Màn hình dưới 768px) --- */
 @media screen and (max-width: 768px) {
