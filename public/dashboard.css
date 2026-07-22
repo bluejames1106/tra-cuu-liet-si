@@ -456,7 +456,17 @@ tr:hover { background-color: #f1f1f1; }
     color: #333;
     font-size: 15px;
 }
-
+/* Tiêu đề lồng trong Header */
+.header-title-inside {
+    color: #ffeb3b;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 8px 0 0 0;
+    padding: 0 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+}
 /* --- 9. CẤU HÌNH RESPONSIVE CHO ĐIỆN THOẠI (Màn hình dưới 768px) --- */
 @media screen and (max-width: 768px) {
     
