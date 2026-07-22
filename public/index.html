@@ -7,31 +7,36 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <!-- 1. Phần Header (Chỉ còn chứa ảnh nền và chữ Slogan) -->
-    <header class="top-header" id="banner-header">
-        <div class="header-container">
-            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+     <!-- 1. Phần Header (Tiêu đề có khung nền viền vàng nổi bật) -->
+<header class="top-header" id="banner-header">
+    <div class="header-container">
+        <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+        
+        <!-- TIÊU ĐỀ NỔI BẬT DẠNG THẺ SANG TRỌNG -->
+        <div class="header-title-box">
+            CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
         </div>
-    </header>
-
-    <!-- 2. Phần Tiêu đề (Nằm độc lập ở giữa) -->
-    <div class="title-banner">
-        CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
     </div>
+</header>
 
-    <!-- 3. Thanh Chọn Mục (Nằm sát dưới tiêu đề) -->
-    <nav class="main-nav">
-        <div class="nav-container">
-            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-            <div class="nav-links" id="navLinks">
-                <!-- Nhớ đổi class active cho đúng trang nhé -->
-                <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
-                <a href="index.html" class="tab-btn active">TRA CỨU MỘ PHẦN</a>
-                <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
-            </div>
+<!-- 2. Thanh Chọn Mục Navigation -->
+<nav class="main-nav">
+    <div class="nav-container">
+        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+        <div class="nav-links" id="navLinks">
+            <a href="trangchu.html" class="tab-btn active">TRANG CHỦ</a>
+            <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
+            <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
         </div>
-    </nav>
-    <div class="container">   
+    </div>
+</nav>
+
+<!-- 3. CHỈ GIỮ 1 THANH THỜI GIAN DUY NHẤT -->
+<div class="datetime-bar">
+    <div class="datetime-inner">
+        <span id="current-datetime">Đang tải thời gian...</span>
+    </div>
+</div>  
         <!-- Khu vực tìm kiếm -->
         <div class="search-section">
             <!-- 💥 CHÈN THẺ TÊN BẢNG TRA CỨU VÀO ĐÂY -->
