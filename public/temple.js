@@ -77,16 +77,79 @@ async function renderTable() {
     }
 }
 
+// HÀM PHÂN TRANG ĐÃ ĐƯỢC RÚT GỌN TỐI ƯU CHO MOBILE
 function renderPagination(totalRows) {
     const pageCount = Math.ceil(totalRows / rowsPerPage);
     const pagination = document.getElementById("pagination");
+    if (!pagination) return;
     pagination.innerHTML = "";
+
+    if (pageCount <= 1) return; // Nếu chỉ có 1 trang thì không cần hiện nút
+
+    // 1. NÚT TRANG TRƯỚC («)
+    if (currentPage > 1) {
+        let prevBtn = document.createElement("button");
+        prevBtn.innerText = "«";
+        prevBtn.onclick = () => { 
+            currentPage--; 
+            renderTable(); 
+            scrollToTable();
+        };
+        pagination.appendChild(prevBtn);
+    }
+
+    // 2. THUẬT TOÁN RÚT GỌN NÚT (DẠNG 1 ... 17 [18] 19 ... 27)
+    let pages = [];
+    const delta = 1; // Số lượng trang hiển thị xung quanh trang hiện tại
+
     for (let i = 1; i <= pageCount; i++) {
-        let btn = document.createElement("button");
-        btn.innerText = i;
-        if (i === currentPage) btn.className = "active";
-        btn.onclick = () => { currentPage = i; renderTable(); };
-        pagination.appendChild(btn);
+        if (i === 1 || i === pageCount || (i >= currentPage - delta && i <= currentPage + delta)) {
+            pages.push(i);
+        } else if (pages[pages.length - 1] !== '...') {
+            pages.push('...');
+        }
+    }
+
+    // 3. RENDER CÁC NÚT TRANG
+    pages.forEach(page => {
+        if (page === '...') {
+            let span = document.createElement("span");
+            span.innerText = "...";
+            span.style.padding = "0 6px";
+            span.style.alignSelf = "center";
+            span.style.color = "#888";
+            pagination.appendChild(span);
+        } else {
+            let btn = document.createElement("button");
+            btn.innerText = page;
+            if (page === currentPage) btn.className = "active";
+            btn.onclick = () => { 
+                currentPage = page; 
+                renderTable(); 
+                scrollToTable();
+            };
+            pagination.appendChild(btn);
+        }
+    });
+
+    // 4. NÚT TRANG SAU (»)
+    if (currentPage < pageCount) {
+        let nextBtn = document.createElement("button");
+        nextBtn.innerText = "»";
+        nextBtn.onclick = () => { 
+            currentPage++; 
+            renderTable(); 
+            scrollToTable();
+        };
+        pagination.appendChild(nextBtn);
+    }
+}
+
+// Hàm hỗ trợ cuộn màn hình lên đầu bảng khi bấm chuyển trang
+function scrollToTable() {
+    const tableHeader = document.querySelector("table") || document.getElementById("tableBody");
+    if (tableHeader) {
+        tableHeader.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 
@@ -102,5 +165,5 @@ function clearSearch() {
 // Hàm Đóng/Mở Menu trên điện thoại
 function toggleMenu() {
     const nav = document.getElementById("navLinks");
-    nav.classList.toggle("show");
+    if (nav) nav.classList.toggle("show");
 }
