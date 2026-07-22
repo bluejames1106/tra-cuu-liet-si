@@ -81,7 +81,7 @@ window.onload = async function() {
                     // Nếu là ô giao điểm chính xác của Hàng và Cột
                     if (r === targetRow && c === targetCol) {
                         cellClass += " shrine-cell-active";
-                        cellContent = "ĐÂY"; // Ghi ký hiệu hoặc để trống tùy bạn, ở đây ghi chữ ngắn để dễ nhìn
+                        cellContent = "★"; // Ghi ký hiệu hoặc để trống tùy bạn, ở đây ghi chữ ngắn để dễ nhìn
                     }
 
                     tableHTML += `<td class="${cellClass}">${cellContent}</td>`;
