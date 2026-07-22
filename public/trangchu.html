@@ -4,25 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ - Cổng tra cứu thông tin Liệt sĩ Xã Phước An</title>
-    <!-- Nhúng CSS tổng của hệ thống (Header, Footer, Menu) -->
+    <!-- Nhúng CSS tổng của hệ thống (Header, Footer, Menu, Thời gian) -->
     <link rel="stylesheet" href="dashboard.css">
-    <!-- Nhúng CSS riêng của Trang chủ -->
-    
 </head>
 <body>
-    <!-- 1. Phần Header -->
+    <!-- 1. Phần Header (Đã lồng dòng Tiêu đề cổng tra cứu vào bên trong) -->
     <header class="top-header" id="banner-header">
         <div class="header-container">
             <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+            <h1 class="header-title-inside">
+                CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
+            </h1>
         </div>
     </header>
 
-    <!-- 2. Phần Tiêu đề -->
-    <div class="title-banner">
-        CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
-    </div>
-
-    <!-- 3. Thanh Chọn Mục Navigation -->
+    <!-- 2. Thanh Chọn Mục Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
             <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
@@ -33,6 +29,13 @@
             </div>
         </div>
     </nav>
+
+    <!-- 3. Thanh Hiển thị Thời gian (Căn chuẩn lề thẳng hàng với khung nội dung) -->
+    <div class="datetime-bar">
+        <div class="container" style="background: transparent; box-shadow: none; padding-top: 0; padding-bottom: 0;">
+            <span id="current-datetime">Đang tải thời gian...</span>
+        </div>
+    </div>
     
 <!-- Thanh hiển thị thời gian -->
 <div class="datetime-bar">
