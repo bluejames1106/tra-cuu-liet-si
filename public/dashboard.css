@@ -796,3 +796,72 @@ tr:hover { background-color: #f1f1f1; }
     color: #ffffff;
     border-left: 5px solid #66b0ff;
 }
+/* =========================================================
+   1. CĂN GIỮA TIÊU ĐỀ NẰM TRÊN BANNER
+   ========================================================= */
+.top-header .header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* Căn giữa tất cả thành phần theo chiều ngang */
+    justify-content: center;  /* Căn giữa theo chiều dọc */
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.header-title-box {
+    color: #FFEB3B;           /* Chữ vàng kim nổi bật */
+    font-size: 14.5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    
+    /* Căn giữa ô bằng margin auto */
+    margin: 8px auto 0 auto;  
+    padding: 6px 18px;
+    
+    background: rgba(0, 25, 65, 0.75); /* Nền mờ giúp nổi bật chữ */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 235, 59, 0.5);
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px #000000;
+    display: inline-block;
+}
+
+/* =========================================================
+   2. XÓA KHOẢNG TRẮNG GIỮA THANH TAB VÀ THANH THỜI GIAN
+   ========================================================= */
+/* Bắt buộc thanh menu không đẩy lề dưới */
+.main-nav {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Bắt buộc thanh thời gian sát khít lên trên */
+.datetime-bar {
+    background-color: #e9ecef;
+    border-bottom: 1px solid #dee2e6;
+    padding: 6px 0;
+    font-size: 13.5px;
+    color: #333333;
+    font-family: Arial, sans-serif;
+    
+    margin-top: 0 !important;  /* Triệt tiêu hoàn toàn khoảng trống phía trên */
+}
+
+.datetime-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    text-align: left;
+    font-weight: 500;
+}
+
+/* Responsive cho màn hình điện thoại */
+@media (max-width: 768px) {
+    .header-title-box {
+        font-size: 11px;
+        padding: 5px 10px;
+        width: 90%; /* Dàn đều cân đối trên mobile */
+    }
+}
