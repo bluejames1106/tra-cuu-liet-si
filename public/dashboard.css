@@ -957,3 +957,25 @@ tr:hover { background-color: #f1f1f1; }
         width: 92% !important;
     }
 }
+/* =========================================================
+   FIX MỞ RỘNG HEADER & ĐẨY LOGO UBND KHỎI MÉP TRÊN (MOBILE)
+   ========================================================= */
+
+/* 1. Tăng khoảng trống đỉnh (top) và đáy (bottom) trên Desktop */
+.top-header .header-container {
+    padding-top: 18px !important;    /* Đẩy logo UBND rời khỏi mép trên cùng */
+    padding-bottom: 22px !important; /* Kéo rộng chiều cao Header xuống dưới */
+}
+
+/* 2. Áp dụng riêng cho màn hình Điện thoại (Mobile) */
+@media (max-width: 768px) {
+    .top-header .header-container {
+        padding-top: 15px !important;    /* Đủ khoảng trống thoáng mép trên */
+        padding-bottom: 20px !important; /* Đủ khoảng trống thoáng mép dưới */
+    }
+
+    .header-slogan {
+        margin-top: 2px !important;
+        margin-bottom: 10px !important;  /* Tách biệt rõ ràng với ô chữ vàng bên dưới */
+    }
+}
