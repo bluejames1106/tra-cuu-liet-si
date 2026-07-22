@@ -8,42 +8,36 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <!-- 1. Phần Header (Đã lồng dòng Tiêu đề cổng tra cứu vào bên trong) -->
-    <header class="top-header" id="banner-header">
-        <div class="header-container">
-            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
-            <h1 class="header-title-inside">
-                CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
-            </h1>
-        </div>
-    </header>
-
-    <!-- 2. Thanh Chọn Mục Navigation -->
-    <nav class="main-nav">
-        <div class="nav-container">
-            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-            <div class="nav-links" id="navLinks">
-                <a href="trangchu.html" class="tab-btn active">TRANG CHỦ</a>
-                <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
-                <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 3. Thanh Hiển thị Thời gian (Căn chuẩn lề thẳng hàng với khung nội dung) -->
-    <div class="datetime-bar">
-        <div class="container" style="background: transparent; box-shadow: none; padding-top: 0; padding-bottom: 0;">
-            <span id="current-datetime">Đang tải thời gian...</span>
+    <!-- 1. Phần Header (Tiêu đề có khung nền viền vàng nổi bật) -->
+<header class="top-header" id="banner-header">
+    <div class="header-container">
+        <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+        
+        <!-- TIÊU ĐỀ NỔI BẬT DẠNG THẺ SANG TRỌNG -->
+        <div class="header-title-box">
+            CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
         </div>
     </div>
-    
-<!-- Thanh hiển thị thời gian -->
+</header>
+
+<!-- 2. Thanh Chọn Mục Navigation -->
+<nav class="main-nav">
+    <div class="nav-container">
+        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+        <div class="nav-links" id="navLinks">
+            <a href="trangchu.html" class="tab-btn active">TRANG CHỦ</a>
+            <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
+            <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
+        </div>
+    </div>
+</nav>
+
+<!-- 3. CHỈ GIỮ 1 THANH THỜI GIAN DUY NHẤT -->
 <div class="datetime-bar">
-    <div class="container" style="background: transparent; box-shadow: none; padding-top: 0; padding-bottom: 0;">
+    <div class="datetime-inner">
         <span id="current-datetime">Đang tải thời gian...</span>
     </div>
 </div>
-    
     <!-- 4. Khu vực nội dung trung tâm -->
     <div class="container">   
         
