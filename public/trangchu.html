@@ -37,10 +37,17 @@
     <!-- 4. Khu vực nội dung trung tâm -->
     <div class="container">    
         
-        <!-- HÌNH ẢNH TOÀN CẢNH NGHĨA TRANG LIỆT SĨ (BÊN TRÁI) -->
+      <!-- HÌNH ẢNH TOÀN CẢNH NGHĨA TRANG LIỆT SĨ (BÊN TRÁI) -->
         <div class="main-news-box" style="margin-bottom: 20px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 4px; display: inline-block; width: 100%; box-sizing: border-box;">
-            <img src="/nghiatrang.jpg" alt="Toàn cảnh Nghĩa trang liệt sĩ xã Phước An" style="width: 420px; max-width: 100%; height: 260px; display: block; float: left; margin-right: 20px; margin-bottom: 10px; object-fit: cover; border-radius: 3px; border: 1px solid #ccc;" onerror="this.src='nghiatrang.jpg'">
+            <img id="nghiatrang-img" src="nghiatrang.jpg" alt="Toàn cảnh Nghĩa trang liệt sĩ xã Phước An" style="width: 420px; max-width: 100%; height: 260px; display: block; float: left; margin-right: 20px; margin-bottom: 10px; object-fit: cover; border-radius: 3px; border: 1px solid #ccc;">
             
+            <script>
+                // Tự động nhận diện nếu chạy trên GitHub Pages để trỏ đúng đường dẫn thư mục tra-cuu-liet-si
+                if (window.location.pathname.includes('/tra-cuu-liet-si/')) {
+                    document.getElementById('nghiatrang-img').src = '/tra-cuu-liet-si/nghiatrang.jpg';
+                }
+            </script>
+
             <div style="overflow: hidden;">
                 <h3 style="color: #004085; margin-top: 0; font-size: 18px; margin-bottom: 10px;">Giới thiệu tổng quan Nghĩa trang Liệt sĩ xã Phước An</h3>
                 <p style="color: #333; line-height: 1.6; text-align: justify; margin-bottom: 10px; font-size: 14px;">Khuôn viên Đền thờ và Nghĩa trang Liệt sĩ xã Phước An được xây dựng khang trang, sạch đẹp, là nơi an nghỉ của các Anh hùng Liệt sĩ đã anh dũng hy sinh vì độc lập, tự do của Tổ quốc. Công trình là biểu tượng cho đạo lý "Uống nước nhớ nguồn", giáo dục truyền thống cách mạng cho các thế hệ mai sau.</p>
