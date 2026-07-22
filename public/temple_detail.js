@@ -1,6 +1,6 @@
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id'); // Nhận ID khóa chính (số thứ tự gốc) truyền từ trang danh sách sang
+    const id = urlParams.get('id'); // Nhận ID từ trang danh sách
 
     if (!id) {
         alert("Không tìm thấy thông tin liệt sĩ!");
@@ -9,7 +9,7 @@ window.onload = async function() {
     }
 
     try {
-        // Gọi API chuyên biệt để lấy chi tiết thông tin liệt sĩ trong đền thờ từ SQL
+        // Gọi API lấy chi tiết từ SQL / Google Sheet
         const response = await fetch(`/api/shrine-martyrs/${id}`);
         
         if (response.status === 404) {
@@ -22,22 +22,24 @@ window.onload = async function() {
 
         const data = await response.json();
 
-        // Đổ toàn bộ dữ liệu trả về vào các thẻ ID HTML tương ứng trên trang chi tiết
+        // TRÍCH XUẤT CHÍNH XÁC GIÁ TRỊ "BẢNG" TỪ GOOGLE SHEET TÙY THEO CÁCH ĐẶT TÊN CỘT
+        const boardValue = data.board || data.bang || data.bia || data.b_so || "";
+
+        // Đổ dữ liệu trích xuất vào giao diện
         document.getElementById("p_name").innerText = data.name || "Liệt sĩ";
         document.getElementById("p_birth").innerText = data.birth || "";
         document.getElementById("p_home").innerText = data.home || "";
         document.getElementById("p_death").innerText = data.deathYear || "";
-        
-        // --- ĐÃ SỬA: Thay thế Nơi hy sinh thành Danh hiệu ---
         document.getElementById("p_title").innerText = data.danh_hieu || data.title || ""; 
-        
         document.getElementById("p_unit").innerText = data.unit || "";
-        document.getElementById("p_board").innerText = data.board || "";
+        
+        // Hiển thị thông tin Bảng thực tế từ Google Sheet (nếu trống sẽ ghi "Chưa cập nhật")
+        document.getElementById("p_board").innerText = boardValue || "Chưa cập nhật";
         document.getElementById("p_row").innerText = data.row || "";
         document.getElementById("p_col").innerText = data.col || "";
         document.getElementById("p_bio").innerText = data.bio || "Tiểu sử trích ngang";
 
-        // --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT TỰ ĐỘNG ---
+        // --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT ---
         const targetRow = parseInt(data.row);
         const targetCol = parseInt(data.col);
         const gridElement = document.getElementById("shrine_grid");
@@ -48,15 +50,17 @@ window.onload = async function() {
             statusElement.innerText = "⚠️ Chưa cập nhật thông tin Hàng/Cột cụ thể trong cơ sở dữ liệu để vẽ sơ đồ.";
             gridElement.style.display = "none";
         } else {
-            statusElement.innerHTML = `Vị trí hiển thị: <strong>Bảng ${data.board || 1} — Hàng ${targetRow}, Cột ${targetCol}</strong> (Ô màu hồng nổi bật).`;
+            // Hiển thị tên Bảng trích xuất thực tế (không tự động ép về Bảng 1 nữa)
+            const boardText = boardValue ? `Bảng ${boardValue}` : "Chưa xác định Bảng";
+            statusElement.innerHTML = `Vị trí hiển thị: <strong>${boardText} — Hàng ${targetRow}, Cột ${targetCol}</strong> (Biểu tượng ★ nổi bật).`;
             
-            // Xác định kích thước bảng mô phỏng (Tự động mở rộng kích thước nếu hàng/cột lớn hơn 10)
+            // Xác định kích thước bảng mô phỏng
             const maxRows = Math.max(8, targetRow + 2); 
             const maxCols = Math.max(12, targetCol + 2);
 
             let tableHTML = "";
 
-            // 1. Tạo hàng tiêu đề trên cùng để đánh số Cột (Cột 1, Cột 2...)
+            // 1. Tạo hàng tiêu đề trên cùng (Cột 1, Cột 2...)
             tableHTML += "<tr><td class='shrine-header-cell'>H\\C</td>";
             for (let c = 1; c <= maxCols; c++) {
                 tableHTML += `<td class='shrine-header-cell'>${c}</td>`;
@@ -66,22 +70,22 @@ window.onload = async function() {
             // 2. Vòng lặp dựng các hàng và ô lưới
             for (let r = 1; r <= maxRows; r++) {
                 tableHTML += "<tr>";
-                // Ô đầu tiên của mỗi hàng dùng để ghi số Hàng (Hàng 1, Hàng 2...)
+                // Ô đầu tiên ghi số Hàng
                 tableHTML += `<td class='shrine-header-cell'>${r}</td>`;
                 
                 for (let c = 1; c <= maxCols; c++) {
                     let cellClass = "shrine-cell";
-                    let cellContent = ""; // Mặc định để trống không ghi tên theo yêu cầu của bạn
+                    let cellContent = "";
 
-                    // Nếu nằm trên cùng hàng hoặc cùng cột mục tiêu -> Thêm class highlight đường dẫn
+                    // Highlight đường gióng Hàng / Cột
                     if (r === targetRow || c === targetCol) {
                         cellClass += " shrine-highlight-line";
                     }
 
-                    // Nếu là ô giao điểm chính xác của Hàng và Cột
+                    // Ô giao điểm chính xác (Vị trí Liệt sĩ)
                     if (r === targetRow && c === targetCol) {
                         cellClass += " shrine-cell-active";
-                        cellContent = "★"; // Ghi ký hiệu hoặc để trống tùy bạn, ở đây ghi chữ ngắn để dễ nhìn
+                        cellContent = "★"; // Đặt ngôi sao đỏ nổi bật
                     }
 
                     tableHTML += `<td class="${cellClass}">${cellContent}</td>`;
@@ -103,5 +107,5 @@ window.onload = async function() {
 // Hàm Đóng/Mở Menu trên điện thoại
 function toggleMenu() {
     const nav = document.getElementById("navLinks");
-    nav.classList.toggle("show");
+    if (nav) nav.classList.toggle("show");
 }
