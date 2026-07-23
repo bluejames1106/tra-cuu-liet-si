@@ -4,46 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ - Cổng tra cứu thông tin Liệt sĩ Xã Phước An</title>
-    <!-- Nhúng CSS tổng của hệ thống (Header, Footer, Menu) -->
+    <!-- 1. Nhúng CSS dùng chung hệ thống (Header, Menu, Footer) -->
     <link rel="stylesheet" href="dashboard.css">
-    <!-- Nhúng CSS riêng của Trang chủ -->
+    <!-- 2. Nhúng CSS riêng của Trang chủ (Chứa toàn bộ style nội dung bên dưới) -->
     <link rel="stylesheet" href="trangchu.css">
 </head>
 <body>
     <!-- 1. Phần Header -->
-<header class="top-header" id="banner-header">
-    <div class="header-container">
-        <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
-        
-        <div class="header-title-box">
-            CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
+    <header class="top-header" id="banner-header">
+        <div class="header-container">
+            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+            
+            <div class="header-title-box">
+                CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Thanh Chọn Mục Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+            <div class="nav-links" id="navLinks">
+                <a href="trangchu.html" class="tab-btn active">TRANG CHỦ</a>
+                <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
+                <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3. Thanh Thời Gian -->
+    <div class="datetime-bar">
+        <div class="datetime-inner">
+            <span id="current-datetime">Đang tải thời gian...</span>
         </div>
     </div>
-</header>
-
-<!-- 2. Thanh Chọn Mục Navigation (Nút TRANG CHỦ đang Active) -->
-<nav class="main-nav">
-    <div class="nav-container">
-        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-        <div class="nav-links" id="navLinks">
-            <a href="trangchu.html" class="tab-btn active">TRANG CHỦ</a>
-            <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
-            <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
-        </div>
-    </div>
-</nav>
-
-<!-- 3. Thanh Thời Gian -->
-<div class="datetime-bar">
-    <div class="datetime-inner">
-        <span id="current-datetime">Đang tải thời gian...</span>
-    </div>
-</div>
 
     <!-- 4. Khu vực nội dung trung tâm -->
     <div class="container">    
         
-        <!-- HÌNH ẢNH TOÀN CẢNH NGHĨA TRANG LIỆT SĨ (BÊN TRÁI) -->
+        <!-- HÌNH ẢNH TOÀN CẢNH NGHĨA TRANG LIỆT SĨ (BÊN TRÁI) - GIỮ NGUYÊN 100% -->
         <div class="main-news-box" style="margin-bottom: 20px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 4px; display: inline-block; width: 100%; box-sizing: border-box;">
             
             <!-- Khối bên trái chứa ảnh và chú thích nằm ngay dưới -->
@@ -60,86 +60,131 @@
 
         </div>
 
-        <!-- Lời ngỏ tri ân -->
-        <div class="home-intro">
-            <h2>Đời Đời Nhớ Ơn Các Anh Hùng Liệt Sĩ</h2>
-            <p>Nhằm phát huy đạo lý "Uống nước nhớ nguồn" và ứng dụng công nghệ vào công tác Đền ơn đáp nghĩa, Cổng thông tin được xây dựng để giúp các cơ quan, thân nhân, đồng đội và nhân dân dễ dàng tra cứu, tìm kiếm vị trí phần mộ tại Nghĩa trang Liệt sĩ cũng như thông tin tâm linh được khắc trên Bảng vàng tại Đền thờ Liệt sĩ xã Phước An.</p>
-        </div>
-
-        <!-- KHU VỰC CÁC KHUNG THÔNG TIN GIỚI THIỆU -->
-        <div class="info-cards-section">
-            <h3 class="section-title">THÔNG TIN GIỚI THIỆU & ĐÓN TIẾP</h3>
+        <!-- BỐ CỤC 2 CỘT CHUYÊN NGHIỆP TỪ "LỜI NGỎ TRI ÂN" XUỐNG -->
+        <div class="portal-body">
             
-            <div class="cards-grid">
-                <!-- Khung 1: Thông tin chung -->
-                <div class="info-card">
-                    <div class="card-icon">🏛️</div>
-                    <h4>Thông Tin Chung</h4>
-                    <p><strong>Công trình:</strong> Đền thờ & Nghĩa trang Liệt sĩ xã Phước An</p>
-                    <p><strong>Cơ quan quản lý:</strong> UBND xã Phước An (Bộ phận LĐ - TB&XH)</p>
+            <!-- CỘT TRÁI (70%) -->
+            <div class="left-column">
+                
+                <!-- Lời ngỏ tri ân -->
+                <div class="home-intro-box">
+                    <h2 class="intro-title">ĐỜI ĐỜI NHỚ ƠN CÁC ANH HÙNG LIỆT SĨ</h2>
+                    <p class="intro-desc">
+                        Nhằm phát huy đạo lý <strong>"Uống nước nhớ nguồn"</strong> và ứng dụng công nghệ vào công tác Đền ơn đáp nghĩa, Cổng thông tin được xây dựng để giúp các cơ quan, thân nhân, đồng đội và nhân dân dễ dàng tra cứu, tìm kiếm vị trí phần mộ tại Nghĩa trang Liệt sĩ cũng như thông tin tâm linh được khắc trên Bảng vàng tại Đền thờ Liệt sĩ xã Phước An.
+                    </p>
                 </div>
 
-                <!-- Khung 2: Địa điểm -->
-                <div class="info-card">
-                    <div class="card-icon">📍</div>
-                    <h4>Địa Điểm & Vị Trí</h4>
-                    <p>Ấp Phước An, Xã Phước An, Huyện Nhơn Trạch, Tỉnh Đồng Nai.</p>
-                    <span class="card-tag">Tọa lạc tại khu vực trung tâm xã</span>
+                <!-- Nút Tra Cứu Nhanh (Dạng ô màu xanh dương chuẩn Cổng hành chính) -->
+                <div class="action-grid">
+                    <a href="index.html" class="portal-btn">
+                        <div class="btn-icon">🪦</div>
+                        <div class="btn-info">
+                            <h3>TRA CỨU MỘ PHẦN</h3>
+                            <p>Tìm vị trí thực tế (Khu/Lô, Hàng, Số mộ) tại Nghĩa trang</p>
+                        </div>
+                    </a>
+
+                    <a href="temple.html" class="portal-btn">
+                        <div class="btn-icon">🏛️</div>
+                        <div class="btn-info">
+                            <h3>TRA CỨU TRONG ĐỀN</h3>
+                            <p>Vị trí ghi danh trên Bia & Bảng vàng vinh danh trong Đền</p>
+                        </div>
+                    </a>
                 </div>
 
-                <!-- Khung 3: Quy mô -->
-                <div class="info-card">
-                    <div class="card-icon">📊</div>
-                    <h4>Quy Mô Tưởng Niệm</h4>
-                    <p>Nơi ghi danh và quy tập hơn <strong>350+ Anh hùng Liệt sĩ</strong> đã hy sinh qua các thời kỳ kháng chiến bảo vệ Tổ quốc.</p>
+                <!-- Khung Thông Tin Giới Thiệu & Đón Tiếp -->
+                <div class="info-section">
+                    <h3 class="section-heading">THÔNG TIN GIỚI THIỆU & ĐÓN TIẾP</h3>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <span class="card-icon">🏛️</span>
+                            <div class="card-body">
+                                <h4>Thông Tin Chung</h4>
+                                <p><strong>Công trình:</strong> Đền thờ & Nghĩa trang Liệt sĩ xã Phước An</p>
+                                <p><strong>Quản lý:</strong> UBND xã Phước An (Bộ phận LĐ - TB&XH)</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="card-icon">📍</span>
+                            <div class="card-body">
+                                <h4>Địa Điểm & Vị Trí</h4>
+                                <p>Ấp Phước An, Xã Phước An, Huyện Nhơn Trạch, Tỉnh Đồng Nai.</p>
+                                <span class="tag-location">Khu vực trung tâm xã</span>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="card-icon">📊</span>
+                            <div class="card-body">
+                                <h4>Quy Mô Tưởng Niệm</h4>
+                                <p>Quy tập và ghi danh hơn <strong>350+ Anh hùng Liệt sĩ</strong> đã hy sinh qua các thời kỳ kháng chiến.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="card-icon">📜</span>
+                            <div class="card-body">
+                                <h4>Nội Quy Viếng</h4>
+                                <p>Trang phục trang nghiêm, giữ gìn vệ sinh, thắp hương và dâng hoa đúng nơi quy định.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Khung 4: Giờ mở cửa -->
-                <div class="info-card">
-                    <div class="card-icon">⏰</div>
-                    <h4>Thời Gian Đón Tiếp</h4>
-                    <p><strong>Hàng ngày:</strong> 07:30 - 11:30 | 13:30 - 17:00</p>
-                    <p><strong>Dịp Lễ / 27/7:</strong> Mở cửa xuyên suốt phục vụ thân nhân & nhân dân dâng hương.</p>
-                </div>
-
-                <!-- Khung 5: Liên hệ -->
-                <div class="info-card">
-                    <div class="card-icon">📞</div>
-                    <h4>Thông Tin Liên Hệ</h4>
-                    <p><strong>UBND Xã:</strong> 0251.xxx.xxxx</p>
-                    <p><strong>BQL Nghĩa trang:</strong> 09xx.xxx.xxx</p>
-                    <p><strong>Hỗ trợ tra cứu:</strong> Bàn tiếp dân tại Đền thờ</p>
-                </div>
-
-                <!-- Khung 6: Quy định -->
-                <div class="info-card">
-                    <div class="card-icon">📜</div>
-                    <h4>Nội Quy Viếng</h4>
-                    <p>Trang phục trang nghiêm, giữ gìn vệ sinh môi trường, thắp hương và dâng hoa đúng vị trí quy định.</p>
-                </div>
             </div>
-        </div>
 
-        <!-- Các khối chức năng điều hướng nhanh -->
-        <div class="home-cards">
-            <a href="index.html" class="action-card">
-                <span class="action-icon">🪦</span>
-                <h3>Tra Cứu Mộ Phần</h3>
-                <p>Hỗ trợ tìm kiếm thông tin chi tiết và vị trí thực tế (Khu/Lô, Hàng, Số mộ) của các Anh hùng Liệt sĩ đang an nghỉ tại Nghĩa trang.</p>
-            </a>
+            <!-- CỘT PHẢI SIDEBAR (30%) -->
+            <div class="right-sidebar">
+                
+                <!-- Khung Tìm Kiếm Nhanh -->
+                <div class="widget-box">
+                    <h3 class="widget-title">TÌM KIẾM NHANH</h3>
+                    <div class="widget-content">
+                        <form action="index.html" method="GET" class="search-form">
+                            <input type="text" name="keyword" placeholder="Nhập tên Liệt sĩ..." required>
+                            <button type="submit">Tìm</button>
+                        </form>
+                    </div>
+                </div>
 
-            <a href="temple.html" class="action-card">
-                <span class="action-icon">🏛️</span>
-                <h3>Tra Cứu Trong Đền</h3>
-                <p>Hỗ trợ tìm kiếm vị trí trang trọng của tên các Anh hùng Liệt sĩ được khắc trên hệ thống Bia và Bảng vàng vinh danh bên trong Đền thờ.</p>
-            </a>
-        </div>
+                <!-- Khung Giờ Đón Tiếp -->
+                <div class="widget-box">
+                    <h3 class="widget-title">THỜI GIAN ĐÓN TIẾP</h3>
+                    <div class="widget-content">
+                        <ul class="widget-list">
+                            <li>
+                                <strong>⏰ Giờ làm việc hàng ngày:</strong><br>
+                                • Sáng: 07:30 - 11:30<br>
+                                • Chiều: 13:30 - 17:00
+                            </li>
+                            <li>
+                                <strong>🌺 Dịp Lễ / Kỷ niệm 27/7:</strong><br>
+                                Mở cửa xuyên suốt phục vụ thân nhân & nhân dân dâng hương.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-        <!-- Khung Thông báo & Kênh Hỗ trợ -->
-        <div class="home-notice">
-            <h4>📌 Thông báo & Hỗ trợ thông tin</h4>
-            <p>• <strong>Đóng góp và đính chính dữ liệu:</strong> Trong quá trình tra cứu, nếu quý thân nhân phát hiện thông tin chưa chính xác hoặc còn thiếu sót, xin vui lòng liên hệ với Cán bộ phụ trách Thương binh - Xã hội địa phương để phối hợp cập nhật kịp thời vào hệ thống cốt lõi.</p>
-            <p>• <strong>Địa điểm tiếp nhận:</strong> Bộ phận Tiếp nhận và Trả kết quả - UBND Xã Phước An (Ấp Bà Trường, xã Phước An, Thành phố Đồng Nai).</p>
+                <!-- Khung Thông Báo & Hỗ Trợ -->
+                <div class="widget-box">
+                    <h3 class="widget-title">THÔNG BÁO & HỖ TRỢ</h3>
+                    <div class="widget-content">
+                        <div class="notice-item">
+                            <p>📌 <strong>Đính chính dữ liệu:</strong> Thân nhân phát hiện sai sót xin liên hệ Cán bộ LĐ-TB&XH địa phương.</p>
+                        </div>
+                        <div class="notice-item">
+                            <p>🏢 <strong>Tiếp nhận:</strong> Bộ phận Một cửa - UBND Xã Phước An (Ấp Bà Trường).</p>
+                        </div>
+                        <div class="notice-item">
+                            <p>📞 <strong>Liên hệ:</strong><br>• UBND Xã: 0251.xxx.xxxx<br>• BQL Nghĩa trang: 09xx.xxx.xxx</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
