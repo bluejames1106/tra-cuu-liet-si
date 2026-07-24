@@ -5,122 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tra cứu Đền thờ Liệt sĩ</title>
     <link rel="stylesheet" href="dashboard.css">
-    <style>
-        /* Tinh chỉnh banner tràn viền, hiện trọn vẹn toàn bộ hình ảnh đẹp mắt */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f4f6f9;
-        }
-        .top-header {
-            width: 100%;
-            background-color: #8B0000;
-            border-bottom: 4px solid #FFD700;
-        }
-        .header-container {
-            width: 100% !important;
-            max-width: 100% !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            line-height: 0;
-        }
-        .header-slogan {
-            width: 100% !important;
-            height: auto !important;
-            max-height: none !important;
-            object-fit: unset !important;
-            display: block !important;
-        }
-
-        /* Tùy chỉnh tông đỏ sang trọng */
-        .search-badge.badge-red {
-            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%) !important;
-            color: #FFD700 !important;
-            border-left: 5px solid #FFD700;
-            font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        }
-        .btn-search {
-            background-color: #B22222 !important;
-            color: white !important;
-            border: none !important;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        .btn-search:hover {
-            background-color: #8B0000 !important;
-        }
-        .input-group input:focus {
-            border-color: #B22222 !important;
-            box-shadow: 0 0 5px rgba(178, 34, 34, 0.2);
-        }
-    </style>
 </head>
 <body>
-    <!-- 1. Phần Header hiển thị trọn vẹn hình ảnh -->
-    <header class="top-header" id="banner-header">
-        <div class="header-container">
-            <img src="vietnam.jpg" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+    <!-- 1. Phần Header -->
+<header class="top-header" id="banner-header">
+    <div class="header-container">
+        <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+        
+        <div class="header-title-box">
+            CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
         </div>
-    </header>
+    </div>
+</header>
 
-    <!-- 2. Thanh Chọn Mục Navigation (Nút TRA CỨU TRONG ĐỀN đang Active) -->
-    <nav class="main-nav">
-        <div class="nav-container">
-            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-            <div class="nav-links" id="navLinks">
-                <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
-                <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
-                <a href="temple.html" class="tab-btn active">TRA CỨU TRONG ĐỀN</a>
+<!-- 2. Thanh Chọn Mục Navigation (Nút TRA CỨU TRONG ĐỀN đang Active) -->
+<nav class="main-nav">
+    <div class="nav-container">
+        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+        <div class="nav-links" id="navLinks">
+            <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
+            <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
+            <a href="temple.html" class="tab-btn active">TRA CỨU TRONG ĐỀN</a>
+        </div>
+    </div>
+</nav>
+
+<!-- 3. Thanh Thời Gian -->
+<div class="datetime-bar">
+    <div class="datetime-inner">
+        <span id="current-datetime">Đang tải thời gian...</span>
+    </div>
+</div>
+        <!-- Khung tìm kiếm (Chỉ có 4 ô) -->
+        <div class="search-section">
+            <!-- 💥 CHÈN THẺ TÊN BẢNG TRA CỨU VÀO ĐÂY -->
+    <div class="search-badge badge-red">
+        🏛️ DANH SÁCH TRA CỨU TRONG ĐỀN THỜ
+    </div>
+            <div class="search-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+                <div class="input-group"><label>Họ và tên</label><input type="text" id="t_name"></div>
+                <div class="input-group"><label>Năm sinh</label><input type="text" id="t_birth"></div>
+                <div class="input-group"><label>Nguyên quán</label><input type="text" id="t_home"></div>
+                <div class="input-group"><label>Năm hy sinh/Từ trần</label><input type="text" id="t_deathYear"></div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-search" onclick="renderTable()">Tìm kiếm</button>
+                <button class="btn-clear" onclick="clearSearch()">Xóa hết</button>
             </div>
         </div>
-    </nav>
 
-    <!-- 3. Thanh Thời Gian -->
-    <div class="datetime-bar">
-        <div class="datetime-inner">
-            <span id="current-datetime">Đang tải thời gian...</span>
+        <!-- Bảng hiển thị (8 Cột) -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ và tên</th>
+                        <th>Năm sinh</th>
+                        <th>Nguyên quán</th>
+                        <th>Năm hy sinh/từ trần</th>
+                        <th>Bảng</th>
+                        <th>Hàng</th>
+                        <th>Cột</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
         </div>
+        
+        <div class="pagination" id="pagination"></div>
     </div>
-
-    <!-- Khung tìm kiếm (Chỉ có 4 ô) -->
-    <div class="search-section">
-        <div class="search-badge badge-red">
-            🏛️ DANH SÁCH TRA CỨU TRONG ĐỀN THỜ
-        </div>
-        <div class="search-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
-            <div class="input-group"><label>Họ và tên</label><input type="text" id="t_name"></div>
-            <div class="input-group"><label>Năm sinh</label><input type="text" id="t_birth"></div>
-            <div class="input-group"><label>Nguyên quán</label><input type="text" id="t_home"></div>
-            <div class="input-group"><label>Năm hy sinh/Từ trần</label><input type="text" id="t_deathYear"></div>
-        </div>
-        <div class="action-buttons">
-            <button class="btn-search" onclick="renderTable()">Tìm kiếm</button>
-            <button class="btn-clear" onclick="clearSearch()">Xóa hết</button>
-        </div>
-    </div>
-
-    <!-- Bảng hiển thị (8 Cột) -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Họ và tên</th>
-                    <th>Năm sinh</th>
-                    <th>Nguyên quán</th>
-                    <th>Năm hy sinh/từ trần</th>
-                    <th>Bảng</th>
-                    <th>Hàng</th>
-                    <th>Cột</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
-    
-    <div class="pagination" id="pagination"></div>
 
     <footer class="site-footer">
         <div class="footer-content">
