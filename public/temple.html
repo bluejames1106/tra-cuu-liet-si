@@ -6,7 +6,7 @@
     <title>Tra cứu Đền thờ Liệt sĩ</title>
     <link rel="stylesheet" href="dashboard.css">
     <style>
-        /* CSS phóng to hình ảnh và bỏ hoàn toàn khung chữ */
+        /* CSS Ép hình ảnh phủ kín toàn bộ khung header, không bị lệch */
         body {
             margin: 0;
             padding: 0;
@@ -14,24 +14,26 @@
         }
         .top-header {
             width: 100%;
-            background: #8B0000;
+            height: 180px; /* Ông có thể tăng giảm chiều cao này tùy ý (ví dụ: 200px hoặc 220px) */
+            background-image: url('vietnam.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             border-bottom: 4px solid #FFD700;
         }
         .header-container {
             width: 100% !important;
             max-width: 100% !important;
+            height: 100% !important;
             padding: 0 !important;
             margin: 0 !important;
         }
+        /* Ẩn ảnh thẻ img cũ đi để dùng background-image trải dài tuyệt đối */
         .header-slogan {
-            width: 100% !important;
-            height: auto;
-            max-height: 350px;
-            object-fit: cover;
-            display: block;
+            display: none !important;
         }
 
-        /* Tùy chỉnh tông đỏ sang trọng */
+        /* Tùy chỉnh tông đỏ sang trọng cho bảng */
         .search-badge.badge-red {
             background: linear-gradient(135deg, #8B0000 0%, #B22222 100%) !important;
             color: #FFD700 !important;
@@ -57,10 +59,10 @@
     </style>
 </head>
 <body>
-    <!-- 1. Phần Header: Chỉ giữ lại hình ảnh lớn trọn vẹn -->
+    <!-- 1. Phần Header dùng background phủ kín toàn khung -->
     <header class="top-header" id="banner-header">
         <div class="header-container">
-            <img src="vietnam.jpg" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+            <!-- Hình ảnh đã được căn full toàn bộ chiều rộng qua CSS background -->
         </div>
     </header>
 
