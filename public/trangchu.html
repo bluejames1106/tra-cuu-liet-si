@@ -43,20 +43,20 @@
     <!-- 4. Khu vực nội dung trung tâm -->
     <div class="container">    
         
-        <!-- BỐ CỤC 2 CỘT: Cột trái (Đời đời nhớ ơn + Nút tra cứu), Cột phải (Thời gian đón tiếp nằm trên, Thông báo & hỗ trợ nằm dưới) -->
-        <div class="portal-body" style="margin-bottom: 20px;">
+        <!-- BỐ CỤC 2 CỘT CÂN ĐỐI KHÍT NHAU (KHÔNG BỊ TRỐNG KHOẢNG TRẮNG) -->
+        <div class="portal-body" style="display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px;">
             
-            <!-- CỘT TRÁI (70%): Khung Đời đời nhớ ơn và Các nút tra cứu -->
-            <div class="left-column">
+            <!-- CỘT TRÁI (Khoảng 70%): Đời đời nhớ ơn + 2 Nút tra cứu + 4 Thẻ thông tin giới thiệu xếp đầy khít -->
+            <div class="left-column" style="flex: 7; display: flex; flexDirection: column; gap: 20px;">
                 
-                <div class="home-intro-box">
+                <div class="home-intro-box" style="margin: 0;">
                     <h2 class="intro-title">ĐỜI ĐỜI NHỚ ƠN CÁC ANH HÙNG LIỆT SĨ</h2>
                     <p class="intro-desc">
                         Nhằm phát huy đạo lý <strong>"Uống nước nhớ nguồn"</strong> và ứng dụng công nghệ vào công tác Đền ơn đáp nghĩa, Cổng thông tin được xây dựng để giúp các cơ quan, thân nhân, đồng đội và nhân dân dễ dàng tra cứu, tìm kiếm vị trí phần mộ tại Nghĩa trang Liệt sĩ cũng như thông tin được khắc trên Bảng vàng tại Đền thờ Liệt sĩ Nhơn Trạch.
                     </p>
                 </div>
 
-                <div class="action-grid">
+                <div class="action-grid" style="margin: 0;">
                     <a href="index.html" class="portal-btn">
                         <div class="btn-icon">🪦</div>
                         <div class="btn-info">
@@ -74,12 +74,52 @@
                     </a>
                 </div>
 
+                <!-- Đưa 4 thẻ thông tin giới thiệu vào đây luôn để lấp đầy trọn vẹn cột trái khít với chiều cao cột phải -->
+                <div class="info-section" style="margin: 0;">
+                    <h3 class="section-heading">THÔNG TIN GIỚI THIỆU & ĐÓN TIẾP</h3>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <span class="card-icon">🏛️</span>
+                            <div class="card-body">
+                                <h4>Thông Tin Chung</h4>
+                                <p><strong>Công trình:</strong> Đền thờ & Nghĩa trang Liệt sĩ Nhơn Trạch</p>
+                                <p><strong>Quản lý:</strong> UBND xã Phước An (Bộ phận LĐ - TB&XH)</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="card-icon">📍</span>
+                            <div class="card-body">
+                                <h4>Địa Điểm & Vị Trí</h4>
+                                <p>xã Phước An, Tp Đồng Nai.</p>
+                                <span class="tag-location">xã Phước An, Tp Đồng Nai</span>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="card-icon">📊</span>
+                            <div class="card-body">
+                                <h4>Quy Mô Tưởng Niệm</h4>
+                                <p>Quy mô gần 25.000 m², nơi yên nghỉ của hơn 250 liệt sĩ và thờ tự gần 2.400 anh hùng liệt sĩ.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="card-icon">📜</span>
+                            <div class="card-body">
+                                <h4>Nội Quy Viếng</h4>
+                                <p>Trang phục trang nghiêm, giữ gìn vệ sinh, thắp hương và dâng hoa đúng nơi quy định.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- CỘT PHẢI SIDEBAR (30%): Thời gian đón tiếp nằm trên, ngay bên cạnh khối "Đời đời nhớ ơn", và Thông báo & Hỗ trợ nằm bên dưới -->
-            <div class="right-sidebar">
+            <!-- CỘT PHẢI SIDEBAR (Khoảng 30%): Thời gian đón tiếp ở trên, Thông báo & hỗ trợ ở ngay bên dưới -->
+            <div class="right-sidebar" style="flex: 3; display: flex; flex-direction: column; gap: 20px;">
                 
-                <div class="widget-box" style="margin-top: 0;">
+                <div class="widget-box" style="margin: 0;">
                     <h3 class="widget-title">THỜI GIAN ĐÓN TIẾP</h3>
                     <div class="widget-content">
                         <ul class="widget-list">
@@ -96,7 +136,7 @@
                     </div>
                 </div>
 
-                <div class="widget-box">
+                <div class="widget-box" style="margin: 0;">
                     <h3 class="widget-title">THÔNG BÁO & HỖ TRỢ</h3>
                     <div class="widget-content">
                         <div class="notice-item">
@@ -115,47 +155,7 @@
 
         </div>
 
-        <!-- PHẦN THÔNG TIN GIỚI THIỆU & ĐÓN TIẾP (4 khối thẻ card ngang toàn chiều rộng) -->
-        <div class="info-section" style="margin-bottom: 20px;">
-            <h3 class="section-heading">THÔNG TIN GIỚI THIỆU & ĐÓN TIẾP</h3>
-            <div class="info-grid">
-                <div class="info-card">
-                    <span class="card-icon">🏛️</span>
-                    <div class="card-body">
-                        <h4>Thông Tin Chung</h4>
-                        <p><strong>Công trình:</strong> Đền thờ & Nghĩa trang Liệt sĩ Nhơn Trạch</p>
-                        <p><strong>Quản lý:</strong> UBND xã Phước An (Bộ phận LĐ - TB&XH)</p>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <span class="card-icon">📍</span>
-                    <div class="card-body">
-                        <h4>Địa Điểm & Vị Trí</h4>
-                        <p>xã Phước An, Tp Đồng Nai.</p>
-                        <span class="tag-location">xã Phước An, Tp Đồng Nai</span>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <span class="card-icon">📊</span>
-                    <div class="card-body">
-                        <h4>Quy Mô Tưởng Niệm</h4>
-                        <p>Quy mô gần 25.000 m², nơi yên nghỉ của hơn 250 liệt sĩ và thờ tự gần 2.400 anh hùng liệt sĩ.</p>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <span class="card-icon">📜</span>
-                    <div class="card-body">
-                        <h4>Nội Quy Viếng</h4>
-                        <p>Trang phục trang nghiêm, giữ gìn vệ sinh, thắp hương và dâng hoa đúng nơi quy định.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NỘI DUNG BÀI VIẾT GIỚI THIỆU CHI TIẾT -->
+        <!-- NỘI DUNG BÀI VIẾT GIỚI THIỆU CHI TIẾT PHÍA DƯỚI -->
         <div class="main-news-box" style="margin-bottom: 20px; background: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
             <div>
                 <h3 style="color: #004085; margin-top: 0; font-size: 18px; margin-bottom: 10px;">1. Giới thiệu về Đền Thờ và Nghĩa Trang Liệt Sĩ Nhơn Trạch</h3>
