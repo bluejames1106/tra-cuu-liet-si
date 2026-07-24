@@ -37,7 +37,7 @@ window.onload = async function() {
         document.getElementById("p_grave").innerText = data.so_mo || "";
         
         // 3. Hiển thị tiểu sử
-        document.getElementById("p_bio").innerText = data.tieu_su || "Đang cập nhật thông tin tiểu sử...";
+        document.getElementById("p_bio").innerText = data.tieu_su || "Tiểu sử trích ngang";
 
         // 4. Hiển thị cột Sở thích (Nếu trên giao diện HTML có thẻ tương ứng)
         const hobbyElement = document.getElementById("p_hobby");
