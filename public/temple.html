@@ -6,7 +6,7 @@
     <title>Tra cứu Đền thờ Liệt sĩ</title>
     <link rel="stylesheet" href="dashboard.css">
     <style>
-        /* CSS Ép hình ảnh phủ kín toàn bộ khung header, không bị lệch */
+        /* CSS căn chỉnh để hiển thị trọn vẹn toàn bộ hình ảnh banner */
         body {
             margin: 0;
             padding: 0;
@@ -14,9 +14,9 @@
         }
         .top-header {
             width: 100%;
-            height: 180px; /* Ông có thể tăng giảm chiều cao này tùy ý (ví dụ: 200px hoặc 220px) */
+            height: 200px; /* Điều chỉnh chiều cao này nếu muốn hình cao hơn hoặc thấp hơn */
             background-image: url('vietnam.jpg');
-            background-size: cover;
+            background-size: 100% 100%; /* Ép hiển thị trọn vẹn toàn bộ chiều dài và chiều rộng ảnh */
             background-position: center;
             background-repeat: no-repeat;
             border-bottom: 4px solid #FFD700;
@@ -28,7 +28,6 @@
             padding: 0 !important;
             margin: 0 !important;
         }
-        /* Ẩn ảnh thẻ img cũ đi để dùng background-image trải dài tuyệt đối */
         .header-slogan {
             display: none !important;
         }
@@ -59,11 +58,9 @@
     </style>
 </head>
 <body>
-    <!-- 1. Phần Header dùng background phủ kín toàn khung -->
+    <!-- 1. Phần Header hiển thị trọn vẹn hình ảnh -->
     <header class="top-header" id="banner-header">
-        <div class="header-container">
-            <!-- Hình ảnh đã được căn full toàn bộ chiều rộng qua CSS background -->
-        </div>
+        <div class="header-container"></div>
     </header>
 
     <!-- 2. Thanh Chọn Mục Navigation (Nút TRA CỨU TRONG ĐỀN đang Active) -->
