@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cổng tra cứu thông tin Liệt sĩ - Xã Phước An</title>
     <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Tùy chỉnh chuyển sang tông đỏ sang trọng, không đổi cấu trúc code */
+        .search-badge.badge-blue {
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%) !important;
+            color: #FFD700 !important;
+            border-left: 5px solid #FFD700;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .btn-search {
+            background-color: #B22222 !important;
+            color: white !important;
+            border: none !important;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-search:hover {
+            background-color: #8B0000 !important;
+        }
+        .input-group input:focus {
+            border-color: #B22222 !important;
+            box-shadow: 0 0 5px rgba(178, 34, 34, 0.2);
+        }
+    </style>
 </head>
 <body>
      <!-- 1. Phần Header -->
