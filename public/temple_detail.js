@@ -101,6 +101,7 @@ window.onload = async function() {
     } catch (error) {
         console.error("Lỗi tải trang chi tiết đền thờ:", error);
         alert("Đã xảy ra lỗi khi tải dữ liệu chi tiết từ cơ sở dữ liệu đám mây!");
+        window.location.href = "error.html";
     }
 };
 function updateRealtimeClock() {
@@ -140,3 +141,9 @@ function toggleMenu() {
     const nav = document.getElementById("navLinks");
     if (nav) nav.classList.toggle("show");
 }
+
+// Tự động phát hiện mất mạng và chuyển trang
+window.addEventListener('offline', function() {
+    window.location.href = "error.html";
+});
+
