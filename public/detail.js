@@ -51,6 +51,7 @@ window.onload = async function() {
     } catch (error) {
         console.error("Lỗi tải chi tiết:", error);
         alert("Lỗi khi tải chi tiết dữ liệu từ cơ sở dữ liệu SQL!");
+        window.location.href = "error.html";
     }
 };
 function updateRealtimeClock() {
@@ -90,3 +91,7 @@ function toggleMenu() {
     const nav = document.getElementById("navLinks");
     nav.classList.toggle("show");
 }
+
+window.addEventListener('offline', function() {
+    window.location.href = "error.html";
+});
