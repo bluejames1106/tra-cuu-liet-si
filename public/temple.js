@@ -74,6 +74,7 @@ async function renderTable() {
     } catch (error) {
         console.error(error);
         tableBody.innerHTML = `<tr><td colspan="8" style="color: red; padding: 20px;">Không thể kết nối với máy chủ SQL!</td></tr>`;
+        window.location.href = "error.html";
     }
 }
 
@@ -198,3 +199,7 @@ function toggleMenu() {
     const nav = document.getElementById("navLinks");
     if (nav) nav.classList.toggle("show");
 }
+
+window.addEventListener('offline', function() {
+    window.location.href = "error.html";
+});
