@@ -139,7 +139,9 @@ body {
 /* --- 4. KHU VỰC TÌM KIẾM --- */
 .search-section {
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap; /* Lệnh bắt buộc: Cho phép các phần tử rớt xuống dòng dưới */
+    align-items: flex-start; /* Căn lên trên cùng để không bị xô lệch */
+    gap: 15px;
     background: white;
     padding: 25px;
     border: 1px solid #ddd;
@@ -769,21 +771,21 @@ tr:hover { background-color: #f1f1f1; }
 
 /* NHÃN TÊN BẢNG */
 .search-badge {
-    width: 100%; /* Bắt buộc trải dài toàn bộ không gian ngang */
-    box-sizing: border-box; /* Đảm bảo padding không làm tràn viền */
+   flex: 0 0 100% !important; /* LỆNH QUAN TRỌNG NHẤT: Tuyệt đối không co rút, ép chiếm đúng 100% chiều ngang */
+    width: 100%;
+    box-sizing: border-box;
     text-align: center;
-    font-size: 16px; /* Tăng cỡ chữ lên một chút cho bề thế */
+    font-size: 16px;
     font-weight: bold;
     padding: 12px 15px;
     border-radius: 6px;
-    margin-bottom: 20px;
+    margin-bottom: 5px; 
     text-transform: uppercase;
     letter-spacing: 0.5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
 }
 
 /* Đồng bộ màu sắc chung cho cả 2 trang: Đỏ đô viền vàng trang trọng */
