@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống gián đoạn</title>
+    <style>
+        /* Cấu hình tối giản: Nền trắng, chữ đen, căn giữa toàn bộ */
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 400px;
+            line-height: 1.5;
+        }
+        
+        /* Nút Reset đảo màu: Nền đen chữ trắng */
+        .btn-reset {
+            background-color: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        
+        .btn-reset:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>⚠️ HỆ THỐNG TẠM GIÁN ĐOẠN</h1>
+    <p>Máy chủ đang bị quá tải hoặc thiết bị của bạn đã mất kết nối Internet. Vui lòng kiểm tra lại đường truyền và thử kết nối lại.</p>
+    
+    <!-- Nút bấm đưa người dùng quay trở lại thử kết nối với trang chủ -->
+    <button class="btn-reset" onclick="window.location.href='index.html'">Kết nối lại</button>
+
+</body>
+</html>
