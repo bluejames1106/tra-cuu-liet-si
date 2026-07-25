@@ -788,9 +788,9 @@ tr:hover { background-color: #f1f1f1; }
 
 /* Đồng bộ màu sắc chung cho cả 2 trang: Đỏ đô viền vàng trang trọng */
 .badge-blue {
-    background: linear-gradient(135deg, #b30000, #800000);
-    color: #ffffff;
-    border-left: 6px solid #ffcc00;
+    background: linear-gradient(135deg, #b30000, #800000) !important;
+    color: #ffff00 !important; /* Màu chữ vàng (Yellow) */
+    border-left: 6px solid #ffcc00 !important; /* Viền trái màu vàng */
 }
 /* =========================================================
    1. CĂN GIỮA TIÊU ĐỀ NẰM TRÊN BANNER
