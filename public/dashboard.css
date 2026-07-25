@@ -767,7 +767,7 @@ tr:hover { background-color: #f1f1f1; }
     margin-left: 4px;
 }
 
-/* Thẻ nhãn tên bảng tra cứu trên mobile & desktop */
+/* NHÃN TÊN BẢNG */
 .search-badge {
     width: 100%; /* Bắt buộc trải dài toàn bộ không gian ngang */
     box-sizing: border-box; /* Đảm bảo padding không làm tràn viền */
@@ -789,7 +789,7 @@ tr:hover { background-color: #f1f1f1; }
 /* Đồng bộ màu sắc chung cho cả 2 trang: Đỏ đô viền vàng trang trọng */
 .badge-blue {
     background: linear-gradient(135deg, #b30000, #800000) !important;
-    color: #ffff00 !important; /* Màu chữ vàng (Yellow) */
+    color: #FFD700 !important; /* Màu chữ vàng (Yellow) */
     border-left: 6px solid #ffcc00 !important; /* Viền trái màu vàng */
 }
 /* =========================================================
