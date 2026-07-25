@@ -1,266 +1,278 @@
 /* =========================================================
-   BỐ CỤC TRANG CHỦ - PHONG CÁCH TẠP CHÍ HIỆN ĐẠI
+   BỐ CỤC TRANG CHỦ - PHONG CÁCH BÁO CHÍ / CỔNG THÔNG TIN
    ========================================================= */
 
-/* Container bọc toàn bộ - Chia 2 cột tỷ lệ 70:30 */
-.modern-magazine-wrapper {
-    display: flex;
-    gap: 40px;
-    margin-top: 25px;
-    margin-bottom: 40px;
-    align-items: flex-start; /* Quan trọng để sidebar sticky hoạt động */
+.news-portal-wrapper {
+    font-family: Arial, Tahoma, sans-serif; /* Phông chữ chuẩn của báo mạng */
+    margin: 20px 0 40px 0;
+    color: #333;
 }
 
-/* --- CỘT TRÁI (BÀI VIẾT) --- */
-.magazine-main {
-    flex: 1;
-    min-width: 0; /* Ngăn chặn vỡ layout khi ảnh quá to */
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 35px 40px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03); /* Đổ bóng cực mềm */
+/* --- TIÊU ĐỀ TỔNG --- */
+.portal-main-title {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #cc0000; /* Vạch đỏ trang nghiêm */
+    padding-bottom: 15px;
 }
 
-/* Phần Intro Header */
-.article-header {
-    margin-bottom: 30px;
-}
-
-.headline {
-    color: #0f172a;
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 1.3;
-    margin: 0 0 20px 0;
+.portal-main-title h1 {
+    color: #cc0000;
+    font-size: 26px;
+    margin: 0 0 15px 0;
     text-transform: uppercase;
-    letter-spacing: -0.5px;
+    font-weight: bold;
 }
 
-.lead-paragraph {
-    font-size: 17px;
-    line-height: 1.8;
-    color: #334155;
-    padding-left: 20px;
-    border-left: 4px solid #0059b3; /* Vạch nhấn màu xanh từ theme */
+.lead-text {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.6;
+    text-align: justify;
+    color: #444;
     margin: 0;
-    font-style: italic;
 }
 
-/* Lưới Fact Cards - 4 ô gọn gàng */
-.quick-facts-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin: 35px 0;
-}
-
-.fact-card {
+/* --- KHU VỰC LƯỚI BÀI BÁO CHÍNH --- */
+.news-grid-section {
     display: flex;
-    align-items: center;
-    background: #f8fafc; /* Nền xám nhạt hiện đại */
-    padding: 15px 20px;
-    border-radius: 12px;
-    transition: transform 0.2s ease;
+    gap: 20px;
+    margin-bottom: 30px;
+    align-items: stretch;
 }
 
-.fact-card:hover {
-    transform: translateY(-2px);
-    background: #f1f5f9;
+/* 1. Cột trái (Bài báo nổi bật) */
+.main-news-article {
+    flex: 6.5;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
 }
 
-.fact-icon {
-    font-size: 28px;
-    margin-right: 15px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-.fact-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.fact-text strong {
-    color: #0f172a;
-    font-size: 14px;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-}
-
-.fact-text span {
-    color: #475569;
-    font-size: 13.5px;
-    line-height: 1.4;
-}
-
-/* Định dạng chữ Bài viết */
-.article-body h3 {
-    color: #1e293b;
+.article-headline {
     font-size: 22px;
-    margin: 40px 0 15px 0;
+    color: #0056b3;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.article-meta {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px dotted #ccc;
 }
 
-.article-body h4 {
-    color: #0059b3;
-    font-size: 18px;
-    margin: 30px 0 10px 0;
-}
-
-.article-body p {
-    font-size: 16.5px;
-    line-height: 1.85; /* Dãn dòng rộng để dễ đọc */
-    color: #334155;
-    margin-bottom: 20px;
+.article-content {
+    font-size: 15px;
+    line-height: 1.6;
     text-align: justify;
 }
 
-/* Xử lý hình ảnh tràn viền mượt mà */
-.modern-figure {
-    margin: 35px 0;
-    text-align: center;
+.article-hero-img {
+    width: 45%;
+    float: left; /* Chữ bọc quanh ảnh đúng chuẩn báo */
+    margin: 0 20px 10px 0;
+    border: 1px solid #eee;
+    padding: 3px;
+    background: #fff;
 }
 
-.modern-figure img {
-    width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Đổ bóng cho ảnh */
-    display: block;
+.article-content p {
+    margin-bottom: 15px;
 }
 
-.modern-figure figcaption {
-    margin-top: 12px;
-    font-size: 14px;
-    color: #64748b;
-    font-style: italic;
-}
-
-/* --- CỘT PHẢI (SIDEBAR) --- */
-.magazine-sidebar {
-    width: 340px;
-    flex-shrink: 0;
-}
-
-/* Tính năng bám dính khi cuộn trang */
-.sticky-widgets {
-    position: sticky;
-    top: 25px; /* Khoảng cách từ đỉnh màn hình khi cuộn */
+/* Chèn một block 2 cột bên trong bài báo */
+.two-col-text {
+    clear: both;
     display: flex;
-    flex-direction: column;
+    gap: 20px;
+    margin-top: 25px;
+    border-top: 1px dashed #ccc;
+    padding-top: 15px;
+}
+
+.col-text {
+    flex: 1;
+}
+
+.col-text img {
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+.col-text em {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+/* 2. Cột phải (Danh sách tin liên quan) */
+.side-news-list {
+    flex: 3.5;
+    border: 1px solid #0088cc;
+    background: #fff;
+}
+
+.portal-box-header {
+    background: #0088cc; /* Tiêu đề màu xanh chuẩn cổng thông tin */
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-transform: uppercase;
+}
+
+.side-news-body {
+    padding: 15px;
+}
+
+.sub-news-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.sub-news-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.sub-news-item img {
+    width: 110px;
+    height: 75px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+
+.sub-news-text h3 {
+    font-size: 14px;
+    color: #0056b3;
+    margin: 0 0 5px 0;
+    line-height: 1.3;
+}
+
+.sub-news-text p {
+    font-size: 12px;
+    color: #555;
+    margin: 0;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+/* --- KHU VỰC THÔNG TIN BÊN DƯỚI (Các khối hộp vuông vức) --- */
+.bottom-widgets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
-.modern-widget {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
-    position: relative;
+.portal-widget {
+    border: 1px solid #ddd;
+    background: #fff;
 }
 
-/* Widget nổi bật */
-.widget-primary {
-    background: linear-gradient(145deg, #0059b3, #004080);
-    color: white;
-    box-shadow: 0 8px 25px rgba(0, 89, 179, 0.2);
+.bg-blue {
+    background: #0077b3; /* Xanh đậm hơn chút cho khối dưới */
 }
 
-.widget-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.modern-widget .widget-title {
-    font-size: 17px;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin: 0 0 15px 0;
-    color: #0f172a;
-}
-
-.widget-primary .widget-title {
-    color: #ffffff;
-}
-
-.time-block {
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px dashed rgba(255,255,255,0.2);
-}
-
-.time-block:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.time-block strong {
-    display: block;
-    margin-bottom: 5px;
+.portal-box-body {
+    padding: 15px;
     font-size: 14px;
-    color: #e2e8f0;
+    color: #333;
+    height: calc(100% - 40px); /* Bù trừ chiều cao header */
+    box-sizing: border-box;
 }
 
-.time-block span {
-    display: block;
-    font-size: 15px;
-    line-height: 1.6;
-}
-
-.time-block.highlight strong {
-    color: #fde047; /* Nhấn màu vàng */
-}
-
-.support-list {
-    list-style: none;
+/* Định dạng List thông tin */
+.bullet-list {
+    list-style: square;
+    margin: 0 0 0 20px;
     padding: 0;
-    margin: 0;
 }
 
-.support-list li {
+.bullet-list li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+    border-bottom: 1px dotted #eaeaea;
+    padding-bottom: 5px;
+}
+
+.bullet-list li:last-child {
+    border-bottom: none;
+}
+
+/* Định dạng Giờ giấc */
+.time-box h4 {
+    margin: 0 0 5px 0;
     font-size: 14px;
-    line-height: 1.6;
-    color: #475569;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #f1f5f9;
+    color: #0056b3;
 }
 
-.support-list li:last-child {
+.time-box p {
+    margin: 3px 0 3px 15px;
+}
+
+.mt-10 {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+}
+
+/* Định dạng Thông báo */
+.notice-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notice-list li {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    border-bottom: 1px dotted #eaeaea;
+    padding-bottom: 10px;
+}
+
+.notice-list li:last-child {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.support-list li strong {
-    display: block;
-    color: #1e293b;
-    margin-bottom: 4px;
+.notice-list li span {
+    font-size: 16px;
 }
 
-/* --- TỰ ĐỘNG THU GỌN TRÊN ĐIỆN THOẠI (RESPONSIVE) --- */
+/* --- ĐÁP ỨNG THIẾT BỊ DI ĐỘNG --- */
 @media (max-width: 992px) {
-    .modern-magazine-wrapper {
-        flex-direction: column; /* Xếp cột bài viết và sidebar chồng lên nhau */
-        gap: 25px;
+    .news-grid-section {
+        flex-direction: column; /* Chuyển cột thành hàng dọc trên điện thoại */
+    }
+    
+    .article-hero-img {
+        width: 100%;
+        float: none;
+        margin: 0 0 15px 0;
+    }
+    
+    .two-col-text {
+        flex-direction: column;
     }
 
-    .magazine-main {
-        padding: 20px;
-    }
-
-    .quick-facts-grid {
-        grid-template-columns: 1fr; /* Các thẻ fact thành 1 hàng dọc */
-    }
-
-    .magazine-sidebar {
-        width: 100%; /* Sidebar giãn full màn hình */
-    }
-
-    .sticky-widgets {
-        position: relative;
-        top: 0;
+    .bottom-widgets-grid {
+        grid-template-columns: 1fr; /* Các khối dưới cũng xếp dọc */
     }
 }
