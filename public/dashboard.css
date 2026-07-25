@@ -140,7 +140,6 @@ body {
 .search-section {
     display: flex;
     flex-wrap: wrap; /* Lệnh bắt buộc: Cho phép các phần tử rớt xuống dòng dưới */
-    align-items: flex-start; /* Căn lên trên cùng để không bị xô lệch */
     gap: 15px;
     background: white;
     padding: 25px;
