@@ -179,10 +179,10 @@ body {
 /* Cột nút bấm */
 .action-buttons {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 15px;
-    width: 150px;
+    flex-direction: column; /* Xếp 2 nút dọc */
+    gap: 15px; /* Khoảng cách giữa 2 nút cho bằng với khoảng cách 2 hàng chữ */
+    margin-top: 24px; /* Lệnh bù trừ: Đẩy cụm nút xuống 24px để thẳng hàng chuẩn xác với các ô nhập liệu (bỏ qua phần chữ nhãn phía trên) */
+    width: 120px; /* Khống chế chiều rộng nút vừa vặn */
 }
 
 .btn-search, .btn-clear {
@@ -528,8 +528,9 @@ tr:hover { background-color: #f1f1f1; }
     }
     
     .search-grid {
+        flex: 0 0 100%; /* Bắt buộc chiếm trọn 100% chiều ngang hàng thứ 2 */
+        width: 100%;
         grid-template-columns: 1fr !important;
-        gap: 12px;
     }
 
     /* 3. Nút 3 gạch bên TRÁI & Menu xổ mượt mà */
