@@ -181,7 +181,7 @@ body {
     display: flex;
     flex-direction: column; 
     gap: 15px; 
-    margin-top: 0; /* Xóa bỏ lệnh đẩy xuống 24px trước đó, đưa về 0 */
+    margin-top: 24px; /* Xóa bỏ lệnh đẩy xuống 24px trước đó, đưa về 0 */
     width: 120px;
 }
 
