@@ -142,6 +142,10 @@ body {
     flex-wrap: wrap; 
     align-items: center; /* Lệnh ma thuật: Đổi từ flex-start thành center để mọi thứ tự động nổi vào giữa khung */
     gap: 15px;
+    background: white;
+    padding: 25px;
+    border: 1px solid #ddd;
+    margin-bottom: 25px;
 }
 
 .search-grid {
