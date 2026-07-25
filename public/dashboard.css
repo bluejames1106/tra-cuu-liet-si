@@ -139,8 +139,6 @@ body {
 /* --- 4. KHU VỰC TÌM KIẾM --- */
 .search-section {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     gap: 20px;
     background: white;
     padding: 25px;
@@ -789,7 +787,7 @@ tr:hover { background-color: #f1f1f1; }
 }
 
 /* Đồng bộ màu sắc chung cho cả 2 trang: Đỏ đô viền vàng trang trọng */
-.badge-red, .badge-blue {
+.badge-blue {
     background: linear-gradient(135deg, #b30000, #800000);
     color: #ffffff;
     border-left: 6px solid #ffcc00;
