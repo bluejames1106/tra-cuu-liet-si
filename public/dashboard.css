@@ -139,12 +139,9 @@ body {
 /* --- 4. KHU VỰC TÌM KIẾM --- */
 .search-section {
     display: flex;
-    flex-wrap: wrap; /* Lệnh bắt buộc: Cho phép các phần tử rớt xuống dòng dưới */
+    flex-wrap: wrap; 
+    align-items: center; /* Lệnh ma thuật: Đổi từ flex-start thành center để mọi thứ tự động nổi vào giữa khung */
     gap: 15px;
-    background: white;
-    padding: 25px;
-    border: 1px solid #ddd;
-    margin-bottom: 25px;
 }
 
 .search-grid {
@@ -178,10 +175,10 @@ body {
 /* Cột nút bấm */
 .action-buttons {
     display: flex;
-    flex-direction: column; /* Xếp 2 nút dọc */
-    gap: 15px; /* Khoảng cách giữa 2 nút cho bằng với khoảng cách 2 hàng chữ */
-    margin-top: 24px; /* Lệnh bù trừ: Đẩy cụm nút xuống 24px để thẳng hàng chuẩn xác với các ô nhập liệu (bỏ qua phần chữ nhãn phía trên) */
-    width: 120px; /* Khống chế chiều rộng nút vừa vặn */
+    flex-direction: column; 
+    gap: 15px; 
+    margin-top: 0; /* Xóa bỏ lệnh đẩy xuống 24px trước đó, đưa về 0 */
+    width: 120px;
 }
 
 .btn-search, .btn-clear {
