@@ -38,7 +38,8 @@ async function searchData() {
         renderTableData(filteredData);
     } catch (error) {
         console.error("Lỗi fetch:", error);
-        alert("Không thể kết nối đến trạm dữ liệu Backend!");
+        //alert("Không thể kết nối đến trạm dữ liệu Backend!");
+        window.location.href = "error.html";
     }
 }
 
@@ -150,3 +151,8 @@ function toggleMenu() {
     const nav = document.getElementById("navLinks");
     nav.classList.toggle("show");
 }
+
+// Tự động phát hiện mất mạng và chuyển trang
+window.addEventListener('offline', function() {
+    window.location.href = "error.html";
+});
