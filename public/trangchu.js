@@ -46,3 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // Bạn có thể mở rộng thêm các tính năng tương tác của trang chủ tại đây trong tương lai
 console.log("Trang chủ đã được tải và sẵn sàng hoạt động ổn định!");
+
+// Tự động phát hiện mất mạng và chuyển trang
+window.addEventListener('offline', function() {
+    window.location.href = "error.html";
+});
