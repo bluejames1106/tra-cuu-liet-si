@@ -139,6 +139,8 @@ body {
 /* --- 4. KHU VỰC TÌM KIẾM --- */
 .search-section {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 20px;
     background: white;
     padding: 25px;
@@ -766,12 +768,15 @@ tr:hover { background-color: #f1f1f1; }
     display: inline-block;
     margin-left: 4px;
 }
+
 /* Thẻ nhãn tên bảng tra cứu trên mobile & desktop */
 .search-badge {
+    width: 100%; /* Bắt buộc trải dài toàn bộ không gian ngang */
+    box-sizing: border-box; /* Đảm bảo padding không làm tràn viền */
     text-align: center;
-    font-size: 15px;
+    font-size: 16px; /* Tăng cỡ chữ lên một chút cho bề thế */
     font-weight: bold;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border-radius: 6px;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -783,18 +788,11 @@ tr:hover { background-color: #f1f1f1; }
     gap: 8px;
 }
 
-/* Kiểu 1: Màu đỏ đô viền vàng trang trọng (Cho Đền thờ) */
-.badge-red {
+/* Đồng bộ màu sắc chung cho cả 2 trang: Đỏ đô viền vàng trang trọng */
+.badge-red, .badge-blue {
     background: linear-gradient(135deg, #b30000, #800000);
     color: #ffffff;
-    border-left: 5px solid #ffcc00;
-}
-
-/* Kiểu 2: Màu xanh dương chìm nổi bật (Cho Mộ phần) */
-.badge-blue {
-    background: linear-gradient(135deg, #004085, #002752);
-    color: #ffffff;
-    border-left: 5px solid #66b0ff;
+    border-left: 6px solid #ffcc00;
 }
 /* =========================================================
    1. CĂN GIỮA TIÊU ĐỀ NẰM TRÊN BANNER
