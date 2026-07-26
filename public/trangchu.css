@@ -264,65 +264,81 @@
     font-size: 16px;
 }
 /* =========================================================
-   THƯ VIỆN HÌNH ẢNH HOẠT ĐỘNG (PHOTO GALLERY GRID)
+   THƯ VIỆN HÌNH ẢNH - GIAO DIỆN LƯỚT NGANG (SWIPEABLE)
    ========================================================= */
+
 .photo-gallery-section {
-    background-color: #ffffff; /* Tạo nền trắng cho cả khung ảnh */
+    background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     margin-top: 25px;
     overflow: hidden;
 }
 
-.bg-red {
-    background: #cc0000 !important;
+/* Biến Grid thành Flexbox cuộn ngang */
+.gallery-grid {
+    display: flex;
+    overflow-x: auto; /* Bật tính năng cuộn ngang */
+    gap: 15px; /* Khoảng cách giữa các tấm ảnh */
+    padding: 15px;
+    scroll-snap-type: x mandatory; /* Bật hiệu ứng nam châm: lướt đến đâu hút vào khung đến đó */
+    scroll-behavior: smooth; /* Cuộn mượt mà */
+    scrollbar-width: thin; /* Làm mỏng thanh cuộn trên Firefox */
+    scrollbar-color: #cc0000 #f0f0f0; 
 }
 
-/* Tự động chia cột linh hoạt (mỗi ô rộng tối thiểu 250px) */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Thuật toán ma thuật: Chia đúng 4 phần bằng nhau, lấp đầy 100% chiều ngang */
-    gap: 8px; /* Khoảng cách khe hở giữa các hình siêu nhỏ (8px) để triệt tiêu khoảng trắng thừa */
-    padding: 12px; /* Khoảng cách lề từ hình dội ra khung ngoài */
+/* Trang trí thanh cuộn ngang cho Chrome/Safari/Edge */
+.gallery-grid::-webkit-scrollbar {
+    height: 8px; /* Độ dày của thanh cuộn */
+}
+.gallery-grid::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+.gallery-grid::-webkit-scrollbar-thumb {
+    background-color: #cc0000; /* Thanh cuộn màu đỏ đồng bộ với tiêu đề */
+    border-radius: 10px;
 }
 
 /* Thẻ khung chứa ảnh */
 .gallery-item {
+    flex: 0 0 280px; /* Chốt cứng chiều rộng mỗi ảnh là 280px, không bị bóp méo */
+    scroll-snap-align: start; /* Điểm dừng nam châm lề trái */
     border: 1px solid #e0e0e0;
     background: #fafafa;
+    border-radius: 6px;
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .gallery-item:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px); /* Nhảy nhẹ lên khi đưa chuột vào (trên máy tính) */
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
+/* Khung bọc hình ảnh */
 .gallery-img-box {
     width: 100%;
-    height: 170px;
+    height: 190px; /* Chiều cao cố định cho mọi ảnh */
     overflow: hidden;
     background: #eee;
 }
 
 .gallery-img-box img {
-    width: 100%; 
-    height: 100%; /* Sửa 160px thành 100% để lấp đầy hoàn toàn khung 170px */
-    object-fit: cover; /* Lệnh này giúp ảnh bó sát, lấp đầy khung mà tỷ lệ người/cảnh không bị bóp méo (chỉ cắt cúp nhẹ viền thừa) */
-    background-color: #f5f5f5;
-    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung 280x190 mà không bể/méo */
     display: block;
     transition: transform 0.3s ease;
 }
 
 .gallery-item:hover .gallery-img-box img {
-    transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi di chuột */
+    transform: scale(1.05); /* Phóng to nhẹ ảnh khi hover */
 }
 
 /* Chú thích dưới từng ảnh */
 .gallery-caption {
-    padding: 8px 10px;
+    padding: 10px;
     font-size: 13px;
     color: #333;
     font-weight: bold;
