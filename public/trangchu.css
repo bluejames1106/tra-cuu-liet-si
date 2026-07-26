@@ -35,18 +35,17 @@
 
 /* --- KHU VỰC LƯỚI BÀI BÁO CHÍNH --- */
 .news-grid-section {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 6.5fr 3.5fr; /* Chia tỷ lệ: Cột chính 6.5 phần, Cột phụ 3.5 phần */
+    gap: 30px; /* Khoảng cách thở giữa 2 cột */
+    align-items: start; /* Ép cả 2 cột bắt đầu từ sát mép trên cùng */
+    margin-top: 20px;
 }
 
-/* 1. Cột trái (Bài báo nổi bật) */
+/* Đảm bảo khung bên trong cột trái không bị tràn */
 .main-news-article {
-    flex: 6.5;
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 20px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .article-headline {
@@ -321,7 +320,8 @@
 /* --- ĐÁP ỨNG THIẾT BỊ DI ĐỘNG --- */
 @media (max-width: 992px) {
     .news-grid-section {
-        flex-direction: column; /* Chuyển cột thành hàng dọc trên điện thoại */
+        grid-template-columns: 1fr; /* Tự động gộp thành 1 cột dọc trên màn hình nhỏ/điện thoại */
+        gap: 20px;
     }
     
     .article-hero-img {
