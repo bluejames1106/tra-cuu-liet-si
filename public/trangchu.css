@@ -44,8 +44,12 @@
 
 /* Đảm bảo khung bên trong cột trái không bị tràn */
 .main-news-article {
-    width: 100%;
-    overflow: hidden;
+    background-color: #ffffff; /* Phủ nền trắng */
+    border: 1px solid #e0e0e0; /* Đường viền xám nhạt */
+    border-radius: 6px; /* Bo nhẹ 4 góc */
+    padding: 20px 24px; /* Tạo khoảng trống lề đệm bên trong để chữ không dính sát vào viền */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Đổ bóng mờ 3D nhẹ nhàng */
+    box-sizing: border-box;
 }
 
 .article-headline {
@@ -70,12 +74,11 @@
 }
 
 .article-hero-img {
-    width: 45%;
-    float: left; /* Chữ bọc quanh ảnh đúng chuẩn báo */
-    margin: 0 20px 10px 0;
-    border: 1px solid #eee;
-    padding: 3px;
-    background: #fff;
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 15px;
 }
 
 .article-content p {
@@ -258,9 +261,11 @@
    THƯ VIỆN HÌNH ẢNH HOẠT ĐỘNG (PHOTO GALLERY GRID)
    ========================================================= */
 .photo-gallery-section {
-    margin-bottom: 30px;
-    border: 1px solid #cc0000;
-    background: #fff;
+    background-color: #ffffff; /* Tạo nền trắng cho cả khung ảnh */
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-top: 25px;
+    overflow: hidden;
 }
 
 .bg-red {
@@ -270,9 +275,9 @@
 /* Tự động chia cột linh hoạt (mỗi ô rộng tối thiểu 250px) */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-    padding: 15px;
+    grid-template-columns: repeat(4, 1fr); /* Thuật toán ma thuật: Chia đúng 4 phần bằng nhau, lấp đầy 100% chiều ngang */
+    gap: 8px; /* Khoảng cách khe hở giữa các hình siêu nhỏ (8px) để triệt tiêu khoảng trắng thừa */
+    padding: 12px; /* Khoảng cách lề từ hình dội ra khung ngoài */
 }
 
 /* Thẻ khung chứa ảnh */
@@ -296,10 +301,12 @@
 }
 
 .gallery-img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Cắt ảnh vừa vặn khung mà không bị méo */
-    transition: transform 0.3s ease;
+    width: 100%; /* Bắt buộc hình dãn hết 100% của 1 cột */
+    height: 160px; /* Fix cứng chiều cao để 4 hình bằng nhau tăm tắp dù ảnh gốc có kích thước khác nhau */
+    object-fit: cover; /* Tự động cắt cúp phần thừa, không làm méo hình */
+    border-radius: 4px;
+    display: block;
+    transition: transform 0.3s ease; /* Thêm hiệu ứng nhẹ *
 }
 
 .gallery-item:hover .gallery-img-box img {
