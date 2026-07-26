@@ -288,6 +288,57 @@ app.post('/api/sync-webhook', async (req, res) => {
         res.status(500).json({ error: "Lỗi hệ thống khi đồng bộ" });
     }
 });
+// ==========================================
+// BỔ SUNG: TẠO INDEX KHÔNG DẤU CHO TÊN (CHẠY 1 LẦN KHI KHỞI ĐỘNG HOẶC ĐĂNG KÝ VÀO POOL)
+// ==========================================
+pool.on('connect', async (client) => {
+    try {
+        await client.query(`
+            CREATE INDEX IF NOT EXISTS idx_liet_si_ten_unaccent 
+            ON danh_sach_liet_si (translate(LOWER(ho_va_ten), 'áàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵđ', 'aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyyd'));
+        `);
+    } catch (e) {
+        // Bỏ qua lỗi nhẹ nếu index đã tồn tại
+    }
+});
+
+// ==========================================
+// BỔ SUNG: CƠ CHẾ GIỚI HẠN KẾT NỐI (POOL MAX 100) VÀ LIMIT KẾT QUẢ TÌM KIẾM TÊN
+// (Hãy dùng đoạn code API này thay thế hoặc bổ sung cho API tìm kiếm mộ phần cũ để chịu 1000 người)
+// ==========================================
+app.get('/api/martyrs-optimized-1000', async (req, res) => {
+    try {
+        const { name } = req.query;
+        const cacheKey = 'search_1000_' + (name ? name.trim().toLowerCase() : 'all');
+        
+        // Kiểm tra RAM Cache tức thì để gánh tải cho 1000 người
+        if (searchCache.has(cacheKey)) {
+            return res.json(searchCache.get(cacheKey));
+        }
+
+        let sql = `SELECT id_db AS id, so_tt, ho_va_ten, nam_sinh, que_quan, hang, so_mo FROM danh_sach_liet_si WHERE 1=1`;
+        const values = []; 
+        
+        if (name && name.trim()) {
+            sql += ` AND ${unaccentSQL('ho_va_ten')} LIKE ${unaccentSQL('$1')}`;
+            values.push(formatSearchPattern(name));
+        }
+        
+        // Giới hạn tối đa 100 kết quả để bảo vệ băng thông và RAM khi đông người truy cập cùng lúc
+        sql += " ORDER BY CAST(NULLIF(TRIM(so_tt), '') AS INT) ASC NULLS LAST LIMIT 100";
+        
+        const result = await pool.query(sql, values);
+        
+        // Lưu cache kết quả tìm kiếm tên này trong 2 phút
+        searchCache.set(cacheKey, result.rows);
+        setTimeout(() => searchCache.delete(cacheKey), 120000); 
+
+        res.json(result.rows);
+    } catch (err) { 
+        console.error(err);
+        res.status(500).json({ error: "Lỗi Server API Tối ưu 1000 người" }); 
+    }
+});
 
 
 // --- 7. KHỞI ĐỘNG SERVER ---
