@@ -255,7 +255,69 @@
 .notice-list li span {
     font-size: 16px;
 }
+/* =========================================================
+   THƯ VIỆN HÌNH ẢNH HOẠT ĐỘNG (PHOTO GALLERY GRID)
+   ========================================================= */
+.photo-gallery-section {
+    margin-bottom: 30px;
+    border: 1px solid #cc0000;
+    background: #fff;
+}
 
+.bg-red {
+    background: #cc0000 !important;
+}
+
+/* Tự động chia cột linh hoạt (mỗi ô rộng tối thiểu 250px) */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    padding: 15px;
+}
+
+/* Thẻ khung chứa ảnh */
+.gallery-item {
+    border: 1px solid #e0e0e0;
+    background: #fafafa;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.gallery-img-box {
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+    background: #eee;
+}
+
+.gallery-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cắt ảnh vừa vặn khung mà không bị méo */
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-img-box img {
+    transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi di chuột */
+}
+
+/* Chú thích dưới từng ảnh */
+.gallery-caption {
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #333;
+    font-weight: bold;
+    line-height: 1.4;
+    text-align: center;
+    background: #fff;
+    border-top: 1px solid #eee;
+}
 /* --- ĐÁP ỨNG THIẾT BỊ DI ĐỘNG --- */
 @media (max-width: 992px) {
     .news-grid-section {
