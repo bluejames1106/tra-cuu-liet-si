@@ -37,7 +37,7 @@ window.onload = async function() {
         document.getElementById("p_board").innerText = boardValue || "Chưa cập nhật";
         document.getElementById("p_row").innerText = data.row || "";
         document.getElementById("p_col").innerText = data.col || "";
-        document.getElementById("p_bio").innerText = data.bio || "Tiểu sử trích ngang";
+        document.getElementById("p_bio").innerText = data.bio || "Đang cập nhật";
 
         // --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT ---
         const targetRow = parseInt(data.row);
