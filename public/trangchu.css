@@ -1,9 +1,9 @@
-/* =========================================================
-   BỐ CỤC TRANG CHỦ - PHONG CÁCH BÁO CHÍ / CỔNG THÔNG TIN
-   ========================================================= */
+/* ==========================================================================
+   BỐ CỤC TRANG CHỦ - CỔNG THÔNG TIN
+   ========================================================================== */
 
 .news-portal-wrapper {
-    font-family: Arial, Tahoma, sans-serif; /* Phông chữ chuẩn của báo mạng */
+    font-family: Arial, Tahoma, sans-serif;
     margin: 20px 0 40px 0;
     color: #333;
 }
@@ -12,7 +12,7 @@
 .portal-main-title {
     text-align: center;
     margin-bottom: 25px;
-    border-bottom: 3px solid #cc0000; /* Vạch đỏ trang nghiêm */
+    border-bottom: 3px solid #cc0000;
     padding-bottom: 15px;
 }
 
@@ -33,29 +33,31 @@
     margin: 0;
 }
 
-/* --- KHU VỰC LƯỚI BÀI BÁO CHÍNH --- */
+/* ==========================================================================
+   LƯỚI BỐ CỤC CHÍNH (2 CỘT)
+   ========================================================================== */
+
 .news-grid-section {
     display: grid;
-    grid-template-columns: 6.5fr 3.5fr; /* Chia tỷ lệ: Cột chính 6.5 phần, Cột phụ 3.5 phần */
-    gap: 30px; /* Khoảng cách thở giữa 2 cột */
-    align-items: start; /* Ép cả 2 cột bắt đầu từ sát mép trên cùng */
+    grid-template-columns: 6.5fr 3.5fr;
+    gap: 30px;
+    align-items: start;
     margin-top: 20px;
 }
 
-/* Đảm bảo khung bên trong cột trái không bị tràn */
+/* --- CỘT TRÁI (BÀI VIẾT CHÍNH) --- */
 .main-news-article {
-    background-color: #ffffff; /* Phủ nền trắng */
-    border: 1px solid #e0e0e0; /* Đường viền xám nhạt */
-    border-radius: 6px; /* Bo nhẹ 4 góc */
-    padding: 20px 24px; /* Tạo khoảng trống lề đệm bên trong để chữ không dính sát vào viền */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Đổ bóng mờ 3D nhẹ nhàng */
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     box-sizing: border-box;
 }
 
-/* --- Ép toàn bộ đoạn văn trong cột trái căn lề trái --- */
 .main-news-article p {
-    text-align: left !important; /* Lệnh !important để ghi đè mọi thiết lập căn lề đều trước đó */
-    line-height: 1.6; /* Sẵn tiện nới lỏng khoảng cách giữa các dòng một chút cho dễ đọc */
+    text-align: left !important;
+    line-height: 1.6;
 }
 
 .article-headline {
@@ -91,7 +93,7 @@
     margin-bottom: 15px;
 }
 
-/* Chèn một block 2 cột bên trong bài báo */
+/* Khối nội dung song song bên trong bài viết */
 .two-col-text {
     clear: both;
     display: flex;
@@ -122,7 +124,7 @@
     text-align: justify;
 }
 
-/* 2. Cột phải (Danh sách tin liên quan) */
+/* --- CỘT PHẢI (DANH SÁCH TIN & CẤU TRÚC ĐỀN THỜ) --- */
 .side-news-list {
     flex: 3.5;
     border: 1px solid #0088cc;
@@ -130,7 +132,7 @@
 }
 
 .portal-box-header {
-    background: #0088cc; /* Tiêu đề màu xanh chuẩn cổng thông tin */
+    background: #0088cc;
     color: #fff;
     font-size: 15px;
     font-weight: bold;
@@ -179,7 +181,10 @@
     text-align: justify;
 }
 
-/* --- KHU VỰC THÔNG TIN BÊN DƯỚI (Các khối hộp vuông vức) --- */
+/* ==========================================================================
+   KHU VỰC THÔNG TIN TIỆN ÍCH (WIDGETS DƯỚI CÙNG)
+   ========================================================================== */
+
 .bottom-widgets-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -192,18 +197,18 @@
 }
 
 .bg-blue {
-    background: #0077b3; /* Xanh đậm hơn chút cho khối dưới */
+    background: #0077b3;
 }
 
 .portal-box-body {
     padding: 15px;
     font-size: 14px;
     color: #333;
-    height: calc(100% - 40px); /* Bù trừ chiều cao header */
+    height: calc(100% - 40px);
     box-sizing: border-box;
 }
 
-/* Định dạng List thông tin */
+/* Danh sách định dạng */
 .bullet-list {
     list-style: square;
     margin: 0 0 0 20px;
@@ -238,7 +243,7 @@
     border-top: 1px dashed #ddd;
 }
 
-/* Định dạng Thông báo */
+/* Danh sách thông báo (Icon) */
 .notice-list {
     list-style: none;
     margin: 0;
@@ -263,9 +268,10 @@
 .notice-list li span {
     font-size: 16px;
 }
-/* =========================================================
-   THƯ VIỆN HÌNH ẢNH - GIAO DIỆN LƯỚT NGANG (SWIPEABLE)
-   ========================================================= */
+
+/* ==========================================================================
+   THƯ VIỆN HÌNH ẢNH (DẠNG TRƯỢT NGANG)
+   ========================================================================== */
 
 .photo-gallery-section {
     background-color: #ffffff;
@@ -275,35 +281,33 @@
     overflow: hidden;
 }
 
-/* Biến Grid thành Flexbox cuộn ngang */
 .gallery-grid {
     display: flex;
-    overflow-x: auto; /* Bật tính năng cuộn ngang */
-    gap: 15px; /* Khoảng cách giữa các tấm ảnh */
+    overflow-x: auto;
+    gap: 15px;
     padding: 15px;
-    scroll-snap-type: x mandatory; /* Bật hiệu ứng nam châm: lướt đến đâu hút vào khung đến đó */
-    scroll-behavior: smooth; /* Cuộn mượt mà */
-    scrollbar-width: thin; /* Làm mỏng thanh cuộn trên Firefox */
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
     scrollbar-color: #cc0000 #f0f0f0; 
 }
 
-/* Trang trí thanh cuộn ngang cho Chrome/Safari/Edge */
+/* Custom thanh cuộn */
 .gallery-grid::-webkit-scrollbar {
-    height: 8px; /* Độ dày của thanh cuộn */
+    height: 8px;
 }
 .gallery-grid::-webkit-scrollbar-track {
     background: #f0f0f0;
     border-radius: 10px;
 }
 .gallery-grid::-webkit-scrollbar-thumb {
-    background-color: #cc0000; /* Thanh cuộn màu đỏ đồng bộ với tiêu đề */
+    background-color: #cc0000;
     border-radius: 10px;
 }
 
-/* Thẻ khung chứa ảnh */
 .gallery-item {
-    flex: 0 0 280px; /* Chốt cứng chiều rộng mỗi ảnh là 280px, không bị bóp méo */
-    scroll-snap-align: start; /* Điểm dừng nam châm lề trái */
+    flex: 0 0 280px;
+    scroll-snap-align: start;
     border: 1px solid #e0e0e0;
     background: #fafafa;
     border-radius: 6px;
@@ -312,14 +316,13 @@
 }
 
 .gallery-item:hover {
-    transform: translateY(-3px); /* Nhảy nhẹ lên khi đưa chuột vào (trên máy tính) */
+    transform: translateY(-3px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
-/* Khung bọc hình ảnh */
 .gallery-img-box {
     width: 100%;
-    height: 190px; /* Chiều cao cố định cho mọi ảnh */
+    height: 190px;
     overflow: hidden;
     background: #eee;
 }
@@ -327,16 +330,15 @@
 .gallery-img-box img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung 280x190 mà không bể/méo */
+    object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
 }
 
 .gallery-item:hover .gallery-img-box img {
-    transform: scale(1.05); /* Phóng to nhẹ ảnh khi hover */
+    transform: scale(1.05);
 }
 
-/* Chú thích dưới từng ảnh */
 .gallery-caption {
     padding: 10px;
     font-size: 13px;
@@ -347,10 +349,14 @@
     background: #fff;
     border-top: 1px solid #eee;
 }
-/* --- ĐÁP ỨNG THIẾT BỊ DI ĐỘNG --- */
+
+/* ==========================================================================
+   THIẾT KẾ ĐÁP ỨNG (RESPONSIVE)
+   ========================================================================== */
+
 @media (max-width: 992px) {
     .news-grid-section {
-        grid-template-columns: 1fr; /* Tự động gộp thành 1 cột dọc trên màn hình nhỏ/điện thoại */
+        grid-template-columns: 1fr;
         gap: 20px;
     }
     
@@ -365,18 +371,6 @@
     }
 
     .bottom-widgets-grid {
-        grid-template-columns: 1fr; /* Các khối dưới cũng xếp dọc */
-    }
-}
-/* THÊM MỚI: Tách thành 2 cột hình ảnh trên màn hình vừa (Tablet/Điện thoại ngang) */
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* THÊM MỚI: Tách thành 1 cột hình ảnh duy nhất trên màn hình điện thoại đứng */
-@media (max-width: 576px) {
-    .gallery-grid {
         grid-template-columns: 1fr;
     }
 }
