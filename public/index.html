@@ -7,43 +7,47 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-     <!-- 1. Phần Header -->
-<header class="top-header" id="banner-header">
-    <div class="header-container">
-        <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+    
+    <!-- HEADER BANNER -->
+    <header class="top-header" id="banner-header">
+        <div class="header-container">
+            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+            <div class="header-title-box">
+                CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ NHƠN TRẠCH
+            </div>
+        </div>
+    </header>
+
+    <!-- THANH ĐIỀU HƯỚNG (NAVIGATION) -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+            <div class="nav-links" id="navLinks">
+                <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
+                <a href="index.html" class="tab-btn active">TRA CỨU MỘ PHẦN</a>
+                <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- THANH HIỂN THỊ THỜI GIAN -->
+    <div class="datetime-bar">
+        <div class="datetime-inner">
+            <span id="current-datetime">Đang tải thời gian...</span>
+        </div>
+    </div>
+
+    <!-- KHU VỰC NỘI DUNG CHÍNH -->
+    <div class="container">
         
-        <div class="header-title-box">
-            CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ NHƠN TRẠCH
-        </div>
-    </div>
-</header>
-
-<!-- 2. Thanh Chọn Mục Navigation (Nút TRA CỨU MỘ PHẦN đang Active) -->
-<nav class="main-nav">
-    <div class="nav-container">
-        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-        <div class="nav-links" id="navLinks">
-            <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
-            <a href="index.html" class="tab-btn active">TRA CỨU MỘ PHẦN</a>
-            <a href="temple.html" class="tab-btn">TRA CỨU TRONG ĐỀN</a>
-        </div>
-    </div>
-</nav>
-
-<!-- 3. Thanh Thời Gian -->
-<div class="datetime-bar">
-    <div class="datetime-inner">
-        <span id="current-datetime">Đang tải thời gian...</span>
-    </div>
-</div>
-        <!-- Khu vực tìm kiếm -->
+        <!-- Khu vực bộ lọc tìm kiếm -->
         <div class="search-section">
-            <!-- 💥 CHÈN THẺ TÊN BẢNG TRA CỨU VÀO ĐÂY -->
-    <div class="search-badge badge-blue">
-        DANH SÁCH TRA CỨU MỘ PHẦN TẠI NGHĨA TRANG LIỆT SĨ
-    </div>
+            <div class="search-badge badge-blue">
+                DANH SÁCH TRA CỨU MỘ PHẦN TẠI NGHĨA TRANG LIỆT SĨ
+            </div>
+            
             <div class="search-grid">
-                <!-- Hàng 1 -->
+                <!-- Thông tin cá nhân -->
                 <div class="input-group">
                     <label>Họ và tên Liệt sĩ</label>
                     <input type="text" id="s_name">
@@ -57,7 +61,7 @@
                     <input type="text" id="s_home">
                 </div>
                 
-                <!-- Hàng 2 -->
+                <!-- Thông tin vị trí mộ phần -->
                 <div class="input-group">
                     <label>Khu/Lô</label>
                     <input type="text" id="s_area">
@@ -72,13 +76,14 @@
                 </div>
             </div>
             
+            <!-- Nút thao tác -->
             <div class="action-buttons">
                 <button class="btn-search" onclick="searchData()">Tìm kiếm</button>
                 <button class="btn-clear" onclick="clearSearch()">Xóa hết</button>
             </div>
         </div>
 
-        <!-- Bảng dữ liệu -->
+        <!-- Bảng hiển thị kết quả -->
         <div class="table-container">
             <table id="martyrTable">
                 <thead>
@@ -93,17 +98,17 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Dữ liệu sẽ được chèn vào đây qua JS -->
+                    <!-- Dữ liệu từ cơ sở dữ liệu sẽ được hiển thị tại đây thông qua JS -->
                 </tbody>
             </table>
         </div>
 
+        <!-- Điều hướng phân trang -->
         <div class="pagination" id="pagination"></div>
+        
     </div>
 
-    <script src="dashboard.js"></script>
-</body>
-<!-- Phần Footer -->
+    <!-- CHÂN TRANG (FOOTER) -->
     <footer class="site-footer">
         <div class="footer-content">
             <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
@@ -114,4 +119,7 @@
             <p>Website: ........................ &nbsp;&nbsp;|&nbsp;&nbsp; Email: ...................</p>
         </div>
     </footer>
+
+    <script src="dashboard.js"></script>
+</body>
 </html>
