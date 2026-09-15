@@ -1,6 +1,11 @@
+/* ==========================================================================
+   TEMPLE_DETAIL.JS - Hiển thị chi tiết liệt sĩ trong Đền thờ và sơ đồ vị trí
+   ========================================================================== */
+
+// Tải chi tiết dữ liệu khi mở trang
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id'); // Nhận ID từ trang danh sách
+    const id = urlParams.get('id');
 
     if (!id) {
         alert("Không tìm thấy thông tin liệt sĩ!");
@@ -9,7 +14,7 @@ window.onload = async function() {
     }
 
     try {
-        // Gọi API lấy chi tiết từ SQL / Google Sheet
+        // Gửi yêu cầu truy xuất dữ liệu từ Backend
         const response = await fetch(`/api/shrine-martyrs/${id}`);
         
         if (response.status === 404) {
@@ -22,10 +27,10 @@ window.onload = async function() {
 
         const data = await response.json();
 
-        // TRÍCH XUẤT CHÍNH XÁC GIÁ TRỊ "BẢNG" TỪ GOOGLE SHEET TÙY THEO CÁCH ĐẶT TÊN CỘT
+        // Thu thập giá trị Bảng từ cơ sở dữ liệu
         const boardValue = data.board || data.bang || data.bia || data.b_so || "";
 
-        // Đổ dữ liệu trích xuất vào giao diện
+        // Hiển thị thông tin cá nhân
         document.getElementById("p_name").innerText = data.name || "Liệt sĩ";
         document.getElementById("p_birth").innerText = data.birth || "";
         document.getElementById("p_home").innerText = data.home || "";
@@ -33,59 +38,61 @@ window.onload = async function() {
         document.getElementById("p_title").innerText = data.danh_hieu || data.title || ""; 
         document.getElementById("p_unit").innerText = data.unit || "";
         
-        // Hiển thị thông tin Bảng thực tế từ Google Sheet (nếu trống sẽ ghi "Chưa cập nhật")
+        // Hiển thị thông tin vị trí trong Đền
         document.getElementById("p_board").innerText = boardValue || "Chưa cập nhật";
         document.getElementById("p_row").innerText = data.row || "";
         document.getElementById("p_col").innerText = data.col || "";
         document.getElementById("p_bio").innerText = data.bio || "Đang cập nhật";
 
-        // --- ĐOẠN XỬ LÝ VẼ SƠ ĐỒ HÀNG CỘT ---
+        // ==========================================
+        // XỬ LÝ VẼ SƠ ĐỒ VỊ TRÍ (MA TRẬN HÀNG/CỘT)
+        // ==========================================
         const targetRow = parseInt(data.row);
         const targetCol = parseInt(data.col);
         const gridElement = document.getElementById("shrine_grid");
         const statusElement = document.getElementById("map_status");
 
-        // Kiểm tra xem dữ liệu hàng và cột có hợp lệ không
+        // Xử lý ngoại lệ nếu thiếu dữ liệu Hàng/Cột
         if (isNaN(targetRow) || isNaN(targetCol) || targetRow <= 0 || targetCol <= 0) {
             statusElement.innerText = "⚠️ Chưa cập nhật thông tin Hàng/Cột cụ thể trong cơ sở dữ liệu để vẽ sơ đồ.";
             gridElement.style.display = "none";
         } else {
-            // Hiển thị tên Bảng trích xuất thực tế (không tự động ép về Bảng 1 nữa)
+            // Hiển thị chú thích sơ đồ
             const boardText = boardValue ? `Bảng ${boardValue}` : "Chưa xác định Bảng";
             statusElement.innerHTML = `Vị trí hiển thị: <strong>${boardText} — Hàng ${targetRow}, Cột ${targetCol}</strong> (Biểu tượng ★ nổi bật).`;
             
-            // Xác định kích thước bảng mô phỏng
+            // Tính toán kích thước lưới ma trận
             const maxRows = Math.max(8, targetRow + 2); 
             const maxCols = Math.max(12, targetCol + 2);
 
             let tableHTML = "";
 
-            // 1. Tạo hàng tiêu đề trên cùng (Cột 1, Cột 2...)
+            // Tạo hàng tiêu đề trên cùng
             tableHTML += "<tr><td class='shrine-header-cell'>H\\C</td>";
             for (let c = 1; c <= maxCols; c++) {
                 tableHTML += `<td class='shrine-header-cell'>${c}</td>`;
             }
             tableHTML += "</tr>";
 
-            // 2. Vòng lặp dựng các hàng và ô lưới
+            // Vòng lặp xây dựng ma trận
             for (let r = 1; r <= maxRows; r++) {
                 tableHTML += "<tr>";
-                // Ô đầu tiên ghi số Hàng
+                // Ô đầu tiên hiển thị chỉ số Hàng
                 tableHTML += `<td class='shrine-header-cell'>${r}</td>`;
                 
                 for (let c = 1; c <= maxCols; c++) {
                     let cellClass = "shrine-cell";
                     let cellContent = "";
 
-                    // Highlight đường gióng Hàng / Cột
+                    // Tạo hiệu ứng đường gióng Hàng/Cột
                     if (r === targetRow || c === targetCol) {
                         cellClass += " shrine-highlight-line";
                     }
 
-                    // Ô giao điểm chính xác (Vị trí Liệt sĩ)
+                    // Ô giao điểm chứa vị trí Liệt sĩ
                     if (r === targetRow && c === targetCol) {
                         cellClass += " shrine-cell-active";
-                        cellContent = "★"; // Đặt ngôi sao đỏ nổi bật
+                        cellContent = "★";
                     }
 
                     tableHTML += `<td class="${cellClass}">${cellContent}</td>`;
@@ -93,57 +100,54 @@ window.onload = async function() {
                 tableHTML += "</tr>";
             }
 
-            // Xuất HTML ra màn hình giao diện
+            // Đưa bản đồ vào giao diện
             gridElement.innerHTML = tableHTML;
             gridElement.style.display = "table";
         }
 
     } catch (error) {
         console.error("Lỗi tải trang chi tiết đền thờ:", error);
-        alert("Đã xảy ra lỗi khi tải dữ liệu chi tiết từ cơ sở dữ liệu đám mây!");
+        alert("Đã xảy ra lỗi khi tải dữ liệu chi tiết từ cơ sở dữ liệu!");
         window.location.href = "error.html";
     }
 };
+
+// Cập nhật đồng hồ thời gian thực
 function updateRealtimeClock() {
     const now = new Date();
 
-    // 1. Mảng tên các thứ trong tuần
     const days = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
     const dayName = days[now.getDay()];
 
-    // 2. Định dạng Ngày / Tháng / Năm (Thêm số 0 vào trước nếu nhỏ hơn 10)
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const year = now.getFullYear();
 
-    // 3. Định dạng Giờ : Phút
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
 
-    // 4. Ghép thành chuỗi dạng: "Thứ tư, 22/07/2026, 23:25"
+    // Ghép thành chuỗi hiển thị
     const timeString = `${dayName}, ${day}/${month}/${year}, ${hours}:${minutes}`;
 
-    // 5. Gán vào HTML
     const clockElement = document.getElementById("current-datetime");
     if (clockElement) {
         clockElement.innerText = timeString;
     }
 }
 
-// Chạy hàm ngay khi trang web load xong
+// Kích hoạt đồng hồ khi tải trang và lặp lại mỗi giây
 document.addEventListener("DOMContentLoaded", () => {
     updateRealtimeClock();
-    // Tự động chạy lại mỗi 1 giây (1000ms) để đồng hồ luôn chính xác
     setInterval(updateRealtimeClock, 1000);
 });
-// Hàm Đóng/Mở Menu trên điện thoại
+
+// Đóng/mở menu điều hướng trên thiết bị di động
 function toggleMenu() {
     const nav = document.getElementById("navLinks");
     if (nav) nav.classList.toggle("show");
 }
 
-// Tự động phát hiện mất mạng và chuyển trang
+// Chuyển hướng đến trang lỗi khi mất kết nối mạng
 window.addEventListener('offline', function() {
     window.location.href = "error.html";
 });
-
