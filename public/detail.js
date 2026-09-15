@@ -1,7 +1,11 @@
-// detail.js - Lấy chi tiết dữ liệu trực tiếp từ SQL thông qua Backend
+/* ==========================================================================
+   DETAIL.JS - Xử lý hiển thị thông tin chi tiết liệt sĩ
+   ========================================================================== */
+
+// Lấy thông tin chi tiết khi trang được tải
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id'); // Lấy ID khóa chính truyền từ trang chủ sang
+    const id = urlParams.get('id'); // Lấy tham số ID từ URL
 
     if (!id) {
         alert("Không tìm thấy thông tin liệt sĩ!");
@@ -10,7 +14,7 @@ window.onload = async function() {
     }
 
     try {
-        // Gọi API đến Server để lấy thông tin chi tiết của liệt sĩ theo ID thật trong SQL
+        // Gửi yêu cầu lấy dữ liệu chi tiết theo ID
         const response = await fetch(`/api/martyrs/${id}`);
         
         if (response.status === 404) {
@@ -23,7 +27,7 @@ window.onload = async function() {
 
         const data = await response.json();
         
-        // 1. Đổ dữ liệu chữ khớp chính xác với tên cột trong PostgreSQL của bạn
+        // Hiển thị thông tin cá nhân
         document.getElementById("p_name").innerText = data.ho_va_ten || "Liệt sĩ";
         document.getElementById("p_birth").innerText = data.nam_sinh || "";
         document.getElementById("p_home").innerText = data.que_quan || "";
@@ -31,67 +35,63 @@ window.onload = async function() {
         document.getElementById("p_deathPlace").innerText = data.noi_hy_sinh || "";
         document.getElementById("p_unit").innerText = data.don_vi || "";
         
-        // 2. Định dạng thông tin vị trí mộ
-        document.getElementById("p_area").innerText = data.khu_lo || data.khu || ""; // Đã nạp lại biến hiển thị Khu/Lô dự phòng nếu trống
+        // Hiển thị thông tin vị trí phần mộ
+        document.getElementById("p_area").innerText = data.khu_lo || data.khu || "";
         document.getElementById("p_row").innerText = data.hang || "";
         document.getElementById("p_grave").innerText = data.so_mo || "";
         
-        // 3. Hiển thị tiểu sử
+        // Hiển thị tiểu sử
         document.getElementById("p_bio").innerText = data.tieu_su || "Đang cập nhật";
 
-        // 4. Hiển thị cột Sở thích (Nếu trên giao diện HTML có thẻ tương ứng)
+        // Hiển thị thông tin sở thích (nếu có thẻ tương ứng trên giao diện)
         const hobbyElement = document.getElementById("p_hobby");
         if (hobbyElement) {
             hobbyElement.innerText = data.so_thich || "Trống";
         }
 
-        // ĐOẠN XỬ LÝ ẢNH ĐÃ ĐƯỢC XÓA BỎ HOÀN TOÀN:
-        // Việc hiển thị hình tượng trưng tĩnh lúc này sẽ do thẻ <img> trong file HTML tự đảm nhận.
-
     } catch (error) {
         console.error("Lỗi tải chi tiết:", error);
-        alert("Lỗi khi tải chi tiết dữ liệu từ cơ sở dữ liệu SQL!");
+        alert("Lỗi khi tải chi tiết dữ liệu từ cơ sở dữ liệu!");
         window.location.href = "error.html";
     }
 };
+
+// Cập nhật đồng hồ thời gian thực
 function updateRealtimeClock() {
     const now = new Date();
 
-    // 1. Mảng tên các thứ trong tuần
     const days = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
     const dayName = days[now.getDay()];
 
-    // 2. Định dạng Ngày / Tháng / Năm (Thêm số 0 vào trước nếu nhỏ hơn 10)
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const year = now.getFullYear();
 
-    // 3. Định dạng Giờ : Phút
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
 
-    // 4. Ghép thành chuỗi dạng: "Thứ tư, 22/07/2026, 23:25"
+    // Ghép thành chuỗi hiển thị
     const timeString = `${dayName}, ${day}/${month}/${year}, ${hours}:${minutes}`;
 
-    // 5. Gán vào HTML
     const clockElement = document.getElementById("current-datetime");
     if (clockElement) {
         clockElement.innerText = timeString;
     }
 }
 
-// Chạy hàm ngay khi trang web load xong
+// Kích hoạt đồng hồ khi tải trang và lặp lại mỗi giây
 document.addEventListener("DOMContentLoaded", () => {
     updateRealtimeClock();
-    // Tự động chạy lại mỗi 1 giây (1000ms) để đồng hồ luôn chính xác
     setInterval(updateRealtimeClock, 1000);
 });
-// Hàm Đóng/Mở Menu trên điện thoại
+
+// Đóng/mở menu điều hướng trên thiết bị di động
 function toggleMenu() {
     const nav = document.getElementById("navLinks");
     nav.classList.toggle("show");
 }
 
+// Chuyển hướng đến trang lỗi khi mất kết nối mạng
 window.addEventListener('offline', function() {
     window.location.href = "error.html";
 });
