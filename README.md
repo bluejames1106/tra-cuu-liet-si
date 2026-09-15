@@ -25,21 +25,21 @@ Hệ thống tra cứu và quản lý hồ sơ liệt sĩ Phước An, hỗ tr�
 ```text
 .
 ├── public/                     # Tài nguyên tĩnh & giao diện client
-│   ├── index.html              # Cấu hình trang tra cứu danh sách liệt sĩ ngoài mộ phần
 │   ├── trangchu.html           # Trang chủ tra cứu
 │   ├── trangchu.css            # Style giao diện trang chủ
 │   ├── trangchu.js             # Logic xử lý tìm kiếm và điều hướng
 │   │
-│   ├── temple.html             # Danh sách & tra cứu liệt sĩ trong đền thờ
+│   ├── temple.html             # Cấu hình trang tra cứu liệt sĩ trong đền thờ
 │   ├── temple.js               # Logic tra cứu danh sách liệt sĩ đền thờ
 │   ├── temple_detail.html      # Trang chi tiết hồ sơ liệt sĩ trong đền thờ
 │   ├── temple_detail.js        # Logic tải thông tin chi tiết liệt sĩ đền thờ
 │   │
-│   ├── detail.html             # Trang chi tiết hồ sơ liệt sĩ (mộ phần/chung)
-│   ├── detail.js               # Logic lấy và hiển thị chi tiết hồ sơ
-│   │
-│   ├── dashboard.css           # Style bảng điều khiển quản trị
+│   ├── detail.html             # Cấu hình trang tra cứu liệt sĩ ngoài mộ phần
+│   ├── index.html              # Cấu hình trang tra cứu danh sách liệt sĩ ngoài mộ phần
 │   ├── dashboard.js            # Logic xử lý bảng điều khiển & thống kê
+│   ├── detail.js               # Logic lấy và hiển thị chi tiết hồ sơ ở mộ phần
+|   |
+│   ├── dashboard.css           # Style chung cho giao diện các trang trừ trang chủ
 │   ├── error.html              # Trang hiển thị thông báo lỗi hệ thống
 │   └── [images]                # Hình ảnh đồ họa (nghiatrang.jpg, dentholietsi.jpg, hoasen.jpg,...)
 │
