@@ -7,54 +7,72 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <!-- 1. Phần Header -->
-<header class="top-header" id="banner-header">
-    <div class="header-container">
-        <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
-        
-        <div class="header-title-box">
-            CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ NHƠN TRẠCH
-        </div>
-    </div>
-</header>
-
-<!-- 2. Thanh Chọn Mục Navigation (Nút TRA CỨU TRONG ĐỀN đang Active) -->
-<nav class="main-nav">
-    <div class="nav-container">
-        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-        <div class="nav-links" id="navLinks">
-            <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
-            <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
-            <a href="temple.html" class="tab-btn active">TRA CỨU TRONG ĐỀN</a>
-        </div>
-    </div>
-</nav>
-
-<!-- 3. Thanh Thời Gian -->
-<div class="datetime-bar">
-    <div class="datetime-inner">
-        <span id="current-datetime">Đang tải thời gian...</span>
-    </div>
-</div>
-        <!-- Khung tìm kiếm (Chỉ có 4 ô) -->
-        <div class="search-section">
-            <!--  CHÈN THẺ TÊN BẢNG TRA CỨU VÀO ĐÂY -->
-    <div class="search-badge badge-blue">
-        DANH SÁCH TRA CỨU LIỆT SĨ TRONG ĐỀN THỜ
-    </div>
-            <div class="search-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
-                <div class="input-group"><label>Họ và tên</label><input type="text" id="t_name"></div>
-                <div class="input-group"><label>Năm sinh</label><input type="text" id="t_birth"></div>
-                <div class="input-group"><label>Nguyên quán (cũ)</label><input type="text" id="t_home"></div>
-                <div class="input-group"><label>Năm hy sinh/Từ trần</label><input type="text" id="t_deathYear"></div>
+    
+    <!-- HEADER BANNER -->
+    <header class="top-header" id="banner-header">
+        <div class="header-container">
+            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+            <div class="header-title-box">
+                CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ NHƠN TRẠCH
             </div>
+        </div>
+    </header>
+
+    <!-- THANH ĐIỀU HƯỚNG (NAVIGATION) -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+            <div class="nav-links" id="navLinks">
+                <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
+                <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
+                <a href="temple.html" class="tab-btn active">TRA CỨU TRONG ĐỀN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- THANH HIỂN THỊ THỜI GIAN -->
+    <div class="datetime-bar">
+        <div class="datetime-inner">
+            <span id="current-datetime">Đang tải thời gian...</span>
+        </div>
+    </div>
+
+    <!-- KHU VỰC NỘI DUNG CHÍNH -->
+    <div class="container">
+        
+        <!-- Khu vực bộ lọc tìm kiếm -->
+        <div class="search-section">
+            <div class="search-badge badge-blue">
+                DANH SÁCH TRA CỨU LIỆT SĨ TRONG ĐỀN THỜ
+            </div>
+            
+            <div class="search-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+                <div class="input-group">
+                    <label>Họ và tên</label>
+                    <input type="text" id="t_name">
+                </div>
+                <div class="input-group">
+                    <label>Năm sinh</label>
+                    <input type="text" id="t_birth">
+                </div>
+                <div class="input-group">
+                    <label>Nguyên quán (cũ)</label>
+                    <input type="text" id="t_home">
+                </div>
+                <div class="input-group">
+                    <label>Năm hy sinh/Từ trần</label>
+                    <input type="text" id="t_deathYear">
+                </div>
+            </div>
+            
+            <!-- Nút thao tác -->
             <div class="action-buttons">
                 <button class="btn-search" onclick="renderTable()">Tìm kiếm</button>
                 <button class="btn-clear" onclick="clearSearch()">Xóa hết</button>
             </div>
         </div>
 
-        <!-- Bảng hiển thị (8 Cột) -->
+        <!-- Bảng hiển thị kết quả -->
         <div class="table-container">
             <table>
                 <thead>
@@ -69,13 +87,18 @@
                         <th>Cột</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="tableBody">
+                    <!-- Dữ liệu từ cơ sở dữ liệu sẽ được hiển thị tại đây thông qua JS -->
+                </tbody>
             </table>
         </div>
         
+        <!-- Điều hướng phân trang -->
         <div class="pagination" id="pagination"></div>
+        
     </div>
 
+    <!-- CHÂN TRANG (FOOTER) -->
     <footer class="site-footer">
         <div class="footer-content">
             <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
