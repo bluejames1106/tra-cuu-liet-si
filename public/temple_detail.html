@@ -7,41 +7,46 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <!-- 1. Phần Header -->
-<header class="top-header" id="banner-header">
-    <div class="header-container">
-        <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+    
+    <!-- HEADER BANNER -->
+    <header class="top-header" id="banner-header">
+        <div class="header-container">
+            <img src="slogan-1-1.png" alt="Ủy ban nhân dân xã Phước An" class="header-slogan">
+            
+            <div class="header-title-box">
+                CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
+            </div>
+        </div>
+    </header>
+
+    <!-- THANH ĐIỀU HƯỚNG (NAVIGATION) -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+            <div class="nav-links" id="navLinks">
+                <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
+                <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
+                <a href="temple.html" class="tab-btn active">TRA CỨU TRONG ĐỀN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- THANH HIỂN THỊ THỜI GIAN -->
+    <div class="datetime-bar">
+        <div class="datetime-inner">
+            <span id="current-datetime">Đang tải thời gian...</span>
+        </div>
+    </div>    
+    
+    <!-- KHU VỰC NỘI DUNG CHÍNH -->
+    <div class="container">
         
-        <div class="header-title-box">
-            CỔNG TRA CỨU THÔNG TIN CÁC ANH HÙNG LIỆT SĨ TẠI ĐỀN THỜ, NGHĨA TRANG LIỆT SĨ XÃ PHƯỚC AN
-        </div>
-    </div>
-</header>
-
-<!-- 2. Thanh Chọn Mục Navigation (Kích hoạt tab Tra cứu Trong Đền) -->
-<nav class="main-nav">
-    <div class="nav-container">
-        <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
-        <div class="nav-links" id="navLinks">
-            <a href="trangchu.html" class="tab-btn">TRANG CHỦ</a>
-            <a href="index.html" class="tab-btn">TRA CỨU MỘ PHẦN</a>
-            <a href="temple.html" class="tab-btn active">TRA CỨU TRONG ĐỀN</a>
-        </div>
-    </div>
-</nav>
-
-<!-- 3. Thanh Thời Gian -->
-<div class="datetime-bar">
-    <div class="datetime-inner">
-        <span id="current-datetime">Đang tải thời gian...</span>
-    </div>
-</div>    
-        <!-- Nút quay lại -->
+        <!-- Nút quay lại danh sách -->
         <div class="btn-back-container">
             <button class="btn-back" onclick="window.location.href='temple.html'">← Quay lại danh sách Đền</button>
         </div>
 
-        <!-- Khung hiển thị chi tiết tiểu sử -->
+        <!-- Khung thông tin chi tiết Liệt sĩ -->
         <div class="profile-box">
             <div class="profile-top">
                 <div class="profile-image">
@@ -64,14 +69,14 @@
             </div>
         </div>
 
-        <!-- KHU VỰC HIỂN THỊ SƠ ĐỒ VỊ TRÍ NÂNG CẤP -->
+        <!-- KHU VỰC HIỂN THỊ SƠ ĐỒ VỊ TRÍ TRONG ĐỀN -->
         <div class="shrine-map-container">
             <div class="shrine-map-header">
-                <h4> SƠ ĐỒ VỊ TRÍ TÊN TRONG ĐỀN THỜ</h4>
+                <h4>SƠ ĐỒ VỊ TRÍ TÊN TRONG ĐỀN THỜ</h4>
                 <p id="map_status" class="map-status-text">Đang xác định vị trí trên sơ đồ...</p>
             </div>
 
-            <!-- BẢNG CHÚ THÍCH (LEGEND) -->
+            <!-- Bảng chú thích ký hiệu sơ đồ (Legend) -->
             <div class="shrine-legend">
                 <div class="legend-item">
                     <span class="legend-box box-active">★</span>
@@ -87,14 +92,15 @@
                 </div>
             </div>
             
-            <!-- Bảng lưới ma trận -->
+            <!-- Bảng lưới hiển thị vị trí -->
             <div class="table-scroll-wrapper">
                 <table id="shrine_grid"></table>
             </div>
         </div>
+        
     </div>
 
-    <!-- CSS BẢNG VỊ TRÍ ĐƯỢC THIẾT KẾ LẠI -->
+    <!-- CSS BẢNG SƠ ĐỒ VỊ TRÍ -->
     <style>
         .shrine-map-container {
             margin-top: 25px;
@@ -121,7 +127,7 @@
             color: #4a5568;
         }
 
-        /* KHU VỰC CHÚ THÍCH */
+        /* Khu vực chú thích (Legend) */
         .shrine-legend {
             display: flex;
             flex-wrap: wrap;
@@ -173,10 +179,10 @@
             padding-bottom: 8px;
         }
 
-        /* BẢNG LƯỚI MA TRẬN */
+        /* Bảng lưới hiển thị vị trí (Ma trận) */
         #shrine_grid {
             border-collapse: separate;
-            border-spacing: 4px; /* Tạo khoảng cách hiện đại giữa các ô */
+            border-spacing: 4px; 
             margin: 0 auto;
             display: none;
         }
@@ -213,7 +219,7 @@
             color: #9f1239;
         }
 
-        /* Ô VỊ TRÍ CHÍNH XÁC */
+        /* Ô chứa vị trí chính xác (có hiệu ứng nhấp nháy) */
         .shrine-cell-active {
             background: linear-gradient(135deg, #e63946, #b7094c) !important;
             border: 1px solid #990000 !important;
@@ -236,7 +242,7 @@
         }
     </style>
 
-    <!-- FOOTER -->
+    <!-- CHÂN TRANG (FOOTER) -->
     <footer class="site-footer">
         <div class="footer-content">
             <h3>ỦY BAN NHÂN DÂN XÃ PHƯỚC AN</h3>
