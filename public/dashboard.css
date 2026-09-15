@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CÀI ĐẶT CHUNG & BỐ CỤC (DASHBOARD.CSS)
+   CÀI ĐẶT CHUNG & BỐ CỤC
    ========================================================================== */
 
 body {
@@ -9,30 +9,69 @@ body {
     padding: 0;
 }
 
-/* --- 1. HEADER BANNER CHÍNH (ĐÃ PHÓNG TO) --- */
+.container {
+    max-width: 1300px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   HEADER & BANNER
+   ========================================================================== */
+
 .top-header {
     background-color: #0072c6;
     background-image: url('untitled-1.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    height: 145px; /* Tăng chiều cao giúp Header thoáng & hoành tráng hơn */
+    height: auto !important;
+    min-height: 140px !important;
     display: flex;
     align-items: center;
     border-bottom: none;
 }
 
-.header-container {
-    max-width: 1300px;
+.top-header .header-container {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 18px 20px 25px 20px !important;
+    box-sizing: border-box;
 }
 
+/* Logo tiêu đề UBND */
 .header-slogan {
-    max-height: 105px; /* Phóng to ảnh chữ "ỦY BAN NHÂN DÂN XÃ PHƯỚC AN" bự & rõ nét */
-    margin-left: 40px;
+    align-self: flex-start !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    display: block !important;
+    max-width: 280px;
+    max-height: 105px;
+    height: auto;
     filter: drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* Khung nhãn thông tin trên banner */
+.header-title-box {
+    align-self: center;
+    color: #FFEB3B;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    padding: 7px 18px;
+    background: rgba(0, 25, 65, 0.85);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 235, 59, 0.5);
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px #000000;
+    max-width: 95%;
+    display: inline-block;
 }
 
 .top-header h1 {
@@ -42,36 +81,36 @@ body {
     line-height: 1.4;
 }
 
-/* Container chính */
-.container {
-    max-width: 1300px;
-    margin: 20px auto;
-    padding: 0 20px;
-}
+/* ==========================================================================
+   TIÊU ĐỀ CỔNG TRA CỨU
+   ========================================================================== */
 
-/* --- 2. DẢI TIÊU ĐỀ CỔNG TRA CỨU (THIẾT KẾ SANG TRỌNG / UY NGHIÊM) --- */
 .title-banner {
-    background: linear-gradient(135deg, #0d3b66 0%, #004e92 50%, #000428 100%); /* Màu chiều sâu cao cấp */
+    background: linear-gradient(135deg, #0d3b66 0%, #004e92 50%, #000428 100%);
     color: #ffffff;
     text-align: center;
-    padding: 18px 25px; /* Khoảng thở rộng rãi, dễ đọc */
+    padding: 18px 25px;
     font-size: 19px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     line-height: 1.6;
-    border-top: 3px solid #f39c12; /* Đường viền Vàng Đồng chuẩn phong cách Nhà nước */
+    border-top: 3px solid #f39c12;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Tạo hiệu ứng chữ nổi */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 10px rgba(0, 0, 0, 0.15);
     margin-bottom: 0;
 }
 
-/* --- 3. THANH MENU VÀ NÚT CHỌN MỤC (TABS) MODERN --- */
+/* ==========================================================================
+   THANH ĐIỀU HƯỚNG & TABS
+   ========================================================================== */
+
 .main-nav {
     background: linear-gradient(to right, #0059b3, #0073e6);
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
     border-bottom: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
@@ -85,9 +124,9 @@ body {
     padding: 6px 20px;
 }
 
-/* Nút 3 gạch ẩn trên PC */
+/* Nút chuyển đổi menu trên thiết bị di động */
 .menu-toggle {
-    display: none; 
+    display: none;
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 6px;
@@ -109,7 +148,7 @@ body {
     width: 100%;
 }
 
-/* Kiểu dáng Tab dạng Viên thuốc (Pill Tabs) */
+/* Nút điều hướng tab */
 .tab-btn {
     padding: 9px 22px;
     color: rgba(255, 255, 255, 0.9);
@@ -128,7 +167,7 @@ body {
     color: #ffffff;
 }
 
-/* Tab đang được chọn - Nổi bật trên nền Trắng */
+/* Tab trạng thái kích hoạt */
 .tab-btn.active {
     background-color: #ffffff;
     color: #004080;
@@ -136,11 +175,36 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* --- 4. KHU VỰC TÌM KIẾM --- */
+/* ==========================================================================
+   THANH HIỂN THỊ THỜI GIAN
+   ========================================================================== */
+
+.datetime-bar {
+    background-color: #e9ecef;
+    border-bottom: 1px solid #dee2e6;
+    padding: 6px 0;
+    font-size: 13.5px;
+    color: #333333;
+    font-family: Arial, sans-serif;
+    margin-top: 0 !important;
+}
+
+.datetime-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    text-align: left;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   KHU VỰC TÌM KIẾM
+   ========================================================================== */
+
 .search-section {
     display: flex;
-    flex-wrap: wrap; 
-    align-items: center; /* Lệnh ma thuật: Đổi từ flex-start thành center để mọi thứ tự động nổi vào giữa khung */
+    flex-wrap: wrap;
+    align-items: center;
     gap: 15px;
     background: white;
     padding: 25px;
@@ -148,6 +212,33 @@ body {
     margin-bottom: 25px;
 }
 
+/* Nhãn tiêu đề bảng tra cứu */
+.search-badge {
+    flex: 0 0 100% !important;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Tùy biến màu sắc nhãn tra cứu */
+.badge-blue {
+    background: linear-gradient(135deg, #b30000, #800000) !important;
+    color: #FFD700 !important;
+    border-left: 6px solid #ffcc00 !important;
+}
+
+/* Lưới các trường nhập liệu */
 .search-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -176,12 +267,12 @@ body {
     border-color: #3498db;
 }
 
-/* Cột nút bấm */
+/* Khối nút thao tác tìm kiếm */
 .action-buttons {
     display: flex;
-    flex-direction: column; 
-    gap: 15px; 
-    margin-top: 24px; /* Xóa bỏ lệnh đẩy xuống 24px trước đó, đưa về 0 */
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 24px;
     width: 120px;
 }
 
@@ -198,16 +289,25 @@ body {
     color: #721c24;
     border-color: #f5c6cb;
 }
-.btn-search:hover { background-color: #f1b0b7; }
+
+.btn-search:hover {
+    background-color: #f1b0b7;
+}
 
 .btn-clear {
     background-color: #d4edda;
     color: #155724;
     border-color: #c3e6cb;
 }
-.btn-clear:hover { background-color: #c3e6cb; }
 
-/* --- 5. BẢNG DỮ LIỆU --- */
+.btn-clear:hover {
+    background-color: #c3e6cb;
+}
+
+/* ==========================================================================
+   BẢNG DỮ LIỆU & PHÂN TRANG
+   ========================================================================== */
+
 .table-container {
     background: white;
     border: 1px solid #ddd;
@@ -232,10 +332,15 @@ th {
     color: #333;
 }
 
-tr:nth-child(even) { background-color: #f9f9f9; }
-tr:hover { background-color: #f1f1f1; }
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
 
-/* Phân trang */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Điều hướng phân trang */
 .pagination {
     margin-top: 20px;
     display: flex;
@@ -251,7 +356,9 @@ tr:hover { background-color: #f1f1f1; }
     color: #3498db;
 }
 
-.pagination button:hover { background: #eee; }
+.pagination button:hover {
+    background: #eee;
+}
 
 .pagination button.active {
     background: #3498db;
@@ -259,10 +366,25 @@ tr:hover { background-color: #f1f1f1; }
     border-color: #3498db;
 }
 
-/* --- 6. TRANG TIỂU SỬ --- */
-.btn-back-container { margin-bottom: 15px; }
-.btn-back { padding: 8px 15px; background: #fff; border: 1px solid #ccc; cursor: pointer; color: #333; }
-.btn-back:hover { background: #e9ecef; }
+/* ==========================================================================
+   TRANG THÔNG TIN CHI TIẾT
+   ========================================================================== */
+
+.btn-back-container {
+    margin-bottom: 15px;
+}
+
+.btn-back {
+    padding: 8px 15px;
+    background: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    color: #333;
+}
+
+.btn-back:hover {
+    background: #e9ecef;
+}
 
 .profile-box {
     background: white;
@@ -278,14 +400,25 @@ tr:hover { background-color: #f1f1f1; }
 
 .profile-image {
     width: 150px;
-    height: 200px; 
+    height: 200px;
     border: none !important;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
 }
 
-.no-image-text { color: #888; font-size: 14px; }
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    display: block;
+}
+
+.no-image-text {
+    color: #888;
+    font-size: 14px;
+}
 
 .profile-info h2 {
     margin-top: 0;
@@ -323,15 +456,10 @@ tr:hover { background-color: #f1f1f1; }
     color: #d32f2f;
 }
 
-.profile-image img {
-    width: 100%;
-    height: 100%;
-    max-height: 280px;
-    object-fit: cover;
-    display: block;
-}
+/* ==========================================================================
+   CHÂN TRANG (FOOTER)
+   ========================================================================== */
 
-/* --- 7. FOOTER --- */
 .site-footer {
     background-color: #0059b3;
     color: #ffffff;
@@ -350,10 +478,19 @@ tr:hover { background-color: #f1f1f1; }
     text-transform: uppercase;
 }
 
-.site-footer p { margin: 5px 0; }
-.site-footer em { font-style: italic; opacity: 0.9; }
+.site-footer p {
+    margin: 5px 0;
+}
 
-/* --- 8. CSS TRANG CHỦ --- */
+.site-footer em {
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* ==========================================================================
+   GIAO DIỆN TRANG CHỦ
+   ========================================================================== */
+
 .home-intro {
     text-align: center;
     margin: 20px 0 40px 0;
@@ -364,11 +501,11 @@ tr:hover { background-color: #f1f1f1; }
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .home-intro h2 {
-    color: #0069b4; 
+    color: #0069b4;
     margin-bottom: 15px;
     font-size: 24px;
     text-transform: uppercase;
@@ -383,6 +520,7 @@ tr:hover { background-color: #f1f1f1; }
     margin: 0 auto;
 }
 
+/* Danh sách thẻ tác vụ */
 .home-cards {
     display: flex;
     gap: 30px;
@@ -402,7 +540,7 @@ tr:hover { background-color: #f1f1f1; }
     text-align: center;
     text-decoration: none;
     color: #333;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 }
 
@@ -433,6 +571,7 @@ tr:hover { background-color: #f1f1f1; }
     margin: 0;
 }
 
+/* Khung thông báo hướng dẫn */
 .home-notice {
     background: #eef7fc;
     border-left: 5px solid #0090d2;
@@ -452,208 +591,14 @@ tr:hover { background-color: #f1f1f1; }
     text-transform: uppercase;
 }
 
-.home-notice p { 
-    margin: 8px 0; 
-    line-height: 1.6; 
+.home-notice p {
+    margin: 8px 0;
+    line-height: 1.6;
     color: #333;
     font-size: 15px;
 }
-/* --- 1. KHUNG TIÊU ĐỀ TRÊN BANNER (Màu vàng kim nổi bật) --- */
-.header-title-box {
-    color: #FFEB3B; /* Vàng sáng sang trọng */
-    font-size: 14.5px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    margin-top: 8px;
-    padding: 6px 18px;
-    background: rgba(0, 25, 65, 0.75); /* Nền xanh sẫm mờ giúp làm nổi bật chữ */
-    border-radius: 20px;
-    border: 1px solid rgba(255, 235, 59, 0.5); /* Viền vàng mảnh */
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px #000000;
-    display: inline-block;
-}
 
-/* --- 2. SỬA LỖI THANH THỜI GIAN (Gọn gàng 1 dòng duy nhất) --- */
-.datetime-bar {
-    background-color: #f0f0f0;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 7px 0;
-    font-size: 13.5px;
-    color: #333333;
-    font-family: Arial, sans-serif;
-}
-
-/* Dùng datetime-inner thay vì container để không bị dính khung trắng */
-.datetime-inner {
-    max-width: 1200px; /* Căn thẳng hàng với lề khung dưới */
-    margin: 0 auto;
-    padding: 0 15px;
-    text-align: left;
-    font-weight: 500;
-}
-
-/* Tự động điều chỉnh kích thước trên điện thoại */
-@media (max-width: 768px) {
-    .header-title-box {
-        font-size: 11.5px;
-        padding: 5px 10px;
-        margin-top: 5px;
-    }
-}
-/* --- 9. CẤU HÌNH RESPONSIVE CHO ĐIỆN THOẠI (Màn hình dưới 768px) --- */
-@media screen and (max-width: 768px) {
-    
-    /* 1. Thu nhỏ Header & Ảnh Slogan trên điện thoại */
-    .top-header { height: 95px; }
-    
-    .header-slogan {
-        max-height: 65px;
-        margin: 0 auto;
-        display: block;
-    }
-
-    .title-banner {
-        font-size: 13.5px;
-        padding: 12px 15px;
-        border-top: 2px solid #f39c12;
-    }
-
-    /* 2. Sắp xếp lại khu vực Tìm kiếm */
-    .search-section {
-        flex-direction: column;
-        padding: 15px;
-        gap: 15px;
-    }
-    
-    .search-grid {
-        flex: 0 0 100%; /* Bắt buộc chiếm trọn 100% chiều ngang hàng thứ 2 */
-        width: 100%;
-        grid-template-columns: 1fr !important;
-    }
-
-    /* 3. Nút 3 gạch bên TRÁI & Menu xổ mượt mà */
-    .nav-container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 5px 0;
-    }
-
-    .menu-toggle {
-        display: inline-block;
-        margin-left: 15px;
-        margin-right: auto;
-        margin-top: 4px;
-        margin-bottom: 4px;
-    }
-
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        background-color: #0059b3;
-        gap: 0;
-        
-        /* Cấu hình trượt mượt */
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out;
-    }
-
-    .nav-links.show {
-        max-height: 250px;
-        opacity: 1;
-    }
-
-    .tab-btn {
-        padding: 12px 20px;
-        border-radius: 0;
-        border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        text-align: left;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .tab-btn.active {
-        background-color: rgba(255, 255, 255, 0.2);
-        color: #ffffff;
-        box-shadow: none;
-        border-left: 4px solid #ffffff;
-    }
-    
-    .action-buttons {
-        flex-direction: row;
-        width: 100%;
-        gap: 10px;
-    }
-    
-    .btn-search, .btn-clear {
-        flex: 1;
-        padding: 12px; 
-    }
-
-    /* 4. Bảng dữ liệu */
-    .table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    table { min-width: 500px; }
-    
-    th, td {
-        padding: 6px 3px;
-        font-size: 12px;
-        line-height: 1.3;
-        word-wrap: break-word;
-    }
-
-    th:first-child, td:first-child {
-        width: 30px;
-        min-width: 30px;
-        padding: 4px 1px;
-    }
-    
-    th:nth-child(3), td:nth-child(3) { width: 60px; }
-
-    /* 5. Trang Tiểu sử */
-    .profile-top {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .profile-image {
-        width: 180px;
-        height: 240px;
-        margin-bottom: 15px;
-    }
-
-    .profile-info {
-        width: 100%;
-        padding-left: 0;
-    }
-
-    .profile-info h2 {
-        text-align: center;
-        font-size: 22px;
-        margin-bottom: 20px;
-    }
-
-    .profile-info p {
-        font-size: 15px;
-        line-height: 1.6;
-        word-break: break-word; 
-        border-bottom: 1px dashed #ddd;
-        padding-bottom: 8px;
-    }
-}
-/* ==========================================================================
-   KHUNG THÔNG TIN TRANG CHỦ (INFO CARDS GRID)
-   ========================================================================== */
-
+/* Lưới thẻ thông tin */
 .info-cards-section {
     margin: 35px 0;
 }
@@ -736,17 +681,7 @@ tr:hover { background-color: #f1f1f1; }
     width: fit-content;
 }
 
-@media screen and (max-width: 768px) {
-    .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .info-card {
-        padding: 16px;
-    }
-}
-/* --- 10. BỔ SUNG: CSS HIỂN THỊ SỐ NGƯỜI ONLINE --- */
+/* Huy hiệu bộ đếm truy cập trực tuyến */
 .online-counter-badge {
     text-align: center;
     padding: 15px;
@@ -770,236 +705,186 @@ tr:hover { background-color: #f1f1f1; }
     margin-left: 4px;
 }
 
-/* NHÃN TÊN BẢNG */
-.search-badge {
-   flex: 0 0 100% !important; /* LỆNH QUAN TRỌNG NHẤT: Tuyệt đối không co rút, ép chiếm đúng 100% chiều ngang */
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 15px;
-    border-radius: 6px;
-    margin-bottom: 5px; 
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* ==========================================================================
+   THIẾT KẾ ĐÁP ỨNG (RESPONSIVE - MÀN HÌNH DƯỚI 768PX)
+   ========================================================================== */
 
-/* Đồng bộ màu sắc chung cho cả 2 trang: Đỏ đô viền vàng trang trọng */
-.badge-blue {
-    background: linear-gradient(135deg, #b30000, #800000) !important;
-    color: #FFD700 !important; /* Màu chữ vàng (Yellow) */
-    border-left: 6px solid #ffcc00 !important; /* Viền trái màu vàng */
-}
-/* =========================================================
-   1. CĂN GIỮA TIÊU ĐỀ NẰM TRÊN BANNER
-   ========================================================= */
-.top-header .header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;      /* Căn giữa tất cả thành phần theo chiều ngang */
-    justify-content: center;  /* Căn giữa theo chiều dọc */
-    text-align: center;
-    width: 100%;
-    padding: 10px 0;
-}
-
-.header-title-box {
-    color: #FFEB3B;           /* Chữ vàng kim nổi bật */
-    font-size: 14.5px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    
-    /* Căn giữa ô bằng margin auto */
-    margin: 8px auto 0 auto;  
-    padding: 6px 18px;
-    
-    background: rgba(0, 25, 65, 0.75); /* Nền mờ giúp nổi bật chữ */
-    border-radius: 20px;
-    border: 1px solid rgba(255, 235, 59, 0.5);
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px #000000;
-    display: inline-block;
-}
-
-/* =========================================================
-   2. XÓA KHOẢNG TRẮNG GIỮA THANH TAB VÀ THANH THỜI GIAN
-   ========================================================= */
-/* Bắt buộc thanh menu không đẩy lề dưới */
-.main-nav {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-/* Bắt buộc thanh thời gian sát khít lên trên */
-.datetime-bar {
-    background-color: #e9ecef;
-    border-bottom: 1px solid #dee2e6;
-    padding: 6px 0;
-    font-size: 13.5px;
-    color: #333333;
-    font-family: Arial, sans-serif;
-    
-    margin-top: 0 !important;  /* Triệt tiêu hoàn toàn khoảng trống phía trên */
-}
-
-.datetime-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-    text-align: left;
-    font-weight: 500;
-}
-
-/* Responsive cho màn hình điện thoại */
-@media (max-width: 768px) {
-    .header-title-box {
-        font-size: 11px;
-        padding: 5px 10px;
-        width: 90%; /* Dàn đều cân đối trên mobile */
+@media screen and (max-width: 768px) {
+    /* Header & Logo */
+    .top-header {
+        min-height: 120px !important;
     }
-}
-/* =========================================================
-   CẤU HÌNH HEADER, LOGO LỀ TRÁI VÀ TIÊU ĐỀ
-   ========================================================= */
 
-/* 1. Khung Header - Tăng chiều cao dưới (padding-bottom: 25px) để tạo độ thoáng */
-.top-header .header-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 15px 20px 25px 20px; /* Tăng chiều rộng xuống phía dưới */
-    box-sizing: border-box;
-}
-
-/* 2. Căn lề TRÁI cho chữ / logo "ỦY BAN NHÂN DÂN XÃ PHƯỚC AN" */
-.header-slogan {
-    align-self: flex-start !important; /* Bắt buộc căn sang mép trái */
-    max-width: 280px;                  /* Điều chỉnh kích thước vừa vặn */
-    height: auto;
-}
-
-/* 3. Khung chữ vàng vẫn CĂN GIỮA BANNER và nằm gọn trong Header */
-.header-title-box {
-    align-self: center;               /* Căn giữa nằm ngang banner */
-    color: #FFEB3B;                     /* Màu vàng kim nổi bật */
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    
-    margin-top: 12px;                 /* Khoảng cách phía trên */
-    margin-bottom: 5px;               /* Tạo khoảng cách an toàn với thanh tab */
-    padding: 7px 18px;
-    
-    background: rgba(0, 25, 65, 0.85); /* Nền xanh sẫm mờ tương phản cao */
-    border-radius: 20px;
-    border: 1px solid rgba(255, 235, 59, 0.5);
-    letter-spacing: 0.5px;
-    text-shadow: 1px 1px 2px #000000;
-    max-width: 95%;
-}
-
-/* Tự động tối ưu độ cao & kích thước trên Điện thoại */
-@media (max-width: 768px) {
     .top-header .header-container {
-        padding: 10px 12px 20px 12px; /* Vẫn giữ độ sâu rộng rãi trên di động */
-    }
-    
-    .header-slogan {
-        max-width: 210px; /* Thu nhỏ logo nhẹ trên điện thoại cho cân đối */
-    }
-
-    .header-title-box {
-        font-size: 11px;
-        padding: 6px 10px;
-        margin-top: 8px;
-    }
-}
-/* =========================================================
-   FIX LỖI CĂN LỀ TRÁI LOGO UBND KHI THU NHỎ MÀN HÌNH (MOBILE)
-   ========================================================= */
-
-/* 1. Ép logo luôn căn lề trái ở mọi kích thước màn hình */
-.header-slogan {
-    align-self: flex-start !important;
-    margin-left: 0 !important;
-    margin-right: auto !important;
-    display: block !important;
-}
-
-/* 2. Ghi đè CSS mobile (không cho phép tự động căn giữa) */
-@media (max-width: 768px) {
-    .top-header .header-container {
-        align-items: flex-start !important; /* Giữ các phần tử con ưu tiên sát lề trái */
+        align-items: flex-start !important;
+        padding: 12px 12px 20px 12px !important;
     }
 
     .header-slogan {
         align-self: flex-start !important;
         margin-left: 0 !important;
         margin-right: auto !important;
-        max-width: 190px !important; /* Thu nhỏ logo nhẹ để đẹp mắt trên điện thoại */
+        margin-top: 2px !important;
+        margin-bottom: 10px !important;
+        max-width: 190px !important;
+        display: block !important;
     }
 
-    /* Giữ riêng Khung chữ vàng CỔNG TRA CỨU luôn nằm chính giữa */
     .header-title-box {
         align-self: center !important;
         margin-left: auto !important;
         margin-right: auto !important;
         width: 92% !important;
-    }
-}
-/* =========================================================
-   FIX MỞ RỘNG HEADER & ĐẨY LOGO UBND KHỎI MÉP TRÊN (MOBILE)
-   ========================================================= */
-
-/* 1. Tăng khoảng trống đỉnh (top) và đáy (bottom) trên Desktop */
-.top-header .header-container {
-    padding-top: 18px !important;    /* Đẩy logo UBND rời khỏi mép trên cùng */
-    padding-bottom: 22px !important; /* Kéo rộng chiều cao Header xuống dưới */
-}
-
-/* 2. Áp dụng riêng cho màn hình Điện thoại (Mobile) */
-@media (max-width: 768px) {
-    .top-header .header-container {
-        padding-top: 15px !important;    /* Đủ khoảng trống thoáng mép trên */
-        padding-bottom: 20px !important; /* Đủ khoảng trống thoáng mép dưới */
+        font-size: 11px;
+        padding: 6px 10px;
+        margin-top: 8px;
     }
 
-    .header-slogan {
-        margin-top: 2px !important;
-        margin-bottom: 10px !important;  /* Tách biệt rõ ràng với ô chữ vàng bên dưới */
+    .title-banner {
+        font-size: 13.5px;
+        padding: 12px 15px;
+        border-top: 2px solid #f39c12;
     }
-}
-/* =========================================================
-   ÉP KHUNG HEADER TỰ ĐỘNG GIÃN RỘNG (GHI ĐÈ MỌI CODE CŨ)
-   ========================================================= */
 
-.top-header {
-    height: auto !important;       /* Phá bỏ chiều cao cố định cũ */
-    min-height: 140px !important;  /* Chiều cao tối thiểu */
-}
-
-.top-header .header-container {
-    height: auto !important;
-    padding-top: 15px !important;    /* Đẩy logo xuống một chút */
-    padding-bottom: 25px !important; /* Kéo khung giãn dài xuống dưới */
-}
-
-/* Xử lý riêng cho màn hình điện thoại */
-@media (max-width: 768px) {
-    .top-header {
-        min-height: 120px !important;
+    /* Menu điều hướng */
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5px 0;
     }
-    .top-header .header-container {
-        padding-top: 12px !important; 
-        padding-bottom: 20px !important; 
+
+    .menu-toggle {
+        display: inline-block;
+        margin-left: 15px;
+        margin-right: auto;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background-color: #0059b3;
+        gap: 0;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease-in-out, opacity 0.25s ease-in-out;
+    }
+
+    .nav-links.show {
+        max-height: 250px;
+        opacity: 1;
+    }
+
+    .tab-btn {
+        padding: 12px 20px;
+        border-radius: 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: left;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .tab-btn.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        box-shadow: none;
+        border-left: 4px solid #ffffff;
+    }
+
+    /* Khu vực tìm kiếm */
+    .search-section {
+        flex-direction: column;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .search-grid {
+        flex: 0 0 100%;
+        width: 100%;
+        grid-template-columns: 1fr !important;
+    }
+
+    .action-buttons {
+        flex-direction: row;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .btn-search, .btn-clear {
+        flex: 1;
+        padding: 12px;
+    }
+
+    /* Bảng dữ liệu */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 500px;
+    }
+
+    th, td {
+        padding: 6px 3px;
+        font-size: 12px;
+        line-height: 1.3;
+        word-wrap: break-word;
+    }
+
+    th:first-child, td:first-child {
+        width: 30px;
+        min-width: 30px;
+        padding: 4px 1px;
+    }
+
+    th:nth-child(3), td:nth-child(3) {
+        width: 60px;
+    }
+
+    /* Chi tiết tiểu sử */
+    .profile-top {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .profile-image {
+        width: 180px;
+        height: 240px;
+        margin-bottom: 15px;
+    }
+
+    .profile-info {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .profile-info h2 {
+        text-align: center;
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .profile-info p {
+        font-size: 15px;
+        line-height: 1.6;
+        word-break: break-word;
+        border-bottom: 1px dashed #ddd;
+        padding-bottom: 8px;
+    }
+
+    /* Khung thẻ thông tin trang chủ */
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .info-card {
+        padding: 16px;
     }
 }
