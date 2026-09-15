@@ -1,26 +1,30 @@
-// dashboard.js - Kết nối trực tiếp đến trạm dữ liệu Backend SQL
+/* ==========================================================================
+   DASHBOARD.JS - Xử lý logic tìm kiếm, phân trang và kết nối Backend
+   ========================================================================== */
+
 let currentPage = 1;
-const rowsPerPage = 20; // Đã giảm xuống 20 hàng/trang
+const rowsPerPage = 20; // Số lượng hàng hiển thị trên mỗi trang
 
+// Khởi tạo trang: tải dữ liệu ban đầu và gán sự kiện tìm kiếm
 window.onload = function() {
-    searchData(); // Tự động lấy dữ liệu từ SQL khi vừa mở trang web
+    searchData();
 
-    // Đăng ký sự kiện nhấn phím Enter trên các ô tìm kiếm để kích hoạt bộ lọc nhanh
+    // Lắng nghe sự kiện phím Enter trên các ô nhập liệu để tìm kiếm nhanh
     const searchInputs = document.querySelectorAll('.search-grid input');
     searchInputs.forEach(input => {
         input.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                currentPage = 1; // Đưa về trang đầu khi thực hiện lệnh tìm kiếm mới
+                currentPage = 1; // Reset về trang đầu tiên khi có truy vấn mới
                 searchData();
             }
         });
     });
 };
 
-// Hàm gửi yêu cầu lấy dữ liệu đã qua bộ lọc từ Server Node.js
+// Gửi yêu cầu lấy dữ liệu từ Backend dựa trên bộ lọc
 async function searchData() {
-    // Thu thập giá trị từ 6 ô nhập liệu giao diện
+    // Thu thập tham số từ các ô nhập liệu giao diện
     const queryParams = new URLSearchParams({
         name: document.getElementById("s_name").value,
         birth: document.getElementById("s_birthDate").value,
@@ -37,37 +41,34 @@ async function searchData() {
         const filteredData = await response.json();
         renderTableData(filteredData);
     } catch (error) {
-        console.error("Lỗi fetch:", error);
-        //alert("Không thể kết nối đến trạm dữ liệu Backend!");
+        console.error("Lỗi kết nối:", error);
         window.location.href = "error.html";
     }
 }
 
-// Vẽ dữ liệu danh sách nhận về lên bảng HTML
+// Hiển thị dữ liệu lên bảng HTML
 function renderTableData(filteredData) {
     const tableBody = document.getElementById("tableBody");
     if (!tableBody) return;
     tableBody.innerHTML = "";
 
-    // Phân trang dữ liệu hiển thị
+    // Phân nhỏ dữ liệu hiển thị theo trang hiện tại
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
     const pageData = filteredData.slice(startIndex, endIndex);
 
-    // Xử lý trường hợp không có kết quả tìm kiếm
+    // Xử lý thông báo khi không có kết quả phù hợp
     if (pageData.length === 0) {
-        // Đã đổi colspan="7" vì bảng hiện tại có 7 cột (tính cả cột STT)
         tableBody.innerHTML = `<tr><td colspan="7" style="color: red; font-weight: bold; padding: 20px;">Không tìm thấy thông tin phù hợp!</td></tr>`;
         renderPagination(0);
         return;
     }
 
+    // Vẽ cấu trúc hàng dữ liệu
     pageData.forEach((item, index) => {
-        // Thuật toán tính Số Thứ Tự (STT) dựa trên trang hiện tại
+        // Tính toán số thứ tự liên tục giữa các trang
         let stt = startIndex + index + 1;
 
-        // Cập nhật lại HTML sao cho hiển thị đúng 7 cột đã thiết kế
-        // Lưu ý: Đã đổi item.so_tt thành item.khu_lo cho đúng với logic giao diện
         let row = `<tr>
             <td>${stt}</td>
             <td><a href="detail.html?id=${item.id}" class="martyr-link">${item.ho_va_ten || ''}</a></td>
@@ -83,7 +84,7 @@ function renderTableData(filteredData) {
     renderPagination(filteredData.length);
 }
 
-// Tạo các nút chuyển trang động
+// Khởi tạo và hiển thị thanh phân trang
 function renderPagination(totalRows) {
     const pageCount = Math.ceil(totalRows / rowsPerPage);
     const pagination = document.getElementById("pagination");
@@ -94,46 +95,46 @@ function renderPagination(totalRows) {
         let btn = document.createElement("button");
         btn.innerText = i;
         if (i === currentPage) btn.className = "active";
+        
         btn.onclick = () => { 
             currentPage = i; 
             searchData(); 
         };
+        
         pagination.appendChild(btn);
     }
 }
+
+// Cập nhật đồng hồ thời gian thực
 function updateRealtimeClock() {
     const now = new Date();
 
-    // 1. Mảng tên các thứ trong tuần
     const days = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
     const dayName = days[now.getDay()];
 
-    // 2. Định dạng Ngày / Tháng / Năm (Thêm số 0 vào trước nếu nhỏ hơn 10)
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const year = now.getFullYear();
 
-    // 3. Định dạng Giờ : Phút
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
 
-    // 4. Ghép thành chuỗi dạng: "Thứ tư, 22/07/2026, 23:25"
+    // Ghép thành chuỗi hiển thị
     const timeString = `${dayName}, ${day}/${month}/${year}, ${hours}:${minutes}`;
 
-    // 5. Gán vào HTML
     const clockElement = document.getElementById("current-datetime");
     if (clockElement) {
         clockElement.innerText = timeString;
     }
 }
 
-// Chạy hàm ngay khi trang web load xong
+// Kích hoạt đồng hồ khi tải trang và lặp lại mỗi giây
 document.addEventListener("DOMContentLoaded", () => {
     updateRealtimeClock();
-    // Tự động chạy lại mỗi 1 giây (1000ms) để đồng hồ luôn chính xác
     setInterval(updateRealtimeClock, 1000);
 });
-// Xóa trắng toàn bộ các ô nhập dữ liệu lọc thông tin
+
+// Xóa trắng biểu mẫu bộ lọc và tải lại bảng mặc định
 function clearSearch() {
     document.getElementById("s_name").value = "";
     document.getElementById("s_birthDate").value = "";
@@ -146,13 +147,13 @@ function clearSearch() {
     searchData();
 }
 
-// Hàm Đóng/Mở Menu trên điện thoại
+// Đóng/mở menu điều hướng trên thiết bị di động
 function toggleMenu() {
     const nav = document.getElementById("navLinks");
     nav.classList.toggle("show");
 }
 
-// Tự động phát hiện mất mạng và chuyển trang
+// Chuyển hướng đến trang lỗi khi mất kết nối mạng
 window.addEventListener('offline', function() {
     window.location.href = "error.html";
 });
